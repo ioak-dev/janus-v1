@@ -3,7 +3,10 @@
     <div class="navigation">
       <div>
         <router-link to="/home">
-          home
+          Home
+        </router-link>
+        <router-link to="/board">
+          Board
         </router-link>
       </div>
     </div>
@@ -27,6 +30,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-body);
+  min-height: 100vh;
   color: var(--color-body-invert);
 }
 .navigation {
