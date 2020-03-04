@@ -9,7 +9,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import TaskLink from '../components/TaskLink';
+import TaskLink from '../Board/TaskLink';
 
 export default {
   name: 'Board',

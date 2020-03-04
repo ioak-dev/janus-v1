@@ -8,6 +8,9 @@
         <router-link to="/board">
           Board
         </router-link>
+        <router-link to="/createspace">
+          Create Space
+        </router-link>
       </div>
     </div>
     <router-view />
@@ -39,6 +42,7 @@ body {
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
   height: var(--height-nav);
+  padding: 4px;
   display: flex;
   align-items: center;
 }
@@ -57,5 +61,9 @@ body {
 .navigation a:hover {
   background: var(--color-body);
   color: var(--color-body-invert);
+}
+.boxed {
+  margin: 10px auto;
+  width: 60%;
 }
 </style>
