@@ -86,7 +86,7 @@ export default {
           if (response.status === 200) {
             // sendMessage('notification', true, {
             // type: 'success',
-            // message: 'Tenant has been created. You can proceed now',
+            // message: 'Space has been created. You can proceed now',
             // duration: 3000,
             // });
           } else {
@@ -109,7 +109,7 @@ export default {
         // setError('name');
         // sendMessage('notification', true, {
         //     type: 'failure',
-        //     message: 'Tenant name cannot be empty',
+        //     message: 'Space name cannot be empty',
         //     duration: 3000,
         // });
         return false;

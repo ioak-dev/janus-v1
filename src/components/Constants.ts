@@ -1,8 +1,8 @@
 const constants = {
-  API_URL_TENANT: '/tenant',
-  API_URL_TENANT_BANNER: '/tenant/banner',
-  API_URL_TENANT_CREATE: '/tenant/create',
-  API_TENANT_URL: '/tenant/sendURL',
+  API_URL_SPACE: '/space',
+  API_URL_SPACE_BANNER: '/space/banner',
+  API_URL_SPACE_CREATE: '/space/create',
+  API_SPACE_URL: '/space/sendURL',
 
   API_URL_PRESIGNUP: '/auth/keys',
   API_URL_RESET: '/auth/reset',

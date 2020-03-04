@@ -42,11 +42,11 @@ export function signup(data: any) {
 
 export function createSpace(data: any) {
   const formData = new FormData();
-  formData.append('tenantName', data.spaceName);
+  formData.append('spaceName', data.spaceName);
   formData.append('email', data.email);
   formData.append('problem', encrypt(data.password, data.solution, data.salt));
   formData.append('solution', data.solution);
-  return httpPost(constants.API_URL_TENANT_CREATE, formData, {
+  return httpPost(constants.API_URL_SPACE_CREATE, formData, {
     'Content-Type': 'multipart/form-data',
   }).then(function(response) {
     return Promise.resolve(response);

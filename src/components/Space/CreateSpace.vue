@@ -14,6 +14,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .create-space {
-  // background: url('../../assets/tenant_creation.jpg') no-repeat center center;
+  // background: url('../../assets/space_creation.jpg') no-repeat center center;
 }
 </style>
