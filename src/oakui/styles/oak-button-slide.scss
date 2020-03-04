@@ -70,10 +70,10 @@ button {
     z-index: 0;
     border: 2px solid var(--color-bg);
     
-    padding: 8px 16px;
+    padding: 4px 5px;//8px 16px;
 
     &.small {
-      padding: 4px 8px;
+      padding: 4px 5px;//4px 8px;
     }
 
     &.align-left {

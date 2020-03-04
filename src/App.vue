@@ -62,8 +62,29 @@ body {
   background: var(--color-body);
   color: var(--color-body-invert);
 }
-.boxed {
-  margin: 10px auto;
-  width: 60%;
+body {
+  width: 100%;
+  margin: auto;
+  .boxed {
+    min-height: 100vh;
+    padding-top: calc(var(--height-nav) + 20px);
+    // padding-bottom: 40px;
+
+    @media (min-width: 768px) {
+      width: 60%;
+      margin: auto;
+    }
+    @media (max-width: 767px) {
+      // padding-top: 0px;
+      // padding-left: 20px;
+      // padding-right: 20px;
+      width: 90%;
+      margin: auto;
+    }
+  }
+  .full {
+    min-height: 100vh;
+    padding-top: calc(var(--height-nav));
+  }
 }
 </style>
