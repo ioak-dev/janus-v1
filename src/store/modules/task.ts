@@ -15,12 +15,12 @@ const actions = {
     const response = await axios.get(
       'https://jsonplaceholder.typicode.com/posts'
     );
-    commit('setTasks', response.data);
+    commit('UPDATE_TASKS', response.data);
   },
 };
 
 const mutations = {
-  setTasks: (state: any, tasks: any) => {
+  UPDATE_TASKS: (state: any, tasks: any) => {
     state.tasks = tasks;
   },
 };

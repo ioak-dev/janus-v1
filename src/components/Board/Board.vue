@@ -1,6 +1,7 @@
 <template>
   <div class="board">
     <h1>Board page</h1>
+    <h2>{{ getProfile.space }}</h2>
     <div v-for="task in getTasks" v-bind:key="task.id">
       <TaskLink v-bind:task="task" />
     </div>
@@ -19,7 +20,7 @@ export default {
   methods: {
     ...mapActions(['fetchTasks']),
   },
-  computed: mapGetters(['getTasks']),
+  computed: mapGetters(['getTasks', 'getProfile']),
   created() {
     this.fetchTasks();
   },

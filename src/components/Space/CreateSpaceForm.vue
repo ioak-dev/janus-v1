@@ -39,6 +39,7 @@ import OakText from '@/oakui/OakText.vue';
 import OakButton from '@/oakui/OakButton.vue';
 import { isEmptyOrSpaces } from '@/Utils';
 import { preSignup, createSpace } from '@/components/Auth/AuthService';
+import { sendMessage } from '@/events/MessageService';
 
 export default {
   name: 'CreateSpaceForm',
@@ -61,7 +62,7 @@ export default {
       this.space[event.target.name] = event.target.value;
     },
     submitForm() {
-      // sendMessage('spinner');
+      sendMessage('spinner');
       // clearError();
 
       if (!this.validate()) {
@@ -84,34 +85,35 @@ export default {
       })
         .then(response => {
           if (response.status === 200) {
-            // sendMessage('notification', true, {
-            // type: 'success',
-            // message: 'Space has been created. You can proceed now',
-            // duration: 3000,
-            // });
+            sendMessage('notification', true, {
+              type: 'success',
+              message: 'Space has been created. You can proceed now',
+              duration: 3000,
+            });
+            this.$emit('created', this.space.name);
           } else {
-            // sendMessage('notification', true, {
-            // message: 'We are facing some problem, please try after sometime',
-            // duration: 3000,
-            // });
+            sendMessage('notification', true, {
+              message: 'We are facing some problem, please try after sometime',
+              duration: 3000,
+            });
           }
         })
         .catch(error => {
-          // sendMessage('notification', true, {
-          //     type: 'failure',
-          //     message: 'Unknown error. Please try again or at a later time',
-          //     duration: 3000,
-          // });
+          sendMessage('notification', true, {
+            type: 'failure',
+            message: 'Unknown error. Please try again or at a later time',
+            duration: 3000,
+          });
         });
     },
     validate() {
       if (isEmptyOrSpaces(this.space.name)) {
         // setError('name');
-        // sendMessage('notification', true, {
-        //     type: 'failure',
-        //     message: 'Space name cannot be empty',
-        //     duration: 3000,
-        // });
+        sendMessage('notification', true, {
+          type: 'failure',
+          message: 'Space name cannot be empty',
+          duration: 3000,
+        });
         return false;
       }
       if (
@@ -120,31 +122,31 @@ export default {
         )
       ) {
         // setError('email');
-        // sendMessage('notification', true, {
-        //     type: 'failure',
-        //     message: 'Email ID is invalid',
-        //     duration: 3000,
-        // });
+        sendMessage('notification', true, {
+          type: 'failure',
+          message: 'Email ID is invalid',
+          duration: 3000,
+        });
         return false;
       }
 
       if (isEmptyOrSpaces(this.space.adminPassword)) {
         // setError('password');
-        // sendMessage('notification', true, {
-        //     type: 'failure',
-        //     message: 'Password cannot be empty',
-        //     duration: 3000,
-        // });
+        sendMessage('notification', true, {
+          type: 'failure',
+          message: 'Password cannot be empty',
+          duration: 3000,
+        });
         return false;
       }
 
       if (this.space.adminPassword !== this.space.repeatAdminPassword) {
         // setError('repeatPassword');
-        // sendMessage('notification', true, {
-        //     type: 'failure',
-        //     message: 'Password and repeat password should be same',
-        //     duration: 3000,
-        // });
+        sendMessage('notification', true, {
+          type: 'failure',
+          message: 'Password and repeat password should be same',
+          duration: 3000,
+        });
         return false;
       }
 
