@@ -9,6 +9,12 @@
     >
       Board
     </router-link>
+    <router-link
+      v-if="getProfile.auth.isAuth"
+      v-bind:to="`/${getProfile.space}/list`"
+    >
+      List View
+    </router-link>
     <router-link to="/createspace">
       Create Space
     </router-link>

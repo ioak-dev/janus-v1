@@ -16,7 +16,7 @@
 <script>
 import VerticalLane from './VerticalLane.vue';
 export default {
-  name: 'Board',
+  name: 'BoardView',
   components: {
     VerticalLane,
   },

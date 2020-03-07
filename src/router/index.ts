@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/components/Home/Home.vue';
-import Board from '@/components/Board/Board.vue';
+import BoardView from '@/components/Board/BoardView.vue';
+import ListView from '@/components/Board/ListView.vue';
 import CreateSpace from '@/components/Space/CreateSpace.vue';
 import Login from '@/components/Auth/Login.vue';
 
@@ -24,8 +25,14 @@ const routes = [
   },
   {
     path: '/:space/board',
-    component: Board,
-    name: 'Board',
+    component: BoardView,
+    name: 'BoardView',
+    meta: { middleware: [readSpace] },
+  },
+  {
+    path: '/:space/list',
+    component: ListView,
+    name: 'ListView',
     meta: { middleware: [readSpace] },
   },
   { path: '/createspace', component: CreateSpace, name: 'CreateSpace' },

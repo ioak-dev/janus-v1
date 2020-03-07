@@ -6,7 +6,7 @@
     @dragstart="dragStart"
   >
     <div class="title">{{ task.title }}</div>
-    <div class="description">{{ task.body }}</div>
+    <!-- <div class="description">{{ task.body }}</div> -->
   </div>
 </template>
 

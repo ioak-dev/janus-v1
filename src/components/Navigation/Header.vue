@@ -1,10 +1,6 @@
 <template>
   <div class="header">
-    <i
-      class="material-icons"
-      v-if="isSidebarExpanded"
-      v-on:click="$emit('sidebarToggled')"
-    >
+    <i class="material-icons" v-on:click="$emit('sidebarToggled')">
       menu_open
     </i>
     <img class="logo" v-bind:src="janusLogo" alt="Janus logo" />
