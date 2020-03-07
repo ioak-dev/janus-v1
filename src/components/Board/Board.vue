@@ -1,7 +1,5 @@
 <template>
   <div class="board">
-    <h1>Board page</h1>
-    <h2>{{ getProfile.space }}</h2>
     <div v-for="task in getTasks" v-bind:key="task.id">
       <TaskLink v-bind:task="task" />
     </div>
@@ -26,3 +24,14 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.board {
+  width: 300px;
+  margin-left: 50px;
+  margin-top: 50px;
+  height: 80vh;
+  max-height: 100vh;
+  overflow-y: auto;
+  // padding: 6px;
+}
+</style>

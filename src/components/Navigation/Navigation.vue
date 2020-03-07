@@ -1,48 +1,35 @@
 <template>
   <div class="navigation">
-    <div>
-      <router-link v-bind:to="`/${getProfile.space}/home`">
-        Home
-      </router-link>
-      <router-link
-        v-if="getProfile.auth.isAuth"
-        v-bind:to="`/${getProfile.space}/board`"
-      >
-        Board
-      </router-link>
-      <router-link to="/createspace">
-        Create Space
-      </router-link>
-      <router-link
-        v-if="!getProfile.auth.isAuth"
-        v-bind:to="`/${getProfile.space}/login?signin=y`"
-      >
-        Login
-      </router-link>
-      <router-link
-        v-if="!getProfile.auth.isAuth"
-        v-bind:to="`/${getProfile.space}/login?signup=y`"
-      >
-        Sign up
-      </router-link>
-      <OakButton
-        v-if="getProfile.auth.isAuth"
-        v-on:click="logout"
-        label="Logout"
-        theme="primary"
-        variant="animate none"
-      />
-    </div>
+    <router-link class="test" v-bind:to="`/${getProfile.space}/home`">
+      Home
+    </router-link>
+    <router-link
+      v-if="getProfile.auth.isAuth"
+      v-bind:to="`/${getProfile.space}/board`"
+    >
+      Board
+    </router-link>
+    <router-link to="/createspace">
+      Create Space
+    </router-link>
+    <router-link
+      v-if="!getProfile.auth.isAuth"
+      v-bind:to="`/${getProfile.space}/login?signin=y`"
+    >
+      Login
+    </router-link>
+    <router-link
+      v-if="!getProfile.auth.isAuth"
+      v-bind:to="`/${getProfile.space}/login?signup=y`"
+    >
+      Sign up
+    </router-link>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import OakButton from '@/oakui/OakButton.vue';
 export default {
   name: 'Navigation',
-  components: {
-    OakButton,
-  },
   computed: {
     ...mapGetters(['getProfile']),
   },
@@ -55,5 +42,24 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import './style.scss';
+.navigation {
+  display: flex;
+  flex-direction: column;
+  a {
+    text-decoration: none;
+    color: white;
+    padding: 0 10px 0 15px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+    &:hover {
+      background-color: var(--color-body-dim);
+      width: 100%;
+    }
+    &.router-link-active {
+      background-color: var(--color-primary);
+      width: 100%;
+    }
+  }
+}
 </style>
