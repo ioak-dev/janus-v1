@@ -1,19 +1,15 @@
 <template>
   <div class="sidebar">
-    <div class="expand-collapse">
-      <i
-        class="material-icons"
-        v-if="isSidebarExpanded"
-        v-on:click="$emit('sidebarToggled')"
-      >
-        menu_open
-      </i>
-    </div>
+    <Header
+      v-bind:isSidebarExpanded="isSidebarExpanded"
+      v-on:sidebarToggled="$emit('sidebarToggled')"
+    />
     <Navigation />
   </div>
 </template>
 <script>
 import Navigation from '@/components/Navigation/Navigation.vue';
+import Header from './Header.vue';
 export default {
   name: 'Sidebar',
   props: {
@@ -21,6 +17,7 @@ export default {
   },
   components: {
     Navigation,
+    Header,
   },
 };
 </script>
@@ -31,16 +28,5 @@ export default {
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  .expand-collapse {
-    display: flex;
-    justify-content: flex-end;
-    height: 50px;
-    line-height: 50px;
-    margin-right: 10px;
-    .material-icons {
-      cursor: pointer;
-      line-height: 50px;
-    }
-  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="@/assets/logo.png" />
-    <HomeContent msg="Home page content" />
+    <img alt="Vue logo" src="@/assets/logo.svg" />
+    <HomeContent msg="Janus, a clutter free agile management tool" />
   </div>
 </template>
 
@@ -16,3 +16,10 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.home {
+  img {
+    width: 400px;
+  }
+}
+</style>

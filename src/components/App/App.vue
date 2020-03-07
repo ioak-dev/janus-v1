@@ -77,12 +77,12 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-body-invert-dim);
+  // background: var(--color-body-invert-dim);
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-body-invert);
+  background: var(--color-body-invert-dim);
   border-radius: 6px;
 }
 </style>

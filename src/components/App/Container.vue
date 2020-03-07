@@ -64,9 +64,15 @@ export default {
     width: 250px;
   }
 
+  .topbar-container {
+    height: 60px;
+  }
+
   .maincontent-container {
-    overflow: auto;
-    height: 100vh;
+    // overflow-x: auto;
+    // overflow-y: scroll;
+    overflow: hidden;
+    height: calc(100vh - 60px);
     display: grid;
     grid-template-rows: auto auto;
     transition: width 250ms ease-in-out;

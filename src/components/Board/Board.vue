@@ -1,37 +1,35 @@
 <template>
   <div class="board">
-    <div v-for="task in getTasks" v-bind:key="task.id">
-      <TaskLink v-bind:task="task" />
-    </div>
+    <div><vertical-lane category="Selected for Development" /></div>
+    <div><vertical-lane category="In progress" /></div>
+    <div><vertical-lane category="Complete" /></div>
+    <div><vertical-lane category="Complete" /></div>
+    <div><vertical-lane category="Complete" /></div>
+    <div><vertical-lane category="Complete" /></div>
+    <div><vertical-lane category="Complete" /></div>
+    <div><vertical-lane category="Complete" /></div>
+    <div><vertical-lane category="Selected for Development" /></div>
+    <div><vertical-lane category="In progress" /></div>
+    <div><vertical-lane category="Complete" /></div>
   </div>
 </template>
-
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import TaskLink from '../Board/TaskLink';
-
+import VerticalLane from './VerticalLane.vue';
 export default {
   name: 'Board',
   components: {
-    TaskLink,
-  },
-  methods: {
-    ...mapActions(['fetchTasks']),
-  },
-  computed: mapGetters(['getTasks', 'getProfile']),
-  created() {
-    this.fetchTasks();
+    VerticalLane,
   },
 };
 </script>
 <style lang="scss" scoped>
 .board {
-  width: 300px;
-  margin-left: 50px;
-  margin-top: 50px;
-  height: 80vh;
-  max-height: 100vh;
-  overflow-y: auto;
-  // padding: 6px;
+  touch-action: none;
+  display: flex;
+  flex-direction: row;
+  //   width: calc(100vw - 100px);
+  overflow-x: auto;
+  overflow-y: scroll;
+  height: calc(100vh - 60px);
 }
 </style>
