@@ -28,9 +28,9 @@ export default {
 
 <style scoped lang="scss">
 .list-item {
-  height: 40px;
-  line-height: 40px;
-  border-bottom: 1px solid var(--color-body-invert-dim);
+  height: 36px;
+  line-height: 36px;
+  border-bottom: 1px solid var(--color-body-dim);
   display: grid;
   grid-template-columns: 3fr 1fr 1fr;
   overflow: hidden;

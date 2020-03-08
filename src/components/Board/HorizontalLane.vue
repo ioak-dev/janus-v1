@@ -57,7 +57,7 @@ export default {
   .category {
     height: 60px;
     line-height: 60px;
-    border-bottom: 1px solid var(--color-body-invert-dim);
+    border-bottom: 1px solid var(--color-body-dim);
   }
 }
 </style>
