@@ -18,7 +18,7 @@ const actions = {
   setSpace({ commit }: any, space: any) {
     commit('UPDATE_PROFILE', { ...state, space });
   },
-  addAuth({ commit }: any, { auth, cookies }: any) {
+  addAuth({ commit, dispatch }: any, { auth, cookies }: any) {
     cookies?.set(`janus_${state.space}`, {
       isAuth: true,
       token: auth.token,
@@ -26,6 +26,8 @@ const actions = {
       name: auth.name,
       email: auth.email,
     });
+    dispatch('fetchProjects');
+    dispatch('fetchTeams');
     commit('UPDATE_PROFILE', { ...state, auth: auth });
   },
   removeAuth({ commit }: any, cookies: any) {
