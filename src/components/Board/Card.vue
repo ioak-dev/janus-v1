@@ -38,11 +38,20 @@ export default {
       sendMessage('dragging', false);
     },
     dragOver(e) {
-      // console.log(window.screen.width * window.devicePixelRatio, e.screenX);
+      // console.log(
+      //   e.screenX,
+      //   window.screen.width,
+      //   window.innerWidth,
+      //   window.outerWidth,
+      //   window.screen.availWidth * window.devicePixelRatio
+      // );
       if (
         (this.getProfile.sidebar && e.screenX <= 250 + 20) ||
         (!this.getProfile.sidebar && e.screenX <= 20)
       ) {
+        sendMessage('dragging');
+      }
+      if (e.screenX > window.innerWidth * window.devicePixelRatio - 20) {
         sendMessage('dragging');
       }
     },

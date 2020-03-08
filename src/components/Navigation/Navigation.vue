@@ -67,5 +67,7 @@ export default {
       width: 100%;
     }
   }
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-body-dim);
 }
 </style>

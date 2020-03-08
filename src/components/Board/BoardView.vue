@@ -28,8 +28,7 @@ export default {
   display: flex;
   flex-direction: row;
   //   width: calc(100vw - 100px);
-  overflow-x: auto;
-  overflow-y: scroll;
+  overflow: auto;
   height: calc(100vh - 60px);
 }
 </style>
