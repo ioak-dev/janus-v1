@@ -1,6 +1,6 @@
 <template>
   <div class="create-space boxed">
-    <CreateSpaceForm v-if="!isSpaceCreated" v-on:created="created" />
+    <CreateSpaceForm v-if="!isSpaceCreated" @created="created" />
     <SpaceCreationSuccess v-else v-bind:name="spaceName" />
   </div>
 </template>

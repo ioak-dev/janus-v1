@@ -4,8 +4,8 @@
       <div class="expand-collapse">
         <i
           class="material-icons"
-          v-if="!isSidebarExpanded"
-          v-on:click="$emit('sidebarToggled')"
+          v-if="!getProfile.sidebar"
+          @click="$emit('sidebarToggled')"
         >
           menu
         </i>
@@ -15,7 +15,7 @@
       <div>
         <OakButton
           v-if="getProfile.auth.isAuth"
-          v-on:click="logout"
+          @click="logout"
           label="Logout"
           theme="primary"
           variant="animate none"
@@ -29,9 +29,6 @@ import OakButton from '@/oakui/OakButton.vue';
 import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'Topbar',
-  props: {
-    isSidebarExpanded: Boolean,
-  },
   components: {
     OakButton,
   },

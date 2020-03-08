@@ -1,23 +1,21 @@
 <template>
   <div class="sidebar">
-    <Header
-      v-bind:isSidebarExpanded="isSidebarExpanded"
-      v-on:sidebarToggled="$emit('sidebarToggled')"
-    />
+    <Header @sidebarToggled="$emit('sidebarToggled')" />
     <Navigation />
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import Navigation from '@/components/Navigation/Navigation.vue';
 import Header from './Header.vue';
 export default {
   name: 'Sidebar',
-  props: {
-    isSidebarExpanded: Boolean,
-  },
   components: {
     Navigation,
     Header,
+  },
+  computed: {
+    ...mapGetters(['getProfile']),
   },
 };
 </script>

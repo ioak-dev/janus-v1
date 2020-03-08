@@ -4,31 +4,31 @@
       id="name"
       label="Space Name"
       v-bind:data="space.name"
-      v-on:change="handleChange"
+      @change="handleChange"
     />
     <OakText
       id="adminEmail"
       label="Administrator Email"
       v-bind:data="space.adminEmail"
-      v-on:change="handleChange"
+      @change="handleChange"
     />
     <OakText
       id="adminPassword"
       label="Administrator Password"
       type="password"
       v-bind:data="space.adminPassword"
-      v-on:change="handleChange"
+      @change="handleChange"
     />
     <OakText
       id="repeatAdminPassword"
       label="Repeat Administrator Password"
       type="password"
       v-bind:data="space.repeatAdminPassword"
-      v-on:change="handleChange"
+      @change="handleChange"
     />
     <OakButton
       label="Create Space"
-      v-on:click="submitForm"
+      @click="submitForm"
       theme="primary"
       variant="animate in"
     />

@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="list-item"
-    draggable="true"
-    @dragover.prevent
-    @dragstart="dragStart"
-  >
+  <div class="list-item" draggable="true" @dragover.stop @dragstart="dragStart">
     <div>{{ task.title }}</div>
     <div>{{ task.title }}</div>
     <div>{{ task.title }}</div>
@@ -22,7 +17,10 @@ export default {
   },
   methods: {
     dragStart(e) {
-      e.dataTransfer.setData('title', this.task.title);
+      e.dataTransfer.setData('id', this.task.id);
+      setTimeout(() => {
+        e.target.style.display = 'none';
+      }, 0);
     },
   },
 };

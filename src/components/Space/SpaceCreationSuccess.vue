@@ -6,7 +6,7 @@
     <OakButton
       theme="primary"
       variant="animate out"
-      v-on:click="gotoTenantPage"
+      @click="gotoTenantPage"
       label="Visit my space"
     />
   </div>

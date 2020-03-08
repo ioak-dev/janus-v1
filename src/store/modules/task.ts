@@ -13,7 +13,7 @@ const getters = {
 const actions = {
   async fetchTasks({ commit }: { commit: any }) {
     const response = await axios.get(
-      'https://jsonplaceholder.typicode.com/posts'
+      'https://jsonplaceholder.typicode.com/posts?_limit=50'
     );
     commit('UPDATE_TASKS', response.data);
   },

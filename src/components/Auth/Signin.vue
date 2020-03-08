@@ -1,27 +1,27 @@
 <template>
   <div class="container">
-    <form method="GET" v-on:submit="signin" noValidate>
+    <form method="GET" @submit="signin" noValidate>
       <h1>Sign In</h1>
       <div class="form">
         <OakText
           label="E-mail"
           id="email"
           :v-bind:email="email"
-          v-on:change="handleChange"
+          @change="handleChange"
         />
         <OakText
           label="Password"
           type="password"
           id="password"
           :v-bind:data="password"
-          v-on:change="handleChange"
+          @change="handleChange"
         />
       </div>
       <br />
       <OakButton
         variant="animate out"
         theme="primary"
-        v-on:click="signin"
+        @click="signin"
         label="Sign In"
       />
       <br />
@@ -31,7 +31,7 @@
         theme="default"
         variant="animate in"
         small
-        v-on:click="$emit('toggle')"
+        @click="$emit('toggle')"
         label="Sign Up"
       />
     </form>
@@ -40,7 +40,7 @@
             theme="default"
             variant="animate in"
             small
-            v-on:click="sentEmailWithCode"
+            @click="sentEmailWithCode"
             label="Forgot password ?"
         /> -->
   </div>

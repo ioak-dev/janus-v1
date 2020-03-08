@@ -2,6 +2,7 @@ const state = {
   theme: '',
   space: '',
   auth: {},
+  sidebar: false,
 };
 
 const getters = {
@@ -31,6 +32,9 @@ const actions = {
     cookies.remove(`janus_${state.space}`);
     commit('UPDATE_PROFILE', { ...state, auth: {} });
   },
+  toggleSidebar({ commit }: any) {
+    commit('UPDATE_PROFILE', { ...state, sidebar: !state.sidebar });
+  },
 };
 
 const mutations = {
@@ -38,6 +42,7 @@ const mutations = {
     state.theme = profile.theme;
     state.space = profile.space;
     state.auth = profile.auth;
+    state.sidebar = profile.sidebar;
   },
 };
 

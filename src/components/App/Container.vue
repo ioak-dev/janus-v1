@@ -2,29 +2,20 @@
   <div class="app-container">
     <div
       class="sidebar-container"
-      v-bind:class="isSidebarExpanded ? 'show' : 'hide'"
+      v-bind:class="getProfile.sidebar ? 'show' : 'hide'"
     >
-      <div
-        class="sidebar-content"
-        v-bind:class="isSidebarExpanded ? 'show' : 'hide'"
-      >
-        <Sidebar
-          v-bind:isSidebarExpanded="isSidebarExpanded"
-          v-on:sidebarToggled="toggleSidebar"
-        />
+      <div class="sidebar-content">
+        <Sidebar @sidebarToggled="toggleSidebar" />
       </div>
     </div>
     <div class="topbar-container">
-      <Topbar
-        v-bind:isSidebarExpanded="isSidebarExpanded"
-        v-on:sidebarToggled="toggleSidebar"
-      />
+      <Topbar @sidebarToggled="toggleSidebar" />
     </div>
     <div
       class="maincontent-container"
-      v-bind:class="isSidebarExpanded ? 'sidebar-shown' : 'sidebar-hidden'"
+      v-bind:class="getProfile.sidebar ? 'sidebar-shown' : 'sidebar-hidden'"
     >
-      <AppRouterView v-bind:isSidebarExpanded="isSidebarExpanded" />
+      <AppRouterView />
     </div>
   </div>
 </template>
@@ -32,6 +23,7 @@
 import Sidebar from '@/components/Navigation/Sidebar.vue';
 import Topbar from '@/components/Navigation/Topbar.vue';
 import AppRouterView from '@/components/App/AppRouterView.vue';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'Content',
   components: {
@@ -39,15 +31,11 @@ export default {
     Topbar,
     AppRouterView,
   },
-  data: function() {
-    return {
-      isSidebarExpanded: false,
-    };
+  computed: {
+    ...mapGetters(['getProfile']),
   },
   methods: {
-    toggleSidebar() {
-      this.isSidebarExpanded = !this.isSidebarExpanded;
-    },
+    ...mapActions(['toggleSidebar']),
   },
 };
 </script>

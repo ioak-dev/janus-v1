@@ -2,8 +2,9 @@
   <div
     class="card app-content"
     draggable="true"
-    @dragover.prevent
+    @dragover.prevent="dragOver"
     @dragstart="dragStart"
+    @dragend="dragEnd"
   >
     <div class="title">{{ task.title }}</div>
     <!-- <div class="description">{{ task.body }}</div> -->
@@ -11,6 +12,9 @@
 </template>
 
 <script>
+import { sendMessage } from '@/events/MessageService';
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Card',
   props: {
@@ -19,9 +23,28 @@ export default {
       required: true,
     },
   },
+  computed: {
+    ...mapGetters(['getProfile']),
+  },
   methods: {
     dragStart(e) {
-      e.dataTransfer.setData('title', this.task.title);
+      // sendMessage('dragging');
+      e.dataTransfer.setData('id', this.task.id);
+      setTimeout(() => {
+        e.target.style.display = 'none';
+      }, 0);
+    },
+    dragEnd() {
+      sendMessage('dragging', false);
+    },
+    dragOver(e) {
+      // console.log(window.screen.width * window.devicePixelRatio, e.screenX);
+      if (
+        (this.getProfile.sidebar && e.screenX <= 250 + 20) ||
+        (!this.getProfile.sidebar && e.screenX <= 20)
+      ) {
+        sendMessage('dragging');
+      }
     },
   },
 };

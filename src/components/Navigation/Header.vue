@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <i class="material-icons" v-on:click="$emit('sidebarToggled')">
+    <i class="material-icons" @click="$emit('sidebarToggled')">
       menu_open
     </i>
     <img class="logo" v-bind:src="janusLogo" alt="Janus logo" />
@@ -9,9 +9,6 @@
 <script>
 export default {
   name: 'Header',
-  props: {
-    isSidebarExpanded: Boolean,
-  },
   data: function() {
     return {
       janusLogo: require('@/assets/janus_logo.svg'),

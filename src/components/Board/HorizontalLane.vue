@@ -1,8 +1,13 @@
 <template>
-  <div class="lane-horizontal" @drop="drop">
+  <div class="lane-horizontal" @dragover.prevent @drop.prevent="drop">
     <div class="category typography-5 space-bottom-2">{{ category }}</div>
     <div class="container">
-      <div v-for="task in getTasks" v-bind:key="task.id" draggable="true">
+      <div
+        v-for="task in getTasks"
+        v-bind:key="task.id"
+        draggable="true"
+        v-bind:id="task.id"
+      >
         <ListItem v-bind:task="task" />
       </div>
     </div>
@@ -24,7 +29,10 @@ export default {
   methods: {
     ...mapActions(['fetchTasks']),
     drop(e) {
-      console.log(e.dataTransfer.getData('title'));
+      const id = e.dataTransfer.getData('id');
+      const listItem = document.getElementById(id);
+      listItem.style.display = 'block';
+      // e.target.appendChild(listItem);
     },
   },
   computed: mapGetters(['getTasks', 'getProfile']),

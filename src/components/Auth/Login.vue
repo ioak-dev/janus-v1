@@ -1,7 +1,7 @@
 <template>
   <div class="login">
-    <Signup v-if="!isSignin" v-on:toggle="toggle" />
-    <Signin v-else v-on:toggle="toggle" />
+    <Signup v-if="!isSignin" @toggle="toggle" />
+    <Signin v-else @toggle="toggle" />
   </div>
 </template>
 <script>

@@ -1,13 +1,14 @@
 <template>
-  <div v-bind:class="isSidebarExpanded ? 'small' : 'large'">
+  <div v-bind:class="getProfile.sidebar ? 'small' : 'large'">
     <router-view />
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'AppRouterView',
-  props: {
-    isSidebarExpanded: Boolean,
+  computed: {
+    ...mapGetters(['getProfile']),
   },
 };
 </script>

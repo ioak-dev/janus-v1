@@ -1,40 +1,40 @@
 <template>
   <div class="container">
-    <form method="GET" v-on:submit="signup" noValidate>
+    <form method="GET" @submit="signup" noValidate>
       <h1>Sign Up</h1>
       <div class="form">
         <OakText
           label="Name"
           id="name"
           v-bind:data="name"
-          v-on:change="handleChange"
+          @change="handleChange"
         />
         <OakText
           label="E-mail"
           id="email"
           v-bind:data="email"
-          v-on:change="handleChange"
+          @change="handleChange"
         />
         <OakText
           label="Password"
           type="password"
           id="password"
           v-bind:data="password"
-          v-on:change="handleChange"
+          @change="handleChange"
         />
         <OakText
           label="Repeat Password"
           type="password"
           id="repeatpassword"
           v-bind:data="repeatPassword"
-          v-on:change="handleChange"
+          @change="handleChange"
         />
       </div>
       <br />
       <OakButton
         theme="primary"
         variant="block"
-        v-on:click="signup"
+        @click="signup"
         label="Create Account"
       />
       <br />
@@ -43,7 +43,7 @@
       <OakButton
         theme="secondary"
         variant="block"
-        v-on:click="$emit('toggle')"
+        @click="$emit('toggle')"
         label="Sign In"
       />
     </form>
