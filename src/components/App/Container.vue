@@ -24,18 +24,20 @@
       class="maincontent-container"
       v-bind:class="isSidebarExpanded ? 'sidebar-shown' : 'sidebar-hidden'"
     >
-      <router-view />
+      <AppRouterView v-bind:isSidebarExpanded="isSidebarExpanded" />
     </div>
   </div>
 </template>
 <script>
 import Sidebar from '@/components/Navigation/Sidebar.vue';
 import Topbar from '@/components/Navigation/Topbar.vue';
+import AppRouterView from '@/components/App/AppRouterView.vue';
 export default {
   name: 'Content',
   components: {
     Sidebar,
     Topbar,
+    AppRouterView,
   },
   data: function() {
     return {
