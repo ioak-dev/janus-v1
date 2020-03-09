@@ -35,8 +35,8 @@ export default {
     flex-direction: row;
     //   width: calc(100vw - 100px);
     overflow-x: auto;
-    overflow-y: scroll;
-    height: calc(100vh - 60px);
+    // overflow-y: scroll;
+    height: calc(100vh - 60px - 36px);
   }
 }
 </style>

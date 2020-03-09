@@ -115,8 +115,10 @@ export default {
     position: absolute;
     padding: 8px 0px;
     background-color: var(--color-body);
-    box-shadow: 0 0 0 1px rgba(111, 119, 130, 0.15),
-      0 5px 20px 0 rgba(234, 228, 217, 0.08);
+    // box-shadow: 0 0 0 1px rgba(111, 119, 130, 0.15),
+    //   0 5px 20px 0 rgba(234, 228, 217, 0.08);
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
     border-radius: 4px;
     // max-width: 200px;
     max-height: 200px;

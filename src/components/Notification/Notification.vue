@@ -13,10 +13,7 @@ export default {
   data: function() {
     return {
       spinner: false,
-      notification: {
-        type: '',
-        message: '',
-      },
+      notification: undefined,
     };
   },
   computed: {
@@ -28,7 +25,7 @@ export default {
     this.eventBus = receiveMessage().subscribe(message => {
       if (message.name === 'notification') {
         if (!message.signal) {
-          this.notification = null;
+          this.notification = undefined;
         } else {
           this.notification = message.data;
           this.spinner = false;

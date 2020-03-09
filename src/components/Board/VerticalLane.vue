@@ -60,7 +60,7 @@ export default {
   margin-top: 50px;
   // padding: 6px;
   .container {
-    height: 80vh;
+    height: 75vh;
     overflow-y: auto;
     &.dragging {
       overflow-y: hidden;
