@@ -24,7 +24,7 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'ProjectNav',
   computed: {
-    ...mapGetters(['getProfile', 'getProjects', 'getProject']),
+    ...mapGetters(['getProfile', 'getProjects']),
   },
 };
 </script>

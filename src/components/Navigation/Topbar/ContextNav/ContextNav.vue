@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="context-nav">
     <ProjectContextNav v-if="contextName === 'Project' && getProject" />
   </div>
 </template>

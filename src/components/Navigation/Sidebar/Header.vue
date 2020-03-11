@@ -1,6 +1,10 @@
 <template>
   <div class="header">
-    <i class="material-icons" @click="$emit('sidebarToggled')">
+    <i
+      class="material-icons"
+      data-test="toggle-sidebar"
+      @click="$emit('sidebarToggled')"
+    >
       menu_open
     </i>
     <img class="logo" v-bind:src="janusLogo" alt="Janus logo" />

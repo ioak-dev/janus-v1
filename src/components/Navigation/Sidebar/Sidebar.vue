@@ -2,11 +2,10 @@
   <div class="sidebar">
     <Header @sidebarToggled="$emit('sidebarToggled')" />
     <CommonNav />
-    <project-nav />
+    <ProjectNav />
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
 import CommonNav from './CommonNav.vue';
 import ProjectNav from './ProjectNav.vue';
 import Header from './Header.vue';
@@ -16,9 +15,6 @@ export default {
     CommonNav,
     Header,
     ProjectNav,
-  },
-  computed: {
-    ...mapGetters(['getProfile']),
   },
 };
 </script>
