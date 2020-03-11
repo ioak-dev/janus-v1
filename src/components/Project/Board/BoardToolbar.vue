@@ -5,26 +5,23 @@
       data="option 1"
       id="1"
       label="sfdsf dsfa"
-    >
-      <i class="material-icons" slot="left-icon">sort</i>
-    </OakPopoverMenu>
+      iconLeft="sort"
+    />
     <OakPopoverMenu
       v-bind:elements="elements"
       data="option 1"
       id="2"
       label="sfd ejf dif i"
-    >
-      <i class="material-icons" slot="right-icon">assignment_ind</i>
-    </OakPopoverMenu>
+      iconRight="assignment_ind"
+    />
     <OakPopoverMenu
       v-bind:elements="elements"
       data="option 1"
       id="3"
       label="sfd ejf dif i"
+      iconRight="assignment_ind"
       right
-    >
-      <i class="material-icons" slot="right-icon">assignment_ind</i>
-    </OakPopoverMenu>
+    />
   </div>
 </template>
 <script>
@@ -33,7 +30,16 @@ export default {
   name: 'BoardToolbar',
   data: function() {
     return {
-      elements: ['option 1', 'option 2 ihikjioj '],
+      elements: [
+        {
+          label: 'option one',
+          action: () => console.log('option one selected'),
+        },
+        {
+          label: 'option two hih jkl j ilk iji ',
+          action: () => console.log('option two selected'),
+        },
+      ],
     };
   },
   components: {
@@ -47,11 +53,11 @@ export default {
   line-height: 36px;
   background-color: var(--color-body);
   border-bottom: 1px solid var(--color-body-dim);
-  border-top: 1px solid var(--color-body-dim);
   display: flex;
   justify-content: flex-end;
   align-items: center;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  padding-right: 10px;
 }
 </style>

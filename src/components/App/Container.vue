@@ -20,8 +20,8 @@
   </div>
 </template>
 <script>
-import Sidebar from '@/components/Navigation/Sidebar.vue';
-import Topbar from '@/components/Navigation/Topbar.vue';
+import Sidebar from '@/components/Navigation/Sidebar/Sidebar.vue';
+import Topbar from '@/components/Navigation/Topbar/Topbar.vue';
 import AppRouterView from '@/components/App/AppRouterView.vue';
 import { mapGetters, mapActions } from 'vuex';
 export default {
@@ -56,6 +56,7 @@ export default {
 
   .topbar-container {
     height: 60px;
+    border-bottom: 1px solid var(--color-body-dim);
   }
 
   .maincontent-container {

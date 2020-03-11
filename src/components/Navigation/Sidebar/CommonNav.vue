@@ -3,18 +3,6 @@
     <router-link class="test" v-bind:to="`/${getProfile.space}/home`">
       Home
     </router-link>
-    <router-link
-      v-if="getProfile.auth.isAuth"
-      v-bind:to="`/${getProfile.space}/board`"
-    >
-      Board
-    </router-link>
-    <router-link
-      v-if="getProfile.auth.isAuth"
-      v-bind:to="`/${getProfile.space}/list`"
-    >
-      List View
-    </router-link>
     <router-link to="/createspace">
       Create Space
     </router-link>
@@ -58,16 +46,15 @@ export default {
     height: 28px;
     line-height: 28px;
     font-size: 14px;
+    display: inline-block;
+    width: 100%;
     &:hover {
       background-color: var(--color-body-dim);
-      width: 100%;
     }
     &.router-link-active {
       background-color: var(--color-primary);
-      width: 100%;
     }
   }
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--color-body-dim);
 }
 </style>

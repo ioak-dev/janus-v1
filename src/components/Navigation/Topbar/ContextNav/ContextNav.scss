@@ -1,0 +1,22 @@
+.nav-menu {
+  height: 30px;
+  line-height: 30px;
+  display: flex;
+  flex-direction: row;
+  a {
+    text-decoration: none;
+    color: white;
+  }
+  .nav-item {
+    cursor: pointer;
+    margin-right: 20px;
+    font-size: 0.9em;
+    &:hover {
+      border-bottom: 2px solid var(--color-body-invert-dim);
+    }
+    &.router-link-active {
+      color: var(--color-primary);
+      border-bottom: 2px solid var(--color-primary);
+    }
+  }
+}

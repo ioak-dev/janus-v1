@@ -26,9 +26,9 @@ const actions = {
       name: auth.name,
       email: auth.email,
     });
+    commit('UPDATE_PROFILE', { ...state, auth: auth });
     dispatch('fetchProjects');
     dispatch('fetchTeams');
-    commit('UPDATE_PROFILE', { ...state, auth: auth });
   },
   removeAuth({ commit }: any, cookies: any) {
     cookies.remove(`janus_${state.space}`);

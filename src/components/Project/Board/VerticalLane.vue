@@ -16,7 +16,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import Card from '../Board/Card';
+import Card from './Card';
 import { receiveMessage } from '@/events/MessageService';
 
 export default {

@@ -21,3 +21,11 @@ export function readSpace({ to, from, next }: any) {
   store.dispatch('setSpace', to.params.space);
   next();
 }
+
+export function readProject({ to, from, next }: any) {
+  if (!to.params.projectId) {
+    console.log('project not selected error page');
+  }
+  store.dispatch('setProject', to.params.projectId);
+  next();
+}

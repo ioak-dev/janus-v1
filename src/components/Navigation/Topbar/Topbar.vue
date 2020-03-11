@@ -1,36 +1,32 @@
 <template>
   <div class="topbar">
     <div class="left">
-      <div class="expand-collapse">
-        <i
-          class="material-icons"
-          v-if="!getProfile.sidebar"
-          @click="$emit('sidebarToggled')"
-        >
-          menu
-        </i>
+      <menu-icon @click="$emit('sidebarToggled')" />
+      <div class="left-nav-container">
+        <div class="title-row-container"><title-row /></div>
+        <context-nav />
       </div>
     </div>
     <div class="right">
       <div>
-        <OakButton
-          v-if="getProfile.auth.isAuth"
-          @click="logout"
-          label="Logout"
-          theme="primary"
-          variant="animate none"
-        />
+        <UserAccount />
       </div>
     </div>
   </div>
 </template>
 <script>
-import OakButton from '@/oakui/OakButton.vue';
+import UserAccount from './RightNav/UserAccount.vue';
+import TitleRow from './TitleRow.vue';
+import ContextNav from './ContextNav/ContextNav.vue';
+import MenuIcon from './MenuIcon.vue';
 import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'Topbar',
   components: {
-    OakButton,
+    UserAccount,
+    TitleRow,
+    MenuIcon,
+    ContextNav,
   },
   computed: {
     ...mapGetters(['getProfile']),
@@ -52,13 +48,11 @@ export default {
   align-items: center;
   justify-content: space-between;
   .left {
-    .expand-collapse {
-      margin-left: 10px;
-      .material-icons {
-        cursor: pointer;
-        line-height: 50px;
-        font-size: 2em;
-      }
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .left-nav-container {
+      margin-left: 20px;
     }
   }
   .right {
@@ -68,6 +62,7 @@ export default {
     align-items: center;
     justify-content: flex-end;
     justify-items: flex-end;
+    margin-right: 10px;
   }
 }
 </style>

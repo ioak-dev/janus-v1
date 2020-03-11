@@ -1,18 +1,21 @@
 <template>
   <div class="sidebar">
     <Header @sidebarToggled="$emit('sidebarToggled')" />
-    <Navigation />
+    <CommonNav />
+    <project-nav />
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import Navigation from '@/components/Navigation/Navigation.vue';
+import CommonNav from './CommonNav.vue';
+import ProjectNav from './ProjectNav.vue';
 import Header from './Header.vue';
 export default {
   name: 'Sidebar',
   components: {
-    Navigation,
+    CommonNav,
     Header,
+    ProjectNav,
   },
   computed: {
     ...mapGetters(['getProfile']),

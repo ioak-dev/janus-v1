@@ -16,7 +16,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import ListItem from '../Board/ListItem.vue';
+import ListItem from './ListItem.vue';
 
 export default {
   name: 'HorizontalLane',
