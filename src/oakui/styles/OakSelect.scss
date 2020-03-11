@@ -60,7 +60,7 @@
         cursor: pointer;
         background-color: var(--color-body-dim);
         color: var(--color-body-invert);
-        padding: 10px 16px;
+        padding: 4px 5px; //10px 16px;
         width: 100%;
         box-sizing:border-box;
         overflow-x: hidden;
@@ -120,7 +120,7 @@
             margin-top: 4px;
     
             .option {
-                padding: 10px 16px;
+                padding: 4px 5px; //10px 16px;
                 cursor: pointer;
     
                 overflow-x: hidden;

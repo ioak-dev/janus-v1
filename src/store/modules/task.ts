@@ -13,14 +13,40 @@ const getters = {
 const actions = {
   async fetchTasks({ commit }: { commit: any }) {
     const response = await axios.get(
-      'https://jsonplaceholder.typicode.com/posts'
+      'https://jsonplaceholder.typicode.com/posts?_limit=50'
     );
-    commit('setTasks', response.data);
+    commit('UPDATE_TASKS', response.data);
+    // const data = [];
+    // data.push({
+    //   id: '1',
+    //   projectId: '1',
+    //   stageId: '1',
+    //   type: 'Kanban',
+    //   name: 'Test task 1 lorem ipsum',
+    //   title: 'Test task 1 lorem ipsum',
+    //   description: 'Test task 1 lorem ipsum with a long description',
+    //   priority: 'Low',
+    //   assignedTo: '1',
+    //   parentTaskId: '',
+    // });
+    // data.push({
+    //   id: '2',
+    //   projectId: '1',
+    //   stageId: '1',
+    //   type: 'Kanban',
+    //   name: 'Test task 1 lorem ipsum',
+    //   title: 'Test task 1 lorem ipsum',
+    //   description: 'Test task 1 lorem ipsum with a long description',
+    //   priority: 'Low',
+    //   assignedTo: '1',
+    //   parentTaskId: '',
+    // });
+    // commit('UPDATE_TASKS', data);
   },
 };
 
 const mutations = {
-  setTasks: (state: any, tasks: any) => {
+  UPDATE_TASKS: (state: any, tasks: any) => {
     state.tasks = tasks;
   },
 };
