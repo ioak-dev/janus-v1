@@ -12,7 +12,6 @@ describe('Avatar.vue', () => {
         initials: 'Ar',
       },
     });
-
     expect(wrapper.contains('.avatar')).toBeTruthy();
     expect(wrapper.find('.avatar').text()).toEqual('Ar');
   });
