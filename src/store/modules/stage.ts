@@ -11,19 +11,19 @@ const getters = {
 };
 
 const actions = {
-  async fetchStages({ commit }: { commit: any }) {
-    const data: any = [];
-    data.push({
-      id: 1,
-      projectId: 1,
-      name: 'Selected for development',
-    });
-    data.push({
-      id: 1,
-      projectId: 1,
-      name: 'In progress',
-    });
-    commit('UPDATE_STAGES', data);
+  async fetchStages({ commit, dispatch, rootState }: any) {
+    const response = await axios.get(
+      'http://localhost:8000/stage/' +
+        rootState.profile.space +
+        '/' +
+        rootState.project.project._id,
+      {
+        headers: {
+          Authorization: `${rootState.profile.auth.token}`,
+        },
+      }
+    );
+    commit('UPDATE_STAGES', response.data.data);
   },
 };
 

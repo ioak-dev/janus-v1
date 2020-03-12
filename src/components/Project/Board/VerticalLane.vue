@@ -1,9 +1,9 @@
 <template>
   <div class="lane-vertical" @dragover.prevent @drop.prevent="drop">
-    <div class="category typography-5 space-bottom-2">{{ category }}</div>
+    <div class="category typography-5 space-bottom-2">{{ stage.name }}</div>
     <div class="container" v-bind:class="isDragging ? 'dragging' : ''">
       <div
-        v-for="task in getTasks"
+        v-for="task in tasks"
         v-bind:key="task.id"
         v-bind:id="task.id"
         draggable="true"
@@ -13,7 +13,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Card from './Card';
@@ -25,7 +24,7 @@ export default {
     Card,
   },
   props: {
-    category: String,
+    stage: Object,
   },
   data: function() {
     return {
@@ -33,7 +32,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['fetchTasks']),
     drop(e) {
       const id = e.dataTransfer.getData('id');
       console.log(id);
@@ -42,9 +40,14 @@ export default {
       // e.target.appendChild(listItem);
     },
   },
-  computed: mapGetters(['getTasks', 'getProfile']),
+  computed: {
+    ...mapGetters(['getTasksByStage']),
+    tasks: function() {
+      const taskList = this.getTasksByStage(this.stage._id);
+      return taskList;
+    },
+  },
   created() {
-    this.fetchTasks();
     const eventBus = receiveMessage().subscribe(message => {
       if (message.name === 'dragging') {
         this.isDragging = message.signal;

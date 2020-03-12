@@ -1,8 +1,8 @@
 <template>
   <div class="list-item" draggable="true" @dragover.stop @dragstart="dragStart">
-    <div>{{ task.title }}</div>
-    <div>{{ task.title }}</div>
-    <div>{{ task.title }}</div>
+    <div class="task-title">{{ task.title }}</div>
+    <div>{{ task.assignedTo }}</div>
+    <div>{{ task.priority }}</div>
   </div>
 </template>
 
@@ -10,10 +10,7 @@
 export default {
   name: 'ListItem',
   props: {
-    task: {
-      type: Object,
-      required: true,
-    },
+    task: Object,
   },
   methods: {
     dragStart(e) {

@@ -1,9 +1,9 @@
 <template>
   <div class="lane-horizontal" @dragover.prevent @drop.prevent="drop">
-    <div class="category typography-5 space-bottom-2">{{ category }}</div>
+    <div class="category typography-5 space-bottom-2">{{ stage.name }}</div>
     <div class="container">
       <div
-        v-for="task in getTasks"
+        v-for="task in tasks"
         v-bind:key="task.id"
         draggable="true"
         v-bind:id="task.id"
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import ListItem from './ListItem.vue';
 
 export default {
@@ -24,10 +24,9 @@ export default {
     ListItem,
   },
   props: {
-    category: String,
+    stage: Object,
   },
   methods: {
-    ...mapActions(['fetchTasks']),
     drop(e) {
       const id = e.dataTransfer.getData('id');
       const listItem = document.getElementById(id);
@@ -35,9 +34,12 @@ export default {
       // e.target.appendChild(listItem);
     },
   },
-  computed: mapGetters(['getTasks', 'getProfile']),
-  created() {
-    this.fetchTasks();
+  computed: {
+    ...mapGetters(['getTasksByStage']),
+    tasks: function() {
+      const taskList = this.getTasksByStage(this.stage._id);
+      return taskList;
+    },
   },
 };
 </script>
