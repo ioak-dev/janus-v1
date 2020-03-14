@@ -45,6 +45,16 @@ body {
 body {
   width: 100%;
   margin: auto;
+  .form-element-label {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    display: block;
+    // bottom: 8px;
+    left: 10px;
+    position: relative;
+    font-size: var(--metric-typography-6);
+    color: var(--color-body-invert-dim);
+    text-transform: capitalize;
+  }
   .app-content {
     background-color: var(--color-body);
     color: var(--color-body-invert);

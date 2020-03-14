@@ -1,7 +1,22 @@
 <template>
   <div class="lane-horizontal" @dragover.prevent @drop.prevent="drop">
-    <div class="category typography-5 space-bottom-2">{{ stage.name }}</div>
-    <div class="container">
+    <div
+      class="stage typography-5"
+      v-bind:class="isExpanded ? 'show' : 'hide'"
+      @click="toggle"
+    >
+      <i
+        class="material-icons"
+        v-bind:class="isExpanded ? 'showless' : 'showmore'"
+        >expand_more</i
+      >
+      {{ stage.name }}
+    </div>
+    <div
+      class="container"
+      v-bind:class="isExpanded ? 'show' : 'hide'"
+      ref="container"
+    >
       <div
         v-for="task in tasks"
         v-bind:key="task.id"
@@ -26,12 +41,41 @@ export default {
   props: {
     stage: Object,
   },
+  data: function() {
+    return {
+      isExpanded: true,
+    };
+  },
+  mounted() {
+    this.updateScrollHeight();
+  },
   methods: {
     drop(e) {
       const id = e.dataTransfer.getData('id');
       const listItem = document.getElementById(id);
       listItem.style.display = 'block';
       // e.target.appendChild(listItem);
+    },
+    toggle: function() {
+      this.isExpanded = !this.isExpanded;
+    },
+    updateScrollHeight: function() {
+      setTimeout(() => {
+        if (this.isExpanded) {
+          this.$refs.container.style.maxHeight =
+            this.$refs.container.scrollHeight + 'px';
+        } else {
+          this.$refs.container.style.maxHeight = 0 + 'px';
+        }
+      }, 0);
+    },
+  },
+  watch: {
+    tasks: function() {
+      this.updateScrollHeight();
+    },
+    isExpanded: function() {
+      this.updateScrollHeight();
     },
   },
   computed: {
@@ -45,21 +89,29 @@ export default {
 </script>
 <style lang="scss" scoped>
 .lane-horizontal {
-  // width: 300px;
-  // width: 100%;
-  // margin-left: 50px;
-  // margin-top: 50px;
-
-  // padding: 6px;
+  user-select: none;
   .container {
-    margin-left: 20px;
-    // height: 80vh;
-    overflow-y: auto;
+    // margin-left: 20px;
+    overflow-y: hidden;
+    transition: max-height 250ms ease-in-out;
   }
-  .category {
+  .stage {
     height: 60px;
     line-height: 60px;
-    border-bottom: 1px solid var(--color-body-dim);
+    &.show {
+      border-bottom: 1px solid var(--color-body-dim);
+    }
+    color: var(--color-body-invert-dim);
+    font-size: 0.9em;
+    .material-icons {
+      line-height: 60px;
+      vertical-align: middle;
+      cursor: pointer;
+      transition: transform 250ms ease-in-out;
+      &.showless {
+        transform: scaleY(-1);
+      }
+    }
   }
 }
 </style>

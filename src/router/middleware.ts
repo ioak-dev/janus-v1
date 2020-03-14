@@ -26,6 +26,6 @@ export function readProject({ to, from, next }: any) {
   if (!to.params.projectId) {
     console.log('project not selected error page');
   }
-  store.dispatch('setProject', to.params.projectId);
+  store.dispatch('chooseProject', to.params.projectId);
   next();
 }

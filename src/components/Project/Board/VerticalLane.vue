@@ -1,27 +1,51 @@
 <template>
-  <div class="lane-vertical" @dragover.prevent @drop.prevent="drop">
-    <div class="category typography-5 space-bottom-2">{{ stage.name }}</div>
-    <div class="container" v-bind:class="isDragging ? 'dragging' : ''">
-      <div
-        v-for="task in tasks"
-        v-bind:key="task.id"
-        v-bind:id="task.id"
-        draggable="true"
-      >
-        <Card v-bind:task="task" />
+  <div>
+    <div class="lane-vertical" @dragover.prevent @drop.prevent="drop">
+      <div class="stage typography-5 space-bottom-2">
+        <div class="stage-name">{{ stage.name }}</div>
+        <div class="stage-actions">
+          <div @click="toggleTask">
+            <i class="material-icons">add</i>
+          </div>
+        </div>
+      </div>
+      <div class="container" v-bind:class="isDragging ? 'dragging' : ''">
+        <div
+          v-for="task in tasks"
+          v-bind:key="task.id"
+          v-bind:id="task.id"
+          draggable="true"
+        >
+          <Card v-bind:task="task" />
+        </div>
       </div>
     </div>
+    <UpdateTask
+      @close="toggleTask"
+      v-bind:visible="newTask"
+      v-bind:task="taskStub"
+      v-bind:alwaysEditFields="[
+        'project',
+        'stage',
+        'type',
+        'title',
+        'description',
+        'priority',
+      ]"
+    />
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Card from './Card';
 import { receiveMessage } from '@/events/MessageService';
+import UpdateTask from '@/components/Create/UpdateTask.vue';
 
 export default {
   name: 'VerticalLane',
   components: {
     Card,
+    UpdateTask,
   },
   props: {
     stage: Object,
@@ -29,19 +53,34 @@ export default {
   data: function() {
     return {
       isDragging: false,
+      newTask: false,
+      taskStub: {
+        stageId: this.stage._id,
+        type: 'Story',
+        title: '',
+        description: '',
+        priority: '',
+        assignedTo: null,
+        parentTaskId: null,
+        projectId: '',
+      },
     };
   },
   methods: {
     drop(e) {
-      const id = e.dataTransfer.getData('id');
-      console.log(id);
+      // const id = e.dataTransfer.getData('id');
+      // console.log(id);
       // const listItem = document.getElementById(id);
       // listItem.style.display = 'block';
       // e.target.appendChild(listItem);
     },
+    toggleTask: function() {
+      this.newTask = !this.newTask;
+      this.taskStub = { ...this.taskStub, projectId: this.getProject._id };
+    },
   },
   computed: {
-    ...mapGetters(['getTasksByStage']),
+    ...mapGetters(['getTasksByStage', 'getProject']),
     tasks: function() {
       const taskList = this.getTasksByStage(this.stage._id);
       return taskList;
@@ -67,6 +106,26 @@ export default {
     overflow-y: auto;
     &.dragging {
       overflow-y: hidden;
+    }
+  }
+
+  .stage {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 32px;
+    line-height: 32px;
+    .stage-actions {
+      display: none;
+      cursor: pointer;
+      .material-icons {
+        line-height: 32px;
+      }
+    }
+    &:hover {
+      .stage-actions {
+        display: block;
+      }
     }
   }
 }

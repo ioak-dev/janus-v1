@@ -1,8 +1,8 @@
 <template>
   <div class="board">
-    <div class="board-toolbar"><board-toolbar /></div>
+    <div class="toolbar-container desktop-only"><Toolbar /></div>
     <div class="board-content">
-      <div v-for="stage in getStages" v-bind:key="stage._id">
+      <div v-for="stage in getStagesByProjectId()" v-bind:key="stage._id">
         <vertical-lane v-bind:stage="stage" />
       </div>
       <!-- <div><vertical-lane category="In progress" /></div>
@@ -21,15 +21,15 @@
 <script>
 import { mapGetters } from 'vuex';
 import VerticalLane from './VerticalLane.vue';
-import BoardToolbar from './BoardToolbar.vue';
+import Toolbar from './Toolbar.vue';
 export default {
   name: 'BoardView',
   components: {
     VerticalLane,
-    BoardToolbar,
+    Toolbar,
   },
   computed: {
-    ...mapGetters(['getStages']),
+    ...mapGetters(['getStagesByProjectId']),
   },
 };
 </script>

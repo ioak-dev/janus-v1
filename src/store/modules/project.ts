@@ -40,15 +40,28 @@ const actions = {
       }
     );
     commit('UPDATE_PROJECTS', response.data.data);
-    dispatch('setProject', state.projectId);
+    dispatch('chooseProject', state.projectId);
   },
-  setProject({ commit, dispatch }: any, projectId: string) {
+  chooseProject({ commit, dispatch }: any, projectId: string) {
     const project = findProject(projectId);
     commit('UPDATE_PROJECT', { projectId, project });
     if (project != null) {
       dispatch('fetchStages');
       dispatch('fetchTasks');
     }
+  },
+  async saveProject({ commit, dispatch, rootState }: any, payload: any) {
+    const response = await axios.put(
+      'http://localhost:8000/project/' + rootState.profile.space + '/',
+      payload,
+      {
+        headers: {
+          Authorization: `${rootState.profile.auth.token}`,
+        },
+      }
+    );
+    dispatch('fetchProjects');
+    // commit('UPDATE_PROJECTS', response.data.data);
   },
 };
 

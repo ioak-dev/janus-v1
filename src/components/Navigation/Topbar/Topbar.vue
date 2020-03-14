@@ -2,31 +2,38 @@
   <div class="topbar">
     <div class="left">
       <menu-icon @click="$emit('sidebarToggled')" />
+      <Logo class="logo-container desktop-only" v-if="!getProfile.sidebar" />
       <div class="left-nav-container">
         <div class="title-row-container"><title-row /></div>
         <context-nav />
       </div>
     </div>
     <div class="right">
-      <div>
-        <UserAccount />
-      </div>
+      <RightNav />
     </div>
   </div>
 </template>
 <script>
-import UserAccount from './RightNav/UserAccount.vue';
+import RightNav from './RightNav/RightNav.vue';
 import TitleRow from './TitleRow.vue';
 import ContextNav from './ContextNav/ContextNav.vue';
 import MenuIcon from './MenuIcon.vue';
 import { mapGetters, mapActions } from 'vuex';
+import Logo from '@/components/Logo/Logo.vue';
+
 export default {
   name: 'Topbar',
+  data: function() {
+    return {
+      janusLogo: require('@/assets/janus_logo.svg'),
+    };
+  },
   components: {
-    UserAccount,
+    RightNav,
     TitleRow,
     MenuIcon,
     ContextNav,
+    Logo,
   },
   computed: {
     ...mapGetters(['getProfile']),
@@ -62,7 +69,9 @@ export default {
     align-items: center;
     justify-content: flex-end;
     justify-items: flex-end;
-    margin-right: 10px;
+  }
+  .logo-container {
+    margin-left: 20px;
   }
 }
 </style>

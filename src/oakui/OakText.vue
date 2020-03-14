@@ -1,6 +1,6 @@
 <template>
   <div class="oak-text-field">
-    <label>{{ label }}</label>
+    <label class="form-element-label">{{ label }}</label>
     <input
       v-if="!multiline"
       :disabled="disabled"
@@ -10,17 +10,21 @@
       :name="id"
       :value="data"
       @keyup="$emit('change')"
+      @blur="blurEvent"
     />
     <textarea
       v-if="multiline"
       :disabled="disabled"
       :name="id"
       :value="data"
+      v-bind:rows="rows"
       @keyup="$emit('change')"
+      @blur="blurEvent"
     />
   </div>
 </template>
 <script>
+import { sendMessage } from '@/events/MessageService';
 export default {
   name: 'OakText',
   props: {
@@ -37,6 +41,13 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    blurEvent: function() {
+      sendMessage('blur', true, {
+        id: this.id,
+      });
+    },
   },
 };
 </script>

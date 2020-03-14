@@ -1,11 +1,12 @@
 <template>
-  <div class="toolbar">
+  <div class="toolbar-filters">
     <OakPopoverMenu
       v-bind:elements="elements"
       data="option 1"
       id="1"
       label="sfdsf dsfa"
       iconLeft="sort"
+      theme="primary"
     />
     <OakPopoverMenu
       v-bind:elements="elements"
@@ -13,6 +14,8 @@
       id="2"
       label="sfd ejf dif i"
       iconRight="assignment_ind"
+      theme="primary"
+      labelVariant="on"
     />
     <OakPopoverMenu
       v-bind:elements="elements"
@@ -27,7 +30,7 @@
 <script>
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
 export default {
-  name: 'BoardToolbar',
+  name: 'ToolbarFilterAndSort',
   data: function() {
     return {
       elements: [
@@ -48,16 +51,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.toolbar {
-  height: 36px;
-  line-height: 36px;
-  background-color: var(--color-body);
-  border-bottom: 1px solid var(--color-body-dim);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+.toolbar-filters {
   padding-right: 10px;
+  display: flex;
 }
 </style>
