@@ -1,7 +1,14 @@
 <template>
   <div>
     <div v-if="notification" v-bind:class="style">
-      <div class="message">{{ notification ? notification.message : '' }}</div>
+      <div class="message">
+        <div class="message-icon" v-if="notification.type === 'success'">
+          <i class="material-icons">check_circle_outline</i>
+        </div>
+        <div class="message-text">
+          {{ notification ? notification.message : '' }}
+        </div>
+      </div>
     </div>
     <div v-if="spinner" class="lds-dual-ring" />
   </div>
