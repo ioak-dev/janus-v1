@@ -62,7 +62,7 @@ export default {
       this.space[event.target.name] = event.target.value;
     },
     submitForm() {
-      sendMessage('spinner');
+      // sendMessage('spinner');
       // clearError();
 
       if (!this.validate()) {

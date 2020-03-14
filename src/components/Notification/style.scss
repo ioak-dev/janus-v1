@@ -1,12 +1,4 @@
 .notification {
-  --color-notification-type: var(--color-success);
-  &.warning {
-    --color-notification-type: var(--color-warning);
-  }
-  &.failure {
-    --color-notification-type: var(--color-failure);
-  }
-
   width: auto;
   left: 30px;
   bottom: 30px;
@@ -17,21 +9,76 @@
   z-index: 11;
   height: 40px;
   line-height: 40px;
-  border-left: 6px solid var(--color-notification-type);
+  display: flex;
+  flex-direction: column-reverse;
   .message {
     // background-color: var(--color-notification-type);
     display: flex;
     align-items: center;
     padding: 0px 10px;
+    position: relative;
+    background-color: var(--color-body-dim);
+    padding: 0px 0px 0px 10px;
+    font-size: 0.9em;
+    border-left: 6px solid var(--color-notification-type);
+    margin-top: 6px;
+
+    --color-notification-type: var(--color-tertiary);
+    &.success {
+      --color-notification-type: var(--color-success);
+    }
+    &.warning {
+      --color-notification-type: var(--color-warning);
+    }
+    &.failure {
+      --color-notification-type: var(--color-failure);
+    }
     .material-icons {
       vertical-align: middle;
-      margin-right: 8px;
       // font-size: 50px;
     }
+
+    .message-icon {
+      margin-right: 8px;
+      // color: var(--color-notification-type);
+    }
+
+    .message-action {
+      cursor: pointer;
+      color: var(--color-body-invert-dim);
+      .material-icons {
+        font-size: 16px;
+        margin: 0px 10px;
+      }
+      &:hover {
+        color: var(--color-body-invert);
+      }
+    }
   }
-  .message {
-    background-color: var(--color-body-dim);
-    padding: 0px 10px;
+
+  .message-icon {
+    &.running {
+      .material-icons {
+        animation: rotating 2s linear infinite;
+      }
+    }
+  }
+
+  @keyframes rotating {
+    from {
+      -ms-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -ms-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
   }
 
   &.show {
@@ -43,13 +90,6 @@
     transition: transform 0.5s;
     transform: translateX(-150vw);
     // background-color: var(--color-body-invert-dim);
-  }
-
-  .message {
-    font-size: 0.9em;
-    @media (max-width: 767px) {
-      font-size: 0.6em;
-    }
   }
 }
 

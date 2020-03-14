@@ -4,24 +4,23 @@
       v-bind:elements="elements"
       data="option 1"
       id="1"
-      label="sfdsf dsfa"
+      label="Sort by"
       iconLeft="sort"
-      theme="primary"
+      theme="default"
     />
     <OakPopoverMenu
       v-bind:elements="elements"
       data="option 1"
       id="2"
-      label="sfd ejf dif i"
+      label="Filter"
       iconRight="assignment_ind"
-      theme="primary"
-      labelVariant="on"
+      theme="default"
     />
     <OakPopoverMenu
       v-bind:elements="elements"
       data="option 1"
       id="3"
-      label="sfd ejf dif i"
+      label="Status"
       iconRight="assignment_ind"
       right
     />
