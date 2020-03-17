@@ -28,6 +28,7 @@ const actions = {
     });
     commit('UPDATE_PROFILE', { ...state, auth: auth });
     dispatch('fetchProjects');
+    dispatch('fetchUsers');
     dispatch('fetchTeams');
   },
   removeAuth({ commit }: any, cookies: any) {

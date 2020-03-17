@@ -23,6 +23,12 @@
       v-bind:stage="stageStub"
       v-bind:alwaysEditFields="['name', 'projectId']"
     />
+    <UpdateTeam
+      @close="toggleTeam"
+      v-bind:visible="newTeam"
+      v-bind:team="teamStub"
+      v-bind:alwaysEditFields="['name']"
+    />
     <UpdateTask
       @close="toggleTask"
       v-bind:visible="newTask"
@@ -42,6 +48,7 @@
 import UpdateProject from '@/components/Create/UpdateProject.vue';
 import UpdateTask from '@/components/Create/UpdateTask.vue';
 import UpdateStage from '@/components/Create/UpdateStage.vue';
+import UpdateTeam from '@/components/Create/UpdateTeam.vue';
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
 
 export default {
@@ -51,9 +58,14 @@ export default {
       newProject: false,
       newStage: false,
       newTask: false,
+      newTeam: false,
       projectStub: {
         name: '',
         type: 'Kanban',
+      },
+      teamStub: {
+        name: '',
+        members: [],
       },
       stageStub: {
         projectId: '',
@@ -83,7 +95,7 @@ export default {
         },
         {
           label: 'Team',
-          action: this.toggleProject,
+          action: this.toggleTeam,
           icon: 'people_alt',
         },
         {
@@ -99,6 +111,7 @@ export default {
     UpdateProject,
     UpdateTask,
     UpdateStage,
+    UpdateTeam,
   },
   methods: {
     toggleProject: function() {
@@ -109,6 +122,9 @@ export default {
     },
     toggleStage: function() {
       this.newStage = !this.newStage;
+    },
+    toggleTeam: function() {
+      this.newTeam = !this.newTeam;
     },
   },
 };

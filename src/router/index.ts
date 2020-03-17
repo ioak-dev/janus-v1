@@ -1,12 +1,19 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/components/Home/Home.vue';
+import TeamProjects from '@/components/Team/TeamProjects.vue';
+import TeamMembers from '@/components/Team/TeamMembers.vue';
 import BoardView from '@/components/Project/Board/BoardView.vue';
 import ListView from '@/components/Project/List/ListView.vue';
 import CreateSpace from '@/components/Space/CreateSpace.vue';
 import Login from '@/components/Auth/Login.vue';
 
-import { middlewarePipeline, readSpace, readProject } from './middleware';
+import {
+  middlewarePipeline,
+  readSpace,
+  readProject,
+  readTeam,
+} from './middleware';
 
 Vue.use(VueRouter);
 
@@ -39,6 +46,24 @@ const routes = [
     meta: {
       context: 'Project',
       middleware: [readSpace, readProject],
+    },
+  },
+  {
+    path: '/:space/:teamId/team/members',
+    component: TeamMembers,
+    name: 'TeamMembers',
+    meta: {
+      context: 'Team',
+      middleware: [readSpace, readTeam],
+    },
+  },
+  {
+    path: '/:space/:teamId/team/projects',
+    component: TeamProjects,
+    name: 'TeamProjects',
+    meta: {
+      context: 'Team',
+      middleware: [readSpace, readTeam],
     },
   },
   { path: '/createspace', component: CreateSpace, name: 'CreateSpace' },

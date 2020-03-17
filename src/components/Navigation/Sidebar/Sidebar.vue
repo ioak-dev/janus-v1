@@ -3,11 +3,13 @@
     <Header @sidebarToggled="$emit('sidebarToggled')" />
     <CommonNav />
     <ProjectNav />
+    <TeamNav />
   </div>
 </template>
 <script>
 import CommonNav from './CommonNav.vue';
 import ProjectNav from './ProjectNav.vue';
+import TeamNav from './TeamNav.vue';
 import Header from './Header.vue';
 export default {
   name: 'Sidebar',
@@ -15,6 +17,7 @@ export default {
     CommonNav,
     Header,
     ProjectNav,
+    TeamNav,
   },
 };
 </script>

@@ -11,6 +11,7 @@
       :value="data"
       @keyup="$emit('change')"
       @blur="blurEvent"
+      @focus="$emit('focus')"
     />
     <textarea
       v-if="multiline"
@@ -44,6 +45,7 @@ export default {
   },
   methods: {
     blurEvent: function() {
+      this.$emit('blur');
       sendMessage('blur', true, {
         id: this.id,
       });

@@ -5,16 +5,6 @@
       <div v-for="stage in getStagesByProjectId()" v-bind:key="stage._id">
         <vertical-lane v-bind:stage="stage" />
       </div>
-      <!-- <div><vertical-lane category="In progress" /></div>
-      <div><vertical-lane category="Complete" /></div>
-      <div><vertical-lane category="Complete" /></div>
-      <div><vertical-lane category="Complete" /></div>
-      <div><vertical-lane category="Complete" /></div>
-      <div><vertical-lane category="Complete" /></div>
-      <div><vertical-lane category="Complete" /></div>
-      <div><vertical-lane category="Selected for Development" /></div>
-      <div><vertical-lane category="In progress" /></div>
-      <div><vertical-lane category="Complete" /></div> -->
     </div>
   </div>
 </template>
