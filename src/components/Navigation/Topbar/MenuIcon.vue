@@ -1,6 +1,7 @@
 <template>
-  <div class="expand-collapse">
+  <div class="menu-icon">
     <i
+      data-test="toggle-sidebar"
       class="material-icons"
       v-if="!getProfile.sidebar"
       @click="$emit('click')"
@@ -19,7 +20,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.expand-collapse {
+.menu-icon {
   margin-left: 10px;
   .material-icons {
     cursor: pointer;

@@ -3,7 +3,7 @@
     <div class="dialog" :class="visible ? 'show ' + style : 'hide ' + style">
       <div :class="visible ? 'container' : 'container hidetext'">
         <div class="dialog-header">
-          <div class="container" @click="$emit('click')">
+          <div class="container" @click="$emit('close')">
             <i class="material-icons">close</i>
             <div class="text-esc">
               esc
@@ -46,7 +46,7 @@ export default {
     escFunction(event) {
       if (event.keyCode === 27) {
         if (this.visible) {
-          this.$emit('click');
+          this.$emit('close');
         }
       }
     },

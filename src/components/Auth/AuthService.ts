@@ -26,7 +26,6 @@ export function preSignup(data: any) {
 }
 
 export function signup(data: any) {
-  console.log(data);
   return httpPost(
     constants.API_URL + data.spaceName + constants.API_SIGNUP,
     {

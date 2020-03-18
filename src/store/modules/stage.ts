@@ -5,25 +5,44 @@ const state = {
 };
 
 const getters = {
-  getStages: (state: any) => {
-    return state.stages;
+  getStagesByProjectId: (state: any, rootState: any) => (projectId: string) => {
+    let projectIdToSearch = projectId;
+    if (!projectIdToSearch) {
+      projectIdToSearch = rootState.getProject?._id;
+    }
+    if (projectIdToSearch) {
+      return state.stages.filter(
+        (item: any) => item.projectId === projectIdToSearch
+      );
+    }
+    return [];
   },
 };
 
 const actions = {
-  async fetchStages({ commit }: { commit: any }) {
-    const data: any = [];
-    data.push({
-      id: 1,
-      projectId: 1,
-      name: 'Selected for development',
-    });
-    data.push({
-      id: 1,
-      projectId: 1,
-      name: 'In progress',
-    });
-    commit('UPDATE_STAGES', data);
+  async fetchStages({ commit, dispatch, rootState }: any) {
+    const response = await axios.get(
+      'http://localhost:8000/stage/' + rootState.profile.space,
+      {
+        headers: {
+          Authorization: `${rootState.profile.auth.token}`,
+        },
+      }
+    );
+    commit('UPDATE_STAGES', response.data.data);
+  },
+  async saveStage({ commit, dispatch, rootState }: any, payload: any) {
+    const response = await axios.put(
+      'http://localhost:8000/stage/' + rootState.profile.space + '/',
+      payload,
+      {
+        headers: {
+          Authorization: `${rootState.profile.auth.token}`,
+        },
+      }
+    );
+    dispatch('fetchStages');
+    // commit('UPDATE_PROJECTS', response.data.data);
   },
 };
 

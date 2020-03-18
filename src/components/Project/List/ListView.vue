@@ -1,13 +1,16 @@
 <template>
   <div class="list-view app-content">
+    <div class="toolbar-container desktop-only"><Toolbar /></div>
     <div class="list-view-header">
-      <div>Name</div>
+      <div>Title</div>
       <div>Assigned to</div>
       <div>Priority</div>
     </div>
     <div class="list-view-content">
-      <horizontal-lane category="Selected for Development" />
-      <horizontal-lane category="In progress" />
+      <div v-for="stage in getStagesByProjectId()" v-bind:key="stage._id">
+        <horizontal-lane v-bind:stage="stage" />
+      </div>
+      <!-- <horizontal-lane category="In progress" />
       <horizontal-lane category="Complete" />
       <horizontal-lane category="Complete" />
       <horizontal-lane category="Complete" />
@@ -16,16 +19,22 @@
       <horizontal-lane category="Complete" />
       <horizontal-lane category="Selected for Development" />
       <horizontal-lane category="In progress" />
-      <horizontal-lane category="Complete" />
+      <horizontal-lane category="Complete" /> -->
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import HorizontalLane from './HorizontalLane.vue';
+import Toolbar from './Toolbar.vue';
 export default {
   name: 'ListView',
   components: {
     HorizontalLane,
+    Toolbar,
+  },
+  computed: {
+    ...mapGetters(['getStagesByProjectId']),
   },
 };
 </script>
@@ -46,7 +55,7 @@ export default {
   .list-view-content {
     margin: 0px 10px;
     overflow-x: auto;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 }
 </style>

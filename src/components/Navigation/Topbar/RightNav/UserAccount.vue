@@ -1,12 +1,5 @@
 <template>
   <div class="user-account">
-    <!-- <OakPopoverMenu
-      id="user-account-popover-menu"
-      v-bind:label="getProfile.auth.email"
-      v-bind:elements="elements"
-      right
-      iconLeft="person"
-    /> -->
     <OakPopoverMenu
       id="user-account-popover-menu"
       v-bind:elements="elements"

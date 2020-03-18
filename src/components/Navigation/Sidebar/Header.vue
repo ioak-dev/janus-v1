@@ -1,18 +1,21 @@
 <template>
   <div class="header">
-    <i class="material-icons" @click="$emit('sidebarToggled')">
+    <i
+      class="material-icons"
+      data-test="toggle-sidebar"
+      @click="$emit('sidebarToggled')"
+    >
       menu_open
     </i>
-    <img class="logo" v-bind:src="janusLogo" alt="Janus logo" />
+    <Logo />
   </div>
 </template>
 <script>
+import Logo from '@/components/Logo/Logo.vue';
 export default {
   name: 'Header',
-  data: function() {
-    return {
-      janusLogo: require('@/assets/janus_logo.svg'),
-    };
+  components: {
+    Logo,
   },
 };
 </script>
@@ -28,12 +31,6 @@ export default {
   .material-icons {
     cursor: pointer;
     line-height: 60px;
-  }
-  img {
-    &.logo {
-      height: 35px;
-      width: auto;
-    }
   }
 }
 </style>

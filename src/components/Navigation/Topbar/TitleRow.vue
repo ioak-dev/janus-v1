@@ -1,12 +1,15 @@
 <template>
-  <div v-if="getProject" class="title-row">{{ getProject.name }}</div>
+  <div>
+    <div v-if="getProject" class="title-row">{{ getProject.name }}</div>
+    <div v-if="getTeam" class="title-row">{{ getTeam.name }}</div>
+  </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 export default {
   name: 'TitleRow',
   computed: {
-    ...mapGetters(['getProject']),
+    ...mapGetters(['getProject', 'getTeam']),
   },
 };
 </script>

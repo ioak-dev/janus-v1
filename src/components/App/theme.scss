@@ -14,7 +14,7 @@
 
   .themecolor_1 {
     --color-dark-primary: #4b85cc;
-    --color-dark-secondary: #d9b5a0;
+    --color-dark-secondary: #9f6c97;
     --color-dark-tertiary: #376b8c;
     --color-dark-tertiary-trans: rgba(55, 107, 140, 0.2);
     --color-light-primary: #376b8c;
@@ -67,7 +67,7 @@
     --color-secondary: var(--color-dark-secondary);
     --color-tertiary: var(--color-dark-tertiary);
     --color-tertiary-trans: var(--color-dark-tertiary-trans);
-    --color-default: rgba(217, 217, 217, 1);
+    --color-default: #3a424c;
     --color-selected: rgba(217, 217, 217, 1);
     --color-hover: rgba(217, 217, 217, 0.2);
     --color-white: white;
@@ -163,5 +163,16 @@
 
     --color-tag: #e6e6e6;
     --color-box-shadow: rgba(0, 0, 0, 0.3);
+  }
+
+  .mobile-only {
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+  .desktop-only {
+    @media (max-width: 767px) {
+      display: none;
+    }
   }
 }

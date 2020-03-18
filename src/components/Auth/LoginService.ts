@@ -21,7 +21,7 @@ function success(data: any) {
 
 export function signinAction({ space, email, password }: any) {
   sendMessage('notification', false);
-  sendMessage('spinner');
+  // sendMessage('spinner');
   if (email && password) {
     preSignin({
       name: space,
@@ -80,7 +80,7 @@ export function signinAction({ space, email, password }: any) {
 
 export function signupAction({ space, name, email, password }: any) {
   sendMessage('notification', false);
-  sendMessage('spinner');
+  // sendMessage('spinner');
   if (name && password && email) {
     if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       sendMessage('notification', true, {

@@ -1,6 +1,6 @@
 <template>
   <div class="oak-select" :class="style">
-    <label v-if="label">{{ label }}</label>
+    <label v-if="label" class="form-element-label">{{ label }}</label>
     <div class="select-button" @click="toggle">
       <div v-if="elements">
         {{ data }}
@@ -47,6 +47,7 @@
   </div>
 </template>
 <script>
+import { sendMessage } from '@/events/MessageService';
 export default {
   name: 'OakSelect',
   props: {
@@ -83,7 +84,13 @@ export default {
       event.target.name = this.id;
       event.target.value = newValue;
       this.$emit('change', event);
+      this.blurEvent();
       this.toggle();
+    },
+    blurEvent: function() {
+      sendMessage('blur', true, {
+        id: this.id,
+      });
     },
   },
 };

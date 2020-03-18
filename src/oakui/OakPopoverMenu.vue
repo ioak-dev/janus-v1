@@ -1,15 +1,10 @@
 <template>
   <div class="oak-popover-menu" :class="style" v-bind:id="id">
-    <div
-      v-if="label"
-      class="label"
-      @click="toggle"
-      :class="show ? 'active' : ''"
-    >
+    <div v-if="label" class="label" @click="toggle" :class="labelStyle">
       <div v-if="iconLeft" class="left-icon">
         <i class="material-icons">{{ iconLeft }}</i>
       </div>
-      {{ label }}
+      <div class="label-text">{{ label }}</div>
       <div class="right-icon">
         <i class="material-icons">{{ iconRight }}</i>
       </div>
@@ -42,11 +37,12 @@ export default {
     label: String,
     data: String,
     elements: Array,
-    variant: String,
+    labelVariant: String,
     theme: String,
     right: Boolean,
     iconLeft: String,
     iconRight: String,
+    mobilize: Boolean,
   },
   data() {
     return {
@@ -60,7 +56,7 @@ export default {
     },
     getStyle() {
       let style = this.theme ? this.theme : '';
-      style += this.variant ? ` ${this.variant}` : '';
+      style += this.labelVariant ? ` ${this.labelVariant}` : '';
       style += this.width ? ` ${this.width}` : '';
       return style;
     },
@@ -75,6 +71,11 @@ export default {
     dropdownContentStyle: function() {
       let style = this.show ? 'show' : 'hide';
       style += this.right ? ' right' : '';
+      return style;
+    },
+    labelStyle: function() {
+      let style = this.show ? 'active' : '';
+      style += this.mobilize ? ' short-label' : '';
       return style;
     },
   },
@@ -97,6 +98,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .oak-popover-menu {
+  --color-popover-theme: var(--color-default);
+  &.primary {
+    --color-popover-theme: var(--color-primary);
+  }
+  &.secondary {
+    --color-popover-theme: var(--color-secondary);
+  }
+  &.tertiary {
+    --color-popover-theme: var(--color-tertiary);
+  }
+  --color-label-normal: none;
+  &.on {
+    --color-label-normal: var(--color-popover-theme);
+  }
   position: relative;
   box-sizing: border-box;
   user-select: none;
@@ -107,9 +122,31 @@ export default {
     padding: 0px 10px;
     border-radius: 4px;
     white-space: nowrap;
+    background-color: var(--color-label-normal);
+    display: flex;
+    align-items: center;
+    &.short-label {
+      @media (max-width: 767px) {
+        border-radius: 50%;
+        height: 32px;
+        width: 32px;
+        padding: 0px;
+        margin: 0px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        .label-text {
+          display: none;
+        }
+        .left-icon,
+        .right-icon {
+          margin: 0px;
+        }
+      }
+    }
     &.active,
     &:hover {
-      background-color: var(--color-body-dim);
+      background-color: var(--color-popover-theme);
     }
     .material-icons {
       line-height: 26px;
@@ -150,7 +187,7 @@ export default {
       height: 40px;
       line-height: 40px;
       &:hover {
-        background-color: var(--color-body-dim);
+        background-color: var(--color-popover-theme);
       }
       .material-icons {
         line-height: 32px;

@@ -71,7 +71,9 @@ export default {
       width: 100vw;
     }
     &.sidebar-shown {
-      width: calc(100vw - 250px);
+      @media (min-width: 768px) {
+        width: calc(100vw - 250px);
+      }
     }
   }
 }
