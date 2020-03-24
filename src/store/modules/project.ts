@@ -6,15 +6,6 @@ const state = {
   project: null,
 };
 
-const getters = {
-  getProjects: (state: any) => {
-    return state.projects;
-  },
-  getProject: (state: any) => {
-    return state.project;
-  },
-};
-
 const findProject = (projectId: string) => {
   if (state.projects?.length > 0) {
     const project = state.projects.filter((element: any) => {
@@ -27,6 +18,18 @@ const findProject = (projectId: string) => {
     }
   }
   return null;
+};
+
+const getters = {
+  getProjects: (state: any) => {
+    return state.projects;
+  },
+  getProject: (state: any) => {
+    return state.project;
+  },
+  getProjectById: (state: any) => (id: string) => {
+    return findProject(id);
+  },
 };
 
 const actions = {

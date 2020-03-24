@@ -33,8 +33,8 @@ export default {
   // line-height: 60px;
   height: 36px;
   line-height: 36px;
-  background-color: var(--color-body);
-  border-bottom: 1px solid var(--color-body-dim);
+  background-color: var(--color-background-2);
+  border-bottom: 1px solid var(--color-background-3);
   display: flex;
   justify-content: space-between;
   align-items: center;

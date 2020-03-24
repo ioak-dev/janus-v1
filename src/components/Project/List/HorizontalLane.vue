@@ -99,9 +99,9 @@ export default {
     height: 60px;
     line-height: 60px;
     &.show {
-      border-bottom: 1px solid var(--color-body-dim);
+      border-bottom: 1px solid var(--color-background-2);
     }
-    color: var(--color-body-invert-dim);
+    color: var(--color-foreground-2);
     font-size: 0.9em;
     .material-icons {
       line-height: 60px;

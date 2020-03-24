@@ -48,7 +48,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .topbar {
-  background-color: var(--color-body);
+  background-color: var(--color-background-2);
   display: flex;
   height: 100%;
   align-content: center;

@@ -1,5 +1,5 @@
 <template>
-  <div class="oak-auto-complete">
+  <div class="oak-auto-complete" v-bind:id="id">
     <div class="search-bar">
       <OakText
         id="auto-complete"
@@ -29,11 +29,25 @@ export default {
   props: {
     label: String,
     objects: Array,
+    id: String,
   },
   data: function() {
     return {
       isSearchOn: false,
     };
+  },
+  created() {
+    window.addEventListener('click', e => {
+      // console.log(e.target, document.getElementById(this.id), this.id);
+      // console.log(
+      //   document
+      //     .getElementById(this.id)
+      //     .querySelector('.oak-popover-menu-label').classList
+      // );
+      if (!document.getElementById(this.id)?.contains(e.target)) {
+        this.isSearchOn = false;
+      }
+    });
   },
   methods: {
     onBlur() {
@@ -53,19 +67,24 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.results {
-  margin-top: -20px;
-  padding: 8px 0px;
-  background-color: var(--color-body);
-  box-shadow: 0 0 0 1px rgba(111, 119, 130, 0.15),
-    0 5px 20px 0 rgba(21, 27, 38, 0.08);
-  cursor: default;
-  .element {
-    padding: 0px 20px;
-    height: 40px;
-    line-height: 40px;
-    &:hover {
-      background-color: var(--color-default);
+.oak-auto-complete {
+  position: relative;
+  .results {
+    position: absolute;
+    z-index: 1;
+    margin-top: -20px;
+    padding: 8px 0px;
+    background-color: var(--color-background-5);
+    box-shadow: 0 0 0 1px rgba(111, 119, 130, 0.15),
+      0 5px 20px 0 rgba(21, 27, 38, 0.08);
+    cursor: default;
+    .element {
+      padding: 0px 20px;
+      height: 40px;
+      line-height: 40px;
+      &:hover {
+        background-color: var(--color-background-3);
+      }
     }
   }
 }

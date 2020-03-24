@@ -11,6 +11,9 @@ const getters = {
   getUserById: (state: any) => (id: string) => {
     return state.users.find((item: any) => item._id === id);
   },
+  getUserByEmail: (state: any) => (email: string) => {
+    return state.users.find((item: any) => item.email === email);
+  },
 };
 
 const findUser = (userId: string) => {
@@ -30,7 +33,7 @@ const findUser = (userId: string) => {
 const actions = {
   async fetchUsers({ commit, dispatch, rootState }: any) {
     const response = await axios.get(
-      'http://localhost:8000/user/' + rootState.profile.space,
+      `http://localhost:8000/user/${rootState.profile.space}/all`,
       {
         headers: {
           Authorization: `${rootState.profile.auth.token}`,

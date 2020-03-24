@@ -2,6 +2,7 @@
   <div class="list-view app-content">
     <div class="toolbar-container desktop-only"><Toolbar /></div>
     <div class="list-view-header">
+      <div>Task Id</div>
       <div>Title</div>
       <div>Assigned to</div>
       <div>Priority</div>
@@ -48,9 +49,9 @@ export default {
     min-height: 36px;
     height: 36px;
     line-height: 36px;
-    border-bottom: 1px solid var(--color-body-dim);
+    border-bottom: 1px solid var(--color-background-2);
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-columns: 1fr 3fr 1fr 1fr;
   }
   .list-view-content {
     margin: 0px 10px;

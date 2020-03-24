@@ -49,10 +49,10 @@ export default {
     display: inline-block;
     width: 100%;
     &:hover {
-      background-color: var(--color-body-dim);
+      background-color: var(--color-background-2);
     }
     &.router-link-active {
-      background-color: var(--color-primary);
+      background-color: var(--color-primary-1);
     }
   }
   padding-bottom: 10px;

@@ -40,6 +40,7 @@
         'title',
         'description',
         'priority',
+        'assignedTo',
       ]"
     />
   </div>

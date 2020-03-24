@@ -75,8 +75,8 @@ export default {
   user-select: none;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--color-body-dim);
-  border-bottom: 1px solid var(--color-body-dim);
+  // border-top: 1px solid var(--color-background-2);
+  // border-bottom: 1px solid var(--color-background-2);
   padding: 10px 0px;
   a {
     text-decoration: none;
@@ -88,17 +88,17 @@ export default {
     display: inline-block;
     width: 100%;
     &:hover {
-      background-color: var(--color-body-dim);
+      background-color: var(--color-background-2);
     }
     &.team-route-active {
-      background-color: var(--color-primary);
+      background-color: var(--color-primary-1);
     }
   }
   .headline {
     padding: 5px 15px;
     height: 28px;
     line-height: 28px;
-    color: var(--color-body-invert-dim);
+    color: var(--color-foreground-2);
     font-size: 0.9em;
     display: flex;
     justify-content: space-between;
@@ -106,11 +106,11 @@ export default {
     .material-icons {
       line-height: 28px;
       &:hover {
-        color: var(--color-body-invert);
+        color: var(--color-foreground-1);
       }
     }
     &:hover {
-      color: var(--color-body-invert);
+      color: var(--color-foreground-1);
     }
   }
   .container {

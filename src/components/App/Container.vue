@@ -50,13 +50,13 @@ export default {
     overflow: hidden;
     grid-row: 1/3;
     background-color: var(--color-nav);
-    color: var(--color-body-invert);
+    color: var(--color-foreground-1);
     width: 250px;
   }
 
   .topbar-container {
     height: 60px;
-    border-bottom: 1px solid var(--color-body-dim);
+    border-bottom: 1px solid var(--color-background-3);
   }
 
   .maincontent-container {

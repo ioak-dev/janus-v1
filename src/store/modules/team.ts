@@ -29,6 +29,9 @@ const getters = {
   getTeam: (state: any) => {
     return state.team;
   },
+  findTeamById: (state: any) => (id: string) => {
+    return findTeam(id);
+  },
 };
 
 const actions = {

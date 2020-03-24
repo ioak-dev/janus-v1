@@ -5,7 +5,7 @@
     </div> -->
     <div
       v-bind:class="dragClass"
-      class="card app-content"
+      class="card"
       draggable="true"
       @dragover.prevent="dragOver"
       @dragstart="dragStart"
@@ -14,7 +14,27 @@
       @click="toggleTask"
       @dragleave="dragLeave"
     >
-      <div class="title">{{ task.title }}</div>
+      <div class="top-row">
+        <div class="title typography-5">
+          <div class="task-id">{{ task.taskId }}</div>
+          <div class="task-title">
+            :
+            {{
+              task.title.length > 100
+                ? task.title.substring(0, 100) + '...'
+                : task.title
+            }}
+          </div>
+        </div>
+      </div>
+      <div class="bottom-row">
+        <div class="left">
+          <Avatar v-if="assignedToUser" v-bind:user="assignedToUser" />
+        </div>
+        <div class="right typography-6">
+          Jan 31
+        </div>
+      </div>
     </div>
     <UpdateTask
       @close="toggleTask"
@@ -28,11 +48,13 @@
 import { sendMessage } from '@/events/MessageService';
 import { mapGetters, mapActions } from 'vuex';
 import UpdateTask from '@/components/Create/UpdateTask.vue';
+import Avatar from '@/components/Avatar/Avatar.vue';
 
 export default {
   name: 'Card',
   components: {
     UpdateTask,
+    Avatar,
   },
   props: {
     task: {
@@ -47,7 +69,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getProfile']),
+    ...mapGetters(['getProfile', 'getUserById']),
+    assignedToUser: function() {
+      return this.getUserById(this.task.assignedTo);
+    },
   },
   methods: {
     ...mapActions(['moveTask']),
@@ -101,15 +126,35 @@ export default {
   user-select: none;
   padding: 10px;
   margin: 0px 8px 8px 0px;
-  box-shadow: 0 1px 3px 0 var(--color-body);
-  // border-radius: 4px;
+  background-color: var(--color-background-3);
+  // box-shadow: 0 1px 3px 0 var(--color-background-1);
+  border-radius: 4px;
   // margin-bottom: 10px;
-  // border: 1px solid var(--color-primary);
+  // border: 1px solid var(--color-primary-1);
   &.destination-spot {
-    background-color: var(--color-tertiary);
+    background-color: var(--color-tertiary-1);
   }
   &.source-spot {
-    background-color: var(--color-body-dim);
+    background-color: var(--color-background-2);
+  }
+
+  .top-row {
+    .task-id,
+    .task-title {
+      display: inline;
+    }
+  }
+  .bottom-row {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .left,
+    .right {
+      display: flex;
+      align-items: center;
+    }
   }
 }
 .shadow-card {

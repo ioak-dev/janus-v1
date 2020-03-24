@@ -100,13 +100,13 @@ export default {
 .oak-popover-menu {
   --color-popover-theme: var(--color-default);
   &.primary {
-    --color-popover-theme: var(--color-primary);
+    --color-popover-theme: var(--color-primary-1);
   }
   &.secondary {
-    --color-popover-theme: var(--color-secondary);
+    --color-popover-theme: var(--color-secondary-1);
   }
   &.tertiary {
-    --color-popover-theme: var(--color-tertiary);
+    --color-popover-theme: var(--color-tertiary-1);
   }
   --color-label-normal: none;
   &.on {
@@ -167,7 +167,7 @@ export default {
   .dropdown-content {
     position: absolute;
     padding: 8px 0px;
-    background-color: var(--color-body);
+    background-color: var(--color-background-1);
     // box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     //   0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
     box-shadow: 0 0 0 1px rgba(111, 119, 130, 0.15),

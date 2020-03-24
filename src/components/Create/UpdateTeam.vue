@@ -14,6 +14,7 @@
           @search="handlePeopleSearch"
           @change="handlePeopleChange"
           v-bind:objects="peopleSearchList"
+          id="people-search-update-team"
         />
         <div class="members">
           <div
@@ -123,6 +124,6 @@ export default {
 <style lang="scss" scoped>
 .member {
   padding: 10px 0px;
-  border-bottom: 1px solid var(--color-body-dim);
+  border-bottom: 1px solid var(--color-background-2);
 }
 </style>

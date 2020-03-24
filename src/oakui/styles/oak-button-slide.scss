@@ -43,16 +43,16 @@ button {
         --color-fg: var(--color-btn-tertiary-fg-hover);
       }
     }
-    
-    // Initialize animation parameters 
-    transition: .4s cubic-bezier(.5,1.6,.4,.7);
+
+    // Initialize animation parameters
+    transition: 0.4s cubic-bezier(0.5, 1.6, 0.4, 0.7);
     &.in {
       --height-start: 0%;
       --height-end: 100%;
       --width-start: 0%;
       --width-end: 100%;
     }
-  
+
     &.out {
       --height-start: 100%;
       --height-end: 0%;
@@ -69,11 +69,11 @@ button {
     overflow: hidden;
     z-index: 0;
     border: 1px solid var(--color-bg);
-    
-    padding: 4px 5px;//8px 16px;
+
+    padding: 4px 5px; //8px 16px;
 
     &.small {
-      padding: 4px 5px;//4px 8px;
+      padding: 4px 5px; //4px 8px;
     }
 
     &.align-left {
@@ -88,18 +88,19 @@ button {
       margin-left: 5px;
       margin-right: 5px;
     }
-    
-    // Slider animation defaulted to right    
+
+    // Slider animation defaulted to right
     &.animate {
-      &.in, &.out {
-        &::before {  
+      &.in,
+      &.out {
+        &::before {
           content: '';
           position: absolute;
           left: 0;
           width: 100%;
           height: 0%;
           z-index: -1;
-          transition: .4s cubic-bezier(.5,1.6,.4,.7);
+          transition: 0.4s cubic-bezier(0.5, 1.6, 0.4, 0.7);
           background-color: var(--color-bg);
           top: 0;
           width: var(--width-start);
@@ -119,7 +120,8 @@ button {
         }
       }
 
-      &.none, &.in {
+      &.none,
+      &.in {
         color: var(--color-fg);
         &:hover {
           color: var(--color-fg-hover);
@@ -133,7 +135,7 @@ button {
         }
       }
     }
-    
+
     &.block {
       border: 1px solid transparent;
       &:hover {
@@ -141,7 +143,7 @@ button {
         background-color: var(--color-bg);
       }
     }
-    
+
     &.outline {
       border: 1px solid transparent;
       color: var(--color-fg);
@@ -149,7 +151,7 @@ button {
         border: 1px solid var(--color-bg);
       }
     }
-      
+
     &.icon {
       height: 38px;
       width: 38px;
@@ -165,8 +167,7 @@ button {
     .material-icons {
       vertical-align: middle;
       margin-right: 5px;
-      font-size: 1.2em
+      font-size: 1.2em;
     }
   }
 }
-  
