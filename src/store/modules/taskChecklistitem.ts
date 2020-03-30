@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const baseUrl = process.env.VUE_APP_ROOT_API;
+
 const state = {
   checklistitems: [],
 };
@@ -23,7 +25,7 @@ const actions = {
     taskId: any
   ) {
     const response = await axios.get(
-      `http://localhost:8000/checklistitem/task/${rootState.profile.space}/task/${taskId}`,
+      `${baseUrl}/checklistitem/task/${rootState.profile.space}/task/${taskId}`,
       {
         headers: {
           Authorization: `${rootState.profile.auth.token}`,
@@ -37,7 +39,7 @@ const actions = {
     payload: any
   ) {
     const response = await axios.put(
-      `http://localhost:8000/checklistitem/task/${rootState.profile.space}/`,
+      `${baseUrl}/checklistitem/task/${rootState.profile.space}/`,
       payload,
       {
         headers: {

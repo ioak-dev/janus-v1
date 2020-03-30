@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { sendMessage, newMessageId } from '@/events/MessageService';
 
+const baseUrl = process.env.VUE_APP_ROOT_API;
+
 const state = {
   tasks: Array<any>(),
   taskToView: Array<string>(),
@@ -38,10 +40,7 @@ const getters = {
 const actions = {
   async fetchTasks({ commit, dispatch, rootState }: any) {
     const response = await axios.get(
-      'http://localhost:8000/task/' +
-        rootState.profile.space +
-        '/' +
-        rootState.project.project._id,
+      `${baseUrl}/task/${rootState.profile.space}/${rootState.project.project._id}`,
       {
         headers: {
           Authorization: `${rootState.profile.auth.token}`,
@@ -60,10 +59,7 @@ const actions = {
         : `Creating task (${payload.title.substring(0, 10)}..})`,
     });
     const response = await axios.put(
-      'http://localhost:8000/task/' +
-        rootState.profile.space +
-        '/' +
-        payload.projectId,
+      `${baseUrl}/task/${rootState.profile.space}/${payload.projectId}`,
       payload,
       {
         headers: {
@@ -103,11 +99,7 @@ const actions = {
     });
     try {
       const response = await axios.post(
-        'http://localhost:8000/task/' +
-          rootState.profile.space +
-          '/' +
-          rootState.project.project._id +
-          '/move',
+        `${baseUrl}/task/${rootState.profile.space}/${rootState.project.project._id}/move`,
         payload,
         {
           headers: {

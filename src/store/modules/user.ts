@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const baseUrl = process.env.VUE_APP_ROOT_API;
+
 const state = {
   users: [],
 };
@@ -33,7 +35,7 @@ const findUser = (userId: string) => {
 const actions = {
   async fetchUsers({ commit, dispatch, rootState }: any) {
     const response = await axios.get(
-      `http://localhost:8000/user/${rootState.profile.space}/all`,
+      `${baseUrl}/user/${rootState.profile.space}/all`,
       {
         headers: {
           Authorization: `${rootState.profile.auth.token}`,

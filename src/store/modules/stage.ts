@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const baseUrl = process.env.VUE_APP_ROOT_API;
+
 const state = {
   stages: [],
 };
@@ -22,7 +24,7 @@ const getters = {
 const actions = {
   async fetchStages({ commit, dispatch, rootState }: any) {
     const response = await axios.get(
-      'http://localhost:8000/stage/' + rootState.profile.space,
+      `${baseUrl}/stage/${rootState.profile.space}`,
       {
         headers: {
           Authorization: `${rootState.profile.auth.token}`,
@@ -33,7 +35,7 @@ const actions = {
   },
   async saveStage({ commit, dispatch, rootState }: any, payload: any) {
     const response = await axios.put(
-      'http://localhost:8000/stage/' + rootState.profile.space + '/',
+      `${baseUrl}/stage/${rootState.profile.space}/`,
       payload,
       {
         headers: {

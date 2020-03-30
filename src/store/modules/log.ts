@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const baseUrl = process.env.VUE_APP_ROOT_API;
+
 const state = {
   Task: [],
 };
@@ -13,7 +15,7 @@ const getters = {
 const actions = {
   async fetchLogs({ commit, dispatch, rootState }: any, payload: any) {
     const response = await axios.get(
-      `http://localhost:8000/log/${rootState.profile.space}/${payload.domain}/${payload.reference}`,
+      `${baseUrl}/log/${rootState.profile.space}/${payload.domain}/${payload.reference}`,
       {
         headers: {
           Authorization: `${rootState.profile.auth.token}`,

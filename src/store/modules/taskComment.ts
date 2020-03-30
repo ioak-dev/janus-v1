@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const baseUrl = process.env.VUE_APP_ROOT_API;
+
 const state = {
   comments: [],
 };
@@ -14,7 +16,7 @@ const actions = {
   async fetchTaskComments({ commit, dispatch, rootState }: any, taskId: any) {
     console.log(taskId);
     const response = await axios.get(
-      `http://localhost:8000/comment/task/${rootState.profile.space}/task/${taskId}`,
+      `${baseUrl}/comment/task/${rootState.profile.space}/task/${taskId}`,
       {
         headers: {
           Authorization: `${rootState.profile.auth.token}`,
@@ -25,7 +27,7 @@ const actions = {
   },
   async saveTaskComment({ commit, dispatch, rootState }: any, payload: any) {
     const response = await axios.put(
-      `http://localhost:8000/comment/task/${rootState.profile.space}/`,
+      `${baseUrl}/comment/task/${rootState.profile.space}/`,
       payload,
       {
         headers: {

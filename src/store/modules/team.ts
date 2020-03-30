@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { sendMessage, newMessageId } from '@/events/MessageService';
 
+const baseUrl = process.env.VUE_APP_ROOT_API;
+
 const state = {
   teams: [],
   teamId: '',
@@ -44,7 +46,7 @@ const getters = {
 const actions = {
   async fetchTeams({ commit, dispatch, rootState }: any) {
     const response = await axios.get(
-      'http://localhost:8000/team/' + rootState.profile.space + '/',
+      `${baseUrl}/team/${rootState.profile.space}/`,
       {
         headers: {
           Authorization: `${rootState.profile.auth.token}`,
@@ -68,7 +70,7 @@ const actions = {
         : `Creating team (${payload.name})`,
     });
     const response = await axios.put(
-      'http://localhost:8000/team/' + rootState.profile.space + '/',
+      `${baseUrl}/team/${rootState.profile.space}/`,
       payload,
       {
         headers: {
