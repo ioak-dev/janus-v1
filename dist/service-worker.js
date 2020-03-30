@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/janus/precache-manifest.44cf762e13df49f79bb5fed5411ee02f.js"
+  "/janus/precache-manifest.1c6b6bcb8f7580a622b51845e424698d.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "janus"});

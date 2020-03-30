@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5ea1a75f3a032006741a",
+    "revision": "14626130e2a86d8deb30",
     "url": "/janus/css/app.4743d882.css"
   },
   {
@@ -16,12 +16,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/janus/img/logo.98cc781a.svg"
   },
   {
-    "revision": "0e3a69e286adf8451f7e121c349ea34e",
+    "revision": "ecb3f586f1c0404494971fb4bcf59c6c",
     "url": "/janus/index.html"
   },
   {
-    "revision": "5ea1a75f3a032006741a",
-    "url": "/janus/js/app.05ee9198.js"
+    "revision": "14626130e2a86d8deb30",
+    "url": "/janus/js/app.bdf1f1f6.js"
   },
   {
     "revision": "2d065ff5690089f78890",
