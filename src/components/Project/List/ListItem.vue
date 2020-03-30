@@ -65,7 +65,6 @@ export default {
       e.dataTransfer.setData('id', this.task._id);
       setTimeout(() => {
         // e.target.style.display = 'none';
-        console.log('here you can set display as none');
       }, 0);
     },
     dragEnd() {

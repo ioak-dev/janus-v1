@@ -50,13 +50,12 @@ export default {
     });
   },
   methods: {
-    onBlur() {
-      console.log('blur');
-      //   console.log(event.target);
-      //   this.isSearchOn = false;
-    },
+    // onBlur() {
+    //   console.log('blur');
+    //   console.log(event.target);
+    //   this.isSearchOn = false;
+    // },
     onFocus() {
-      console.log('focus');
       this.isSearchOn = true;
     },
     selected(key) {

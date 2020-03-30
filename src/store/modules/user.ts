@@ -26,7 +26,7 @@ const findUser = (userId: string) => {
     if (user.length === 1) {
       return user[0];
     } else {
-      console.log('Seleced user id is not present');
+      // console.log('Seleced user id is not present');
     }
   }
   return null;

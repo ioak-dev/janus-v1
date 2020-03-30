@@ -109,8 +109,6 @@ export default {
       });
     },
     changeGroup: function() {
-      console.log(event.target.name);
-      console.log(event.target.value);
       this.getChecklistItemsByGroup(this.group).forEach(item => {
         this.saveTaskChecklistitem({ ...item, group: event.target.value });
       });

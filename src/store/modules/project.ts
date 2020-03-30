@@ -16,7 +16,7 @@ const findProject = (projectId: string) => {
     if (project.length === 1) {
       return project[0];
     } else {
-      console.log('Seleced project id is not present');
+      // console.log('Seleced project id is not present');
     }
   }
   return null;

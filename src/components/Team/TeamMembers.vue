@@ -73,11 +73,9 @@ export default {
       this.saveTeam(this.data);
     },
     handlePeopleSearch: function() {
-      console.log('handlePeopleSearch');
       this.searchText = event.target.value;
     },
     handlePeopleChange: function(key) {
-      console.log(key);
       if (!this.data.members) {
         this.data.members = [key];
       } else {

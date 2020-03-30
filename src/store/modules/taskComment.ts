@@ -14,7 +14,6 @@ const getters = {
 
 const actions = {
   async fetchTaskComments({ commit, dispatch, rootState }: any, taskId: any) {
-    console.log(taskId);
     const response = await axios.get(
       `${baseUrl}/comment/task/${rootState.profile.space}/task/${taskId}`,
       {

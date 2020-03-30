@@ -22,7 +22,6 @@ const actions = {
     { commit, dispatch, rootState }: any,
     { searchText, pageNo, rowsPerPage }: any
   ) {
-    console.log(searchText, pageNo, rowsPerPage);
     const response = await axios.get(
       `https://api.unsplash.com/search/photos?per_page=${rowsPerPage}&orientation=landscape&page=${pageNo}&query=${searchText}`,
       {

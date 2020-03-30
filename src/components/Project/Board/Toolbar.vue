@@ -11,14 +11,14 @@ export default {
   data: function() {
     return {
       elements: [
-        {
-          label: 'option one',
-          action: () => console.log('option one selected'),
-        },
-        {
-          label: 'option two hih jkl j ilk iji ',
-          action: () => console.log('option two selected'),
-        },
+        // {
+        //   label: 'option one',
+        //   action: () => console.log('option one selected'),
+        // },
+        // {
+        //   label: 'option two hih jkl j ilk iji ',
+        //   action: () => console.log('option two selected'),
+        // },
       ],
     };
   },

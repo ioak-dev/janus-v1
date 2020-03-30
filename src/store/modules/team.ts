@@ -20,7 +20,7 @@ const findTeam = (teamId: string): any => {
     if (team.length === 1) {
       return team[0];
     } else {
-      console.log('Seleced team id is not present', teamId);
+      // console.log('Seleced team id is not present', teamId);
     }
   }
   return null;
