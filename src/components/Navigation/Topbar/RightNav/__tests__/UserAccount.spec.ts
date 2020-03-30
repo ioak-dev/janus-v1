@@ -23,6 +23,12 @@ describe('UserAccount.vue', () => {
           },
         };
       },
+      getUserByEmail: (state: any) => (email: string) => {
+        return {
+          email: 'test@test.com',
+          name: 'john doe',
+        };
+      },
     };
     actions = {
       removeAuth: () => jest.fn(),
