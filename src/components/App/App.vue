@@ -30,8 +30,9 @@ export default {
 <style lang="scss">
 @import './theme.scss';
 @import './metric.scss';
-body {
-  // margin: 0;
+body,
+p {
+  margin: 0;
 }
 #app {
   // font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -39,8 +40,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  color: var(--color-body-invert);
-  background-color: var(--color-background);
+  color: var(--color-foreground-1);
+  background-color: var(--color-background-1);
 }
 body {
   width: 100%;
@@ -49,15 +50,15 @@ body {
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
     display: block;
     // bottom: 8px;
-    left: 10px;
+    // left: 10px;
     position: relative;
-    font-size: var(--metric-typography-6);
-    color: var(--color-body-invert-dim);
+    font-size: var(--metric-typography-5);
+    color: var(--color-foreground-2);
     text-transform: capitalize;
   }
   .app-content {
-    background-color: var(--color-body);
-    color: var(--color-body-invert);
+    background-color: var(--color-background-1);
+    color: var(--color-foreground-1);
   }
   .boxed {
     min-height: 100vh;
@@ -88,12 +89,12 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  // background: var(--color-body-invert-dim);
+  // background: var(--color-foreground-2);
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-body-invert-dim);
+  background: var(--color-foreground-2);
   border-radius: 6px;
 }
 </style>

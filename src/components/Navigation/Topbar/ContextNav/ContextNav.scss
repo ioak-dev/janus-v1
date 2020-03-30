@@ -12,11 +12,11 @@
     margin-right: 20px;
     font-size: 0.9em;
     &:hover {
-      border-bottom: 2px solid var(--color-body-invert-dim);
+      border-bottom: 2px solid var(--color-foreground-2);
     }
     &.router-link-active {
-      color: var(--color-primary);
-      border-bottom: 2px solid var(--color-primary);
+      color: var(--color-primary-1);
+      border-bottom: 2px solid var(--color-primary-1);
     }
   }
 }

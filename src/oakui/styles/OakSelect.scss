@@ -1,41 +1,41 @@
 .oak-select {
   user-select: none;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   font-size: 14px;
-  --color-bg: var(--color-btn-default-bg);
-  --color-fg: var(--color-btn-default-fg);
-  --color-fg-hover: var(--color-btn-default-fg);
+  --color-bg: var(--color-background-3);
+  --color-fg: var(--color-btn-palette-0-fg);
+  --color-fg-hover: var(--color-btn-palette-0-fg);
   &.default {
-    --color-bg: var(--color-btn-default-bg);
-    --color-fg: var(--color-btn-default-fg);
-    --color-fg-hover: var(--color-btn-default-fg);
+    --color-bg: var(--color-btn-palette-0-bg);
+    --color-fg: var(--color-btn-palette-0-fg);
+    --color-fg-hover: var(--color-btn-palette-0-fg);
   }
 
   &.primary {
-    --color-bg: var(--color-btn-primary-bg);
-    --color-fg: var(--color-btn-primary-fg);
-    --color-fg-hover: var(--color-btn-primary-fg);
+    --color-bg: var(--color-btn-palette-1-bg);
+    --color-fg: var(--color-btn-palette-1-fg);
+    --color-fg-hover: var(--color-btn-palette-1-fg);
   }
 
   &.secondary {
-    --color-bg: var(--color-btn-secondary-bg);
-    --color-fg: var(--color-btn-secondary-fg);
-    --color-fg-hover: var(--color-btn-secondary-fg);
+    --color-bg: var(--color-btn-palette-2-bg);
+    --color-fg: var(--color-btn-palette-2-fg);
+    --color-fg-hover: var(--color-btn-palette-2-fg);
   }
 
   &.tertiary {
-    --color-bg: var(--color-btn-tertiary-bg);
-    --color-fg: var(--color-btn-tertiary-fg);
-    --color-fg-hover: var(--color-btn-tertiary-fg);
+    --color-bg: var(--color-btn-palette-3-bg);
+    --color-fg: var(--color-btn-palette-3-fg);
+    --color-fg-hover: var(--color-btn-palette-3-fg);
   }
 
   .select-button {
     border-radius: 3px;
     cursor: pointer;
-    background-color: var(--color-body-dim);
-    color: var(--color-body-invert);
+    background-color: var(--color-background-5);
+    color: var(--color-foreground-1);
     padding: 4px 5px; //10px 16px;
-    width: 100%;
+    width: fit-content;
     box-sizing: border-box;
     overflow-x: hidden;
     text-overflow: ellipsis;
@@ -58,8 +58,8 @@
 
   &.outline {
     .select-button {
-      background-color: var(--color-body);
-      color: var(--color-body-invert);
+      background-color: var(--color-background-5);
+      color: var(--color-foreground-1);
       border: 1.5px solid var(--color-bg);
     }
   }
@@ -67,14 +67,14 @@
   &.no-outline {
     .select-button {
       background-color: transparent;
-      color: var(--color-body-invert);
+      color: var(--color-foreground-1);
     }
   }
 
   &.normal {
     .select-button {
-      background-color: var(--color-body-dim);
-      color: var(--color-body-invert);
+      background-color: var(--color-background-5);
+      color: var(--color-foreground-1);
     }
   }
 
@@ -94,8 +94,8 @@
       overflow-y: auto;
       position: absolute;
       //   position: relative;
-      width: 100%;
-      background-color: var(--color-body);
+      width: fit-content;
+      background-color: var(--color-background-5);
       box-shadow: 0 0 0 1px rgba(111, 119, 130, 0.15),
         0 5px 20px 0 rgba(21, 27, 38, 0.08);
       //   margin-top: 4px;
@@ -132,7 +132,7 @@
     padding: 6px;
     font-size: 14px;
     border-radius: 4px;
-    background-color: var(--color-body);
+    background-color: var(--color-background-1);
     margin-left: 10px;
     min-width: 14px;
     text-align: center;

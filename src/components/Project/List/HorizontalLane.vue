@@ -1,5 +1,5 @@
 <template>
-  <div class="lane-horizontal" @dragover.prevent @drop.prevent="drop">
+  <div class="lane-horizontal">
     <div
       class="stage typography-5"
       v-bind:class="isExpanded ? 'show' : 'hide'"
@@ -17,12 +17,7 @@
       v-bind:class="isExpanded ? 'show' : 'hide'"
       ref="container"
     >
-      <div
-        v-for="task in tasks"
-        v-bind:key="task.id"
-        draggable="true"
-        v-bind:id="task.id"
-      >
+      <div v-for="task in tasks" v-bind:key="task.id" v-bind:id="task.id">
         <ListItem v-bind:task="task" />
       </div>
     </div>
@@ -51,9 +46,9 @@ export default {
   },
   methods: {
     drop(e) {
-      const id = e.dataTransfer.getData('id');
-      const listItem = document.getElementById(id);
-      listItem.style.display = 'block';
+      // const id = e.dataTransfer.getData('id');
+      // const listItem = document.getElementById(id);
+      // listItem.style.display = 'block';
       // e.target.appendChild(listItem);
     },
     toggle: function() {
@@ -89,7 +84,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .lane-horizontal {
-  user-select: none;
+  // user-select: none;
   .container {
     // margin-left: 20px;
     overflow-y: hidden;
@@ -99,9 +94,9 @@ export default {
     height: 60px;
     line-height: 60px;
     &.show {
-      border-bottom: 1px solid var(--color-body-dim);
+      border-bottom: 1px solid var(--color-background-transparent-2);
     }
-    color: var(--color-body-invert-dim);
+    color: var(--color-foreground-2);
     font-size: 0.9em;
     .material-icons {
       line-height: 60px;

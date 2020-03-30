@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// const baseUrl = process.env.REACT_APP_API_URL;
-const baseUrl = ' http://localhost:8000';
+const baseUrl = process.env.VUE_APP_ROOT_API;
 
 export function httpGet(endpoint: string, headers: any) {
   return axios.get(baseUrl + endpoint, headers);

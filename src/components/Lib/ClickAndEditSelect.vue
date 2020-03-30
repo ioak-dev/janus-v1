@@ -1,6 +1,7 @@
 <template>
   <OakClickAndEdit
     v-bind:id="id"
+    v-bind:label="label ? label : null"
     v-bind:alwaysEdit="alwaysEditFields.includes(id)"
   >
     <div slot="edit-content">
@@ -9,7 +10,6 @@
         v-bind:data="data[id]"
         v-bind:id="id"
         @change="$emit('change')"
-        v-bind:label="label ? label : id"
         v-bind:objects="objects"
       />
       <OakSelect
@@ -17,16 +17,12 @@
         v-bind:data="data[id]"
         v-bind:id="id"
         @change="$emit('change')"
-        v-bind:label="id"
         v-bind:elements="elements"
       />
     </div>
     <div slot="view-content">
-      <div class="typography-5 form-element-label">
-        {{ label ? label : id }}
-      </div>
       <div class="typography-5">
-        {{ data[id] ? data[id] : 'None' }}
+        {{ viewData }}
       </div>
     </div>
   </OakClickAndEdit>
@@ -35,7 +31,7 @@
 import OakClickAndEdit from '@/oakui/OakClickAndEdit.vue';
 import OakSelect from '@/oakui/OakSelect.vue';
 export default {
-  name: 'ClickAndEditText',
+  name: 'ClickAndEditSelect',
   props: {
     alwaysEditFields: Array,
     data: Object,
@@ -47,6 +43,17 @@ export default {
   components: {
     OakSelect,
     OakClickAndEdit,
+  },
+  computed: {
+    viewData: function() {
+      if (this.elements) {
+        return this.data[this.id] ? this.data[this.id] : 'None';
+      } else if (this.objects) {
+        return this.objects.find(item => item.key === this.data[this.id])
+          ?.value;
+      }
+      return '';
+    },
   },
 };
 </script>

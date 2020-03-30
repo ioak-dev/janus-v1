@@ -31,6 +31,14 @@ export function readProject({ to, from, next }: any) {
   next();
 }
 
+export function readTask({ to, from, next }: any) {
+  if (!to.params.taskId) {
+    console.log('task not selected error page');
+  }
+  store.dispatch('addTaskToView', to.params.taskId);
+  next();
+}
+
 export function readTeam({ to, from, next }: any) {
   if (!to.params.teamId) {
     console.log('team not selected error page');

@@ -7,7 +7,7 @@
       iconLeft="person"
     >
       <div slot="label">
-        <Avatar v-bind:initials="initials" />
+        <Avatar v-bind:user="user" />
       </div>
     </OakPopoverMenu>
   </div>
@@ -23,9 +23,9 @@ export default {
     Avatar,
   },
   computed: {
-    ...mapGetters(['getProfile']),
-    initials: function() {
-      return this?.getProfile?.auth?.email?.substring(0, 2);
+    ...mapGetters(['getProfile', 'getUserByEmail']),
+    user: function() {
+      return this?.getUserByEmail(this?.getProfile?.auth?.email);
     },
     elements: function() {
       const elementsList = [];

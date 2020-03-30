@@ -16,6 +16,11 @@ describe('TitleRow.vue', () => {
           name: 'testname',
         };
       },
+      getTeam: () => {
+        return {
+          name: 'testname',
+        };
+      },
     };
     store = new Vuex.Store({
       getters,

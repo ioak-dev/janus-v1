@@ -6,14 +6,7 @@ const state = {
   project: null,
 };
 
-const getters = {
-  getProjects: (state: any) => {
-    return state.projects;
-  },
-  getProject: (state: any) => {
-    return state.project;
-  },
-};
+const baseUrl = process.env.VUE_APP_ROOT_API;
 
 const findProject = (projectId: string) => {
   if (state.projects?.length > 0) {
@@ -29,10 +22,22 @@ const findProject = (projectId: string) => {
   return null;
 };
 
+const getters = {
+  getProjects: (state: any) => {
+    return state.projects;
+  },
+  getProject: (state: any) => {
+    return state.project;
+  },
+  getProjectById: (state: any) => (id: string) => {
+    return findProject(id);
+  },
+};
+
 const actions = {
   async fetchProjects({ commit, dispatch, rootState }: any) {
     const response = await axios.get(
-      'http://localhost:8000/project/' + rootState.profile.space,
+      `${baseUrl}/project/${rootState.profile.space}`,
       {
         headers: {
           Authorization: `${rootState.profile.auth.token}`,
@@ -52,7 +57,7 @@ const actions = {
   },
   async saveProject({ commit, dispatch, rootState }: any, payload: any) {
     const response = await axios.put(
-      'http://localhost:8000/project/' + rootState.profile.space + '/',
+      `${baseUrl}/project/${rootState.profile.space}/`,
       payload,
       {
         headers: {

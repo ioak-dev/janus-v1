@@ -38,8 +38,15 @@
           v-bind:alwaysEditFields="alwaysEditFields"
           @change="handleChange"
         />
+        <Assignee
+          v-bind:id="data.assignedTo"
+          @remove="clearAssignee"
+          @change="handleAssigneeChange"
+          v-bind:teamIdList="teamIdList"
+        />
         <OakClickAndEdit
           id="description"
+          label="Description"
           v-bind:alwaysEdit="alwaysEditFields.includes('description')"
         >
           <div slot="edit-content">
@@ -49,11 +56,9 @@
               @change="handleChange"
               multiline
               v-bind:rows="10"
-              label="Description"
             />
           </div>
           <div slot="view-content">
-            <div class="typography-5 form-element-label">Description</div>
             <OakShowdown
               v-if="data.description"
               v-bind:source="data.description"
@@ -82,6 +87,7 @@ import OakButton from '@/oakui/OakButton.vue';
 import OakClickAndEdit from '@/oakui/OakClickAndEdit.vue';
 import ClickAndEditText from '@/components/Lib/ClickAndEditText.vue';
 import ClickAndEditSelect from '@/components/Lib/ClickAndEditSelect.vue';
+import Assignee from './Assignee.vue';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -94,6 +100,7 @@ export default {
     OakShowdown,
     ClickAndEditText,
     ClickAndEditSelect,
+    Assignee,
   },
   props: {
     visible: Boolean,
@@ -114,12 +121,14 @@ export default {
         priority: '',
         title: '',
         description: '',
+        assignedTo: '',
       },
+      teamIdList: [],
       stageDropDown: [],
     };
   },
   computed: {
-    ...mapGetters(['getProjects', 'getStagesByProjectId']),
+    ...mapGetters(['getProjects', 'getStagesByProjectId', 'getProjectById']),
     projectDropDown: function() {
       const projectList = [];
       this.getProjects.forEach(item =>
@@ -136,8 +145,9 @@ export default {
       this.data = { ...this.task };
     },
     'data.projectId': function(newProjectId, oldProjectId) {
-      if (oldProjectId !== newProjectId) {
+      if (newProjectId && oldProjectId !== newProjectId) {
         this.fetchStageDropdown();
+        this.teamIdList = this.getProjectById(newProjectId).teamIdList;
       }
     },
   },
@@ -155,6 +165,12 @@ export default {
     },
     save: function() {
       this.saveTask(this.data);
+    },
+    clearAssignee: function() {
+      this.data.assignedTo = '';
+    },
+    handleAssigneeChange: function(key) {
+      this.data.assignedTo = key;
     },
   },
 };

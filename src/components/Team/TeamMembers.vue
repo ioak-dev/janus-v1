@@ -13,6 +13,7 @@
         @search="handlePeopleSearch"
         @change="handlePeopleChange"
         v-bind:objects="peopleSearchList"
+        id="people-search"
       />
       <div class="members">
         <div class="member" v-for="member in data.members" v-bind:key="member">
@@ -92,7 +93,7 @@ export default {
   height: calc(100vh - 60px);
   .member {
     padding: 10px 0px;
-    border-bottom: 1px solid var(--color-body-dim);
+    border-bottom: 1px solid var(--color-background-2);
   }
 }
 </style>

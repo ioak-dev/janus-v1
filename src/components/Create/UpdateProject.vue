@@ -61,6 +61,11 @@ export default {
   created() {
     this.data = { ...this.project };
   },
+  watch: {
+    project: function() {
+      this.data = { ...this.project };
+    },
+  },
   methods: {
     ...mapActions(['saveProject']),
     handleChange: function() {

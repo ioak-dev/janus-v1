@@ -22,3 +22,7 @@ export function receiveMessage(): Observable<Message> {
 export function newMessageId() {
   return Math.random();
 }
+
+export function newId() {
+  return Math.random();
+}

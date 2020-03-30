@@ -17,13 +17,13 @@
     align-items: center;
     padding: 0px 10px;
     position: relative;
-    background-color: var(--color-body-dim);
+    background-color: var(--color-background-2);
     padding: 0px 0px 0px 10px;
     font-size: 0.9em;
     border-left: 6px solid var(--color-notification-type);
     margin-top: 6px;
 
-    --color-notification-type: var(--color-tertiary);
+    --color-notification-type: var(--color-tertiary-1);
     &.success {
       --color-notification-type: var(--color-success);
     }
@@ -45,13 +45,13 @@
 
     .message-action {
       cursor: pointer;
-      color: var(--color-body-invert-dim);
+      color: var(--color-foreground-2);
       .material-icons {
         font-size: 16px;
         margin: 0px 10px;
       }
       &:hover {
-        color: var(--color-body-invert);
+        color: var(--color-foreground-1);
       }
     }
   }
@@ -89,7 +89,7 @@
   &.hide {
     transition: transform 0.5s;
     transform: translateX(-150vw);
-    // background-color: var(--color-body-invert-dim);
+    // background-color: var(--color-foreground-2);
   }
 }
 
@@ -117,8 +117,8 @@
   height: 46px;
   margin: 1px;
   border-radius: 50%;
-  border: 5px solid var(--color-primary);
-  border-color: var(--color-primary) transparent var(--color-primary)
+  border: 5px solid var(--color-primary-1);
+  border-color: var(--color-primary-1) transparent var(--color-primary-1)
     transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
@@ -152,7 +152,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--color-primary);
+  background: var(--color-primary-1);
   margin: -3px 0 0 -3px;
 }
 .lds-roller div:nth-child(1) {
@@ -234,7 +234,7 @@
   position: absolute;
   left: 6px;
   width: 13px;
-  background: var(--color-primary);
+  background: var(--color-primary-1);
   animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
 .lds-facebook div:nth-child(1) {

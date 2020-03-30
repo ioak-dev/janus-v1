@@ -9,10 +9,19 @@ describe('Avatar.vue', () => {
   it('renders when initialized', () => {
     const wrapper = shallowMount(Avatar, {
       propsData: {
-        initials: 'Ar',
+        user: {
+          name: 'Arun',
+        },
       },
     });
     expect(wrapper.contains('.avatar')).toBeTruthy();
     expect(wrapper.find('.avatar').text()).toEqual('Ar');
+  });
+
+  it('should not show avatar when user is not passed', () => {
+    const wrapper = shallowMount(Avatar, {
+      propsData: {},
+    });
+    expect(wrapper.contains('.avatar')).toBeFalsy();
   });
 });

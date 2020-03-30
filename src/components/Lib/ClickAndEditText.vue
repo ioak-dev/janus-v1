@@ -1,6 +1,7 @@
 <template>
   <OakClickAndEdit
     v-bind:id="id"
+    v-bind:label="label ? label : null"
     v-bind:alwaysEdit="alwaysEditFields.includes(id)"
   >
     <div slot="edit-content">
@@ -8,11 +9,9 @@
         v-bind:data="data[id]"
         v-bind:id="id"
         @change="$emit('change')"
-        v-bind:label="id"
       />
     </div>
     <div slot="view-content">
-      <div class="typography-5 form-element-label">{{ id }}</div>
       <div class="typography-5">
         {{ data[id] ? data[id] : 'None' }}
       </div>
@@ -28,6 +27,7 @@ export default {
     alwaysEditFields: Array,
     data: Object,
     id: String,
+    label: String,
   },
   components: {
     OakText,

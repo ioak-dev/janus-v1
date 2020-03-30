@@ -55,7 +55,7 @@ export default {
     label: String,
     handleChange: Function,
     error: Boolean,
-    data: String,
+    data: [String, Number],
     elements: Array,
     objects: Array,
     first: String,

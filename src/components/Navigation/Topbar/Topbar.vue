@@ -2,7 +2,8 @@
   <div class="topbar">
     <div class="left">
       <menu-icon @click="$emit('sidebarToggled')" />
-      <Logo class="logo-container desktop-only" v-if="!getProfile.sidebar" />
+      <!-- <Logo class="logo-container desktop-only" v-if="!getProfile.sidebar" /> -->
+      <ThumbnailSection />
       <div class="left-nav-container">
         <div class="title-row-container"><title-row /></div>
         <context-nav />
@@ -18,8 +19,8 @@ import RightNav from './RightNav/RightNav.vue';
 import TitleRow from './TitleRow.vue';
 import ContextNav from './ContextNav/ContextNav.vue';
 import MenuIcon from './MenuIcon.vue';
+import ThumbnailSection from './ThumbnailSection.vue';
 import { mapGetters, mapActions } from 'vuex';
-import Logo from '@/components/Logo/Logo.vue';
 
 export default {
   name: 'Topbar',
@@ -33,10 +34,10 @@ export default {
     TitleRow,
     MenuIcon,
     ContextNav,
-    Logo,
+    ThumbnailSection,
   },
   computed: {
-    ...mapGetters(['getProfile']),
+    ...mapGetters(['getProfile', 'getProject']),
   },
   methods: {
     ...mapActions(['removeAuth']),
@@ -48,7 +49,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .topbar {
-  background-color: var(--color-body);
+  background-color: var(--color-background-2);
   display: flex;
   height: 100%;
   align-content: center;
