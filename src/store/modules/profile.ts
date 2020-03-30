@@ -2,7 +2,7 @@ const state = {
   theme: '',
   space: '',
   auth: {},
-  sidebar: false,
+  sidebar: true,
 };
 
 const getters = {

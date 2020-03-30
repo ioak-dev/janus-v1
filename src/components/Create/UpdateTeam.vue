@@ -58,7 +58,7 @@ export default {
   },
   props: {
     visible: Boolean,
-    project: Object,
+    team: Object,
     alwaysEditFields: {
       type: Array,
       default: function() {
@@ -91,11 +91,11 @@ export default {
     },
   },
   created() {
-    this.data = { ...this.data, ...this.getTeam };
+    this.data = { ...this.team };
   },
   watch: {
     getTeam: function() {
-      this.data = { ...this.data, ...this.getTeam };
+      this.data = { ...this.team };
     },
   },
   methods: {

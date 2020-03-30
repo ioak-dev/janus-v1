@@ -59,7 +59,7 @@ export default {
   align-content: center;
   border: 1px solid transparent;
   &:hover {
-    border: 1px solid var(--color-background-2);
+    border: 1px solid var(--color-background-5);
     border-radius: 4px;
   }
   .view-content {
@@ -80,6 +80,6 @@ export default {
   }
 }
 .edit-content-container {
-  padding: 6px;
+  // padding: 6px;
 }
 </style>

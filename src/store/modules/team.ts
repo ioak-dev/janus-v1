@@ -7,8 +7,10 @@ const state = {
   team: null,
 };
 
-const findTeam = (teamId: string) => {
-  console.log(teamId, state.teams);
+const findTeam = (teamId: string): any => {
+  if (!teamId) {
+    return null;
+  }
   if (state.teams?.length > 0) {
     const team = state.teams.filter((element: any) => {
       return element._id === teamId;
@@ -16,7 +18,7 @@ const findTeam = (teamId: string) => {
     if (team.length === 1) {
       return team[0];
     } else {
-      console.log('Seleced team id is not present');
+      console.log('Seleced team id is not present', teamId);
     }
   }
   return null;
@@ -31,6 +33,11 @@ const getters = {
   },
   findTeamById: (state: any) => (id: string) => {
     return findTeam(id);
+  },
+  findTeamByIdList: (state: any) => (idList: any) => {
+    const teamList: any = [];
+    idList?.forEach((id: string) => teamList.push(...findTeam(id)?.members));
+    return teamList;
   },
 };
 
@@ -60,7 +67,6 @@ const actions = {
         ? `Updating team (${payload.name})`
         : `Creating team (${payload.name})`,
     });
-    console.log(payload);
     const response = await axios.put(
       'http://localhost:8000/team/' + rootState.profile.space + '/',
       payload,
@@ -98,7 +104,6 @@ const mutations = {
     state.teams = teams;
   },
   UPDATE_TEAM: (state: any, selectedTeamData: any) => {
-    console.log(selectedTeamData);
     state.team = selectedTeamData.team;
     state.teamId = selectedTeamData.teamId;
   },

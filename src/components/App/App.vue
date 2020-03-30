@@ -30,8 +30,9 @@ export default {
 <style lang="scss">
 @import './theme.scss';
 @import './metric.scss';
-body {
-  // margin: 0;
+body,
+p {
+  margin: 0;
 }
 #app {
   // font-family: Avenir, Helvetica, Arial, sans-serif;

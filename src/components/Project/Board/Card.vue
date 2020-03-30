@@ -135,7 +135,7 @@ export default {
     background-color: var(--color-tertiary-1);
   }
   &.source-spot {
-    background-color: var(--color-background-2);
+    background-color: var(--color-background-transparent-4);
   }
 
   .top-row {

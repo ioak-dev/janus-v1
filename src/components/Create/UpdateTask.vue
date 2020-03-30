@@ -42,7 +42,7 @@
           v-bind:id="data.assignedTo"
           @remove="clearAssignee"
           @change="handleAssigneeChange"
-          v-bind:teamId="teamId"
+          v-bind:teamIdList="teamIdList"
         />
         <OakClickAndEdit
           id="description"
@@ -123,7 +123,7 @@ export default {
         description: '',
         assignedTo: '',
       },
-      teamId: '',
+      teamIdList: [],
       stageDropDown: [],
     };
   },
@@ -145,9 +145,9 @@ export default {
       this.data = { ...this.task };
     },
     'data.projectId': function(newProjectId, oldProjectId) {
-      if (oldProjectId !== newProjectId) {
+      if (newProjectId && oldProjectId !== newProjectId) {
         this.fetchStageDropdown();
-        this.teamId = this.getProjectById(newProjectId).teamId;
+        this.teamIdList = this.getProjectById(newProjectId).teamIdList;
       }
     },
   },
@@ -170,7 +170,6 @@ export default {
       this.data.assignedTo = '';
     },
     handleAssigneeChange: function(key) {
-      console.log(this.data, key);
       this.data.assignedTo = key;
     },
   },

@@ -62,6 +62,11 @@ export default {
   created() {
     this.data = { ...this.stage };
   },
+  watch: {
+    stage: function() {
+      this.data = { ...this.stage };
+    },
+  },
   computed: {
     ...mapGetters(['getProjects']),
     projectDropDown: function() {

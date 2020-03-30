@@ -1,13 +1,16 @@
 <template>
-  <div class="list-view app-content">
-    <div class="toolbar-container desktop-only"><Toolbar /></div>
-    <div class="list-view-header">
+  <div class="list-view" v-bind:class="styleClass">
+    <div class="toolbar-container desktop-only" v-bind:class="styleClass">
+      <Toolbar />
+    </div>
+    <div class="list-view-header" v-bind:class="styleClass">
+      <div></div>
       <div>Task Id</div>
       <div>Title</div>
       <div>Assigned to</div>
       <div>Priority</div>
     </div>
-    <div class="list-view-content">
+    <div class="list-view-content" v-bind:class="styleClass">
       <div v-for="stage in getStagesByProjectId()" v-bind:key="stage._id">
         <horizontal-lane v-bind:stage="stage" />
       </div>
@@ -35,28 +38,82 @@ export default {
     Toolbar,
   },
   computed: {
-    ...mapGetters(['getStagesByProjectId']),
+    ...mapGetters(['getStagesByProjectId', 'getProject']),
+    styleClass: function() {
+      if (this.getProject?.image) {
+        return 'background-present';
+      }
+      return 'background-not-present';
+    },
+  },
+  watch: {
+    getProject: function() {
+      if (this.getProject?.image) {
+        document.getElementsByClassName(
+          'list-view'
+        )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
+      }
+    },
+  },
+  mounted() {
+    if (this.getProject?.image) {
+      document.getElementsByClassName(
+        'list-view'
+      )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
+    }
   },
 };
 </script>
 <style lang="scss" scoped>
 .list-view {
+  &.background-present {
+    background-size: cover !important;
+  }
+  .toolbar-container,
+  .list-view-header {
+    &.background-not-present {
+      background-color: var(--color-background-2);
+      border-bottom: 1px solid var(--color-background-1);
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+        0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    }
+    &.background-present {
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid var(--color-transparent-3);
+      background-color: var(--color-background-transparent-5);
+    }
+  }
+  .list-view-content {
+    &.background-not-present {
+      background-color: var(--color-background-2);
+    }
+    &.background-present {
+      background-color: var(--color-background-transparent-5);
+    }
+  }
+  // background-color: var(--color-background-2);
   display: flex;
   flex-direction: column;
   height: calc(100vh - 60px);
   .list-view-header {
-    margin: 0px 10px;
-    min-height: 36px;
     height: 36px;
     line-height: 36px;
-    border-bottom: 1px solid var(--color-background-2);
+    border-bottom: 1px solid var(--color-background-5);
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr 1fr;
+    grid-template-columns: 60px 1fr 3fr 1fr 1fr;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
   }
   .list-view-content {
-    margin: 0px 10px;
+    // margin: 0 20px;
     overflow-x: auto;
     overflow-y: auto;
+  }
+
+  .list-view-header {
+    display: grid;
+    grid-template-columns: 60px repeat(4, minmax(25px, 1fr));
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <OakClickAndEdit
     v-bind:id="id"
-    v-bind:label="id"
+    v-bind:label="label ? label : null"
     v-bind:alwaysEdit="alwaysEditFields.includes(id)"
   >
     <div slot="edit-content">
@@ -27,6 +27,7 @@ export default {
     alwaysEditFields: Array,
     data: Object,
     id: String,
+    label: String,
   },
   components: {
     OakText,

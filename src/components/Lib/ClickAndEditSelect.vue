@@ -1,7 +1,7 @@
 <template>
   <OakClickAndEdit
     v-bind:id="id"
-    v-bind:label="label ? label : id"
+    v-bind:label="label ? label : null"
     v-bind:alwaysEdit="alwaysEditFields.includes(id)"
   >
     <div slot="edit-content">
@@ -49,7 +49,6 @@ export default {
       if (this.elements) {
         return this.data[this.id] ? this.data[this.id] : 'None';
       } else if (this.objects) {
-        console.log(this.objects, this.data, this.id);
         return this.objects.find(item => item.key === this.data[this.id])
           ?.value;
       }

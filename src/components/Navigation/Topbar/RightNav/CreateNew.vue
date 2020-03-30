@@ -52,6 +52,30 @@ import UpdateStage from '@/components/Create/UpdateStage.vue';
 import UpdateTeam from '@/components/Create/UpdateTeam.vue';
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
 
+const projectStub = {
+    name: '',
+    type: 'Kanban',
+  },
+  teamStub = {
+    name: '',
+    members: [],
+  },
+  stageStub = {
+    projectId: '',
+    stageId: '',
+    name: '',
+  },
+  taskStub = {
+    stageId: '',
+    type: 'Story',
+    title: '',
+    description: '',
+    priority: '',
+    assignedTo: null,
+    parentTaskId: null,
+    projectId: '',
+  };
+
 export default {
   name: 'CreateNew',
   data: function() {
@@ -60,29 +84,10 @@ export default {
       newStage: false,
       newTask: false,
       newTeam: false,
-      projectStub: {
-        name: '',
-        type: 'Kanban',
-      },
-      teamStub: {
-        name: '',
-        members: [],
-      },
-      stageStub: {
-        projectId: '',
-        stageId: '',
-        name: '',
-      },
-      taskStub: {
-        stageId: '',
-        type: 'Story',
-        title: '',
-        description: '',
-        priority: '',
-        assignedTo: null,
-        parentTaskId: null,
-        projectId: '',
-      },
+      projectStub: projectStub,
+      teamStub: teamStub,
+      stageStub: stageStub,
+      taskStub: taskStub,
       elements: [
         {
           label: 'Task',
@@ -116,15 +121,19 @@ export default {
   },
   methods: {
     toggleProject: function() {
+      this.projectStub = { ...this.projectStub, projectStub };
       this.newProject = !this.newProject;
     },
     toggleTask: function() {
+      this.taskStub = { ...this.taskStub, taskStub };
       this.newTask = !this.newTask;
     },
     toggleStage: function() {
+      this.stageStub = { ...this.stageStub, ...stageStub };
       this.newStage = !this.newStage;
     },
     toggleTeam: function() {
+      this.teamStub = { ...this.teamStub, ...teamStub };
       this.newTeam = !this.newTeam;
     },
   },

@@ -1,6 +1,8 @@
 <template>
   <div class="assigned-to">
-    <div class="typography-5 form-element-label">Assigned To</div>
+    <div class="typography-5 form-element-label">
+      {{ label ? label : null }}
+    </div>
     <div v-if="user" class="view-content">
       <div class="container">
         <Avatar v-bind:user="user" showName />
@@ -10,7 +12,6 @@
     <div v-else class="edit-content">
       <OakAutoComplete
         v-bind:id="'search-assignee-' + Math.random()"
-        label="Search team members"
         @search="handlePeopleSearch"
         @change="key => $emit('change', key)"
         v-bind:objects="peopleSearchList"
@@ -26,7 +27,8 @@ export default {
   name: 'Assignee',
   props: {
     id: String,
-    teamId: String,
+    teamIdList: Array,
+    label: String,
   },
   data: function() {
     return {
@@ -38,14 +40,14 @@ export default {
     OakAutoComplete,
   },
   computed: {
-    ...mapGetters(['getUserById', 'findTeamById']),
+    ...mapGetters(['getUserById', 'findTeamByIdList']),
     user: function() {
       return this.getUserById(this.id);
     },
     peopleList: function() {
-      const team = this.findTeamById(this.teamId);
+      const team = this.findTeamByIdList(this.teamIdList);
       const people = [];
-      team?.members.forEach(userId => {
+      team?.forEach(userId => {
         const userItem = this.getUserById(userId);
         people.push({ key: userItem._id, value: userItem.name });
       });
@@ -66,7 +68,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .assigned-to {
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   .view-content {
     border: 1px solid var(--color-background-2);
     border-radius: 4px;

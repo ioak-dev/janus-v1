@@ -5,14 +5,17 @@ import TeamProjects from '@/components/Team/TeamProjects.vue';
 import TeamMembers from '@/components/Team/TeamMembers.vue';
 import BoardView from '@/components/Project/Board/BoardView.vue';
 import ListView from '@/components/Project/List/ListView.vue';
+import TaskView from '@/components/Project/Task/TaskView.vue';
 import CreateSpace from '@/components/Space/CreateSpace.vue';
 import Login from '@/components/Auth/Login.vue';
+import ProjectChangeBackground from '@/components/Project/Background/ProjectChangeBackground.vue';
 
 import {
   middlewarePipeline,
   readSpace,
   readProject,
   readTeam,
+  readTask,
 } from './middleware';
 
 Vue.use(VueRouter);
@@ -46,6 +49,24 @@ const routes = [
     meta: {
       context: 'Project',
       middleware: [readSpace, readProject],
+    },
+  },
+  {
+    path: '/:space/:projectId/changebackground',
+    component: ProjectChangeBackground,
+    name: 'ProjectChangeBackground',
+    meta: {
+      context: 'Project',
+      middleware: [readSpace, readProject],
+    },
+  },
+  {
+    path: '/:space/:projectId/task/:taskId',
+    component: TaskView,
+    name: 'TaskView',
+    meta: {
+      context: 'Project',
+      middleware: [readSpace, readProject, readTask],
     },
   },
   {
