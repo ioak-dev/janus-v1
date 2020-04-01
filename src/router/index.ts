@@ -12,6 +12,7 @@ import ProjectChangeBackground from '@/components/Project/Background/ProjectChan
 
 import {
   middlewarePipeline,
+  authenticate,
   readSpace,
   readProject,
   readTeam,
@@ -25,13 +26,12 @@ const routes = [
     path: '/:space/home',
     component: Home,
     name: 'Home',
-    meta: { middleware: [readSpace] },
+    meta: { middleware: [readSpace, authenticate] },
   },
   {
-    path: '/:space/login',
+    path: '/login',
     component: Login,
     name: 'Login',
-    meta: { middleware: [readSpace] },
   },
   {
     path: '/:space/:projectId/board',
@@ -39,7 +39,7 @@ const routes = [
     name: 'BoardView',
     meta: {
       context: 'Project',
-      middleware: [readSpace, readProject],
+      middleware: [readSpace, readProject, authenticate],
     },
   },
   {
@@ -48,7 +48,7 @@ const routes = [
     name: 'ListView',
     meta: {
       context: 'Project',
-      middleware: [readSpace, readProject],
+      middleware: [readSpace, readProject, authenticate],
     },
   },
   {
@@ -57,7 +57,7 @@ const routes = [
     name: 'ProjectChangeBackground',
     meta: {
       context: 'Project',
-      middleware: [readSpace, readProject],
+      middleware: [readSpace, readProject, authenticate],
     },
   },
   {
@@ -66,7 +66,7 @@ const routes = [
     name: 'TaskView',
     meta: {
       context: 'Project',
-      middleware: [readSpace, readProject, readTask],
+      middleware: [readSpace, readProject, readTask, authenticate],
     },
   },
   {
@@ -75,7 +75,7 @@ const routes = [
     name: 'TeamMembers',
     meta: {
       context: 'Team',
-      middleware: [readSpace, readTeam],
+      middleware: [readSpace, readTeam, authenticate],
     },
   },
   {
@@ -84,7 +84,7 @@ const routes = [
     name: 'TeamProjects',
     meta: {
       context: 'Team',
-      middleware: [readSpace, readTeam],
+      middleware: [readSpace, readTeam, authenticate],
     },
   },
   { path: '/createspace', component: CreateSpace, name: 'CreateSpace' },
@@ -108,6 +108,7 @@ router.beforeEach((to, from, next) => {
   return middleware[0]({
     ...context,
     next: middlewarePipeline(context, middleware, 1),
+    nextVue: context.next,
   });
 });
 

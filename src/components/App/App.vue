@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="theme_dark themecolor_1">
-    <AuthInit />
+    <!-- <AuthInit /> -->
     <Notification />
     <!-- <Navigation /> -->
     <Container />
@@ -10,14 +10,14 @@
 <script>
 import { mapGetters } from 'vuex';
 import Notification from '@/components/Notification/Notification.vue';
-import AuthInit from '@/components/Auth/AuthInit.vue';
+// import AuthInit from '@/components/Auth/AuthInit.vue';
 import Container from './Container.vue';
 // import Navigation from '@/components/Navigation/Navigation.vue';
 export default {
   name: 'App',
   components: {
     Notification,
-    AuthInit,
+    // AuthInit,
     // Navigation,
     Container,
   },

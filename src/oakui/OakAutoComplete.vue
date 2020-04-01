@@ -5,7 +5,6 @@
         id="auto-complete"
         v-bind:label="label"
         @focus="onFocus"
-        @blur="onBlur"
         @change="$emit('search')"
       />
     </div>
