@@ -23,11 +23,11 @@ export function authenticate({ to, from, next, nextVue }: any) {
     if (fromCookies) {
       axios
         .get(
-          `${process.env.VUE_APP_ONEAUTH_API}/auth/${to.params.space}/session/${fromCookies}`
+          `${process.env.VUE_APP_ROOT_API}/auth/${to.params.space}/session/${fromCookies}`
         )
         .then(sessionResponse => {
           store.dispatch('addAuth', {
-            auth: { ...sessionResponse.data, isAuth: true },
+            auth: { ...sessionResponse.data.data, isAuth: true },
           });
           next();
         });
