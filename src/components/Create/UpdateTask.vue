@@ -1,6 +1,6 @@
 <template>
   <div>
-    <OakDialog @close="$emit('close')" v-bind:visible="visible">
+    <OakDialog @close="handleClose" v-bind:visible="visible">
       <div slot="dialog-body">
         <ClickAndEditSelect
           v-bind:data="data"
@@ -44,10 +44,12 @@
           @change="handleAssigneeChange"
           v-bind:teamIdList="teamIdList"
         />
+        <div class="form-element-label">Description</div>
         <OakEditor
-          id="task-description"
+          v-bind:id="'task-description-' + task._id"
           v-bind:data="data.description"
           @change="handleDescriptionChange"
+          alwaysEdit
         />
       </div>
 
@@ -143,6 +145,10 @@ export default {
     },
     handleDescriptionChange: function(text) {
       this.data.description = text;
+    },
+    handleClose: function() {
+      this.$emit('close');
+      this.data = { ...this.task };
     },
     fetchStageDropdown: function() {
       const stageList = [];

@@ -4,7 +4,13 @@
       <button class="ql-bold">Bold</button>
       <button class="ql-italic">Italic</button>
     </div> -->
-    <div class="container" v-bind:class="'oak-editor-' + id"></div>
+    <!-- <div
+      class="container"
+      v-html="data"
+      v-bind:class="'oak-editor-' + id"
+    ></div> -->
+    <!-- <div ref="editor" v-html="data"></div> -->
+    <div v-bind:ref="'editor-' + id" v-bind:id="'editor-' + id"></div>
   </div>
 </template>
 <script>
@@ -32,53 +38,65 @@ export default {
     id: String,
     data: String,
   },
-  data: function() {
+
+  data() {
     return {
-      quillData: {
-        initialized: false,
-        options: {
-          modules: {
-            toolbar: toolbarOptions,
-          },
-          theme: 'snow',
-        },
-        editor: null,
-      },
+      editor: null,
     };
   },
   mounted() {
-    this.quillData.editor = new Quill(
-      `.oak-editor-${this.id}`,
-      this.quillData.options
-    );
-    this.quillData.editor.on('text-change', () => {
-      this.initialized = true;
-      // this.$emit('change', this.quillData.editor.root.innerHTML);
-      this.quillData.editor.on('text-change', () => this.update());
+    this.editor = new Quill(this.$refs[`editor-${this.id}`], {
+      modules: {
+        // toolbar: [
+        //   [{ header: [1, 2, 3, 4, false] }],
+        //   [
+        //     'bold',
+        //     'italic',
+        //     'underline',
+        //     'strike',
+        //     'code-block',
+        //     { header: 1 },
+        //   ],
+        // ],
+        toolbar: toolbarOptions,
+      },
+      theme: 'snow',
+      formats: [
+        'bold',
+        'underline',
+        'header',
+        'italic',
+        'strike',
+        'code-block',
+        'list',
+        'color',
+        'font',
+      ],
     });
-    this.quillData.editor.root.innerHTML = this.data;
+
+    this.editor.root.innerHTML = this.data;
+
+    this.editor.on('text-change', () => this.update());
   },
   // watch: {
   //   data: function() {
   //     if (!this.initialized) {
-  //       this.quillData.editor.root.innerHTML = this.data;
+  //     console.log(this.data);
+  //     this.editor.root.innerHTML = this.data;
   //     }
   //   },
   // },
   methods: {
-    update: function() {
+    update() {
       this.$emit(
         'change',
-        this.quillData.editor.getText()
-          ? this.quillData.editor.root.innerHTML
-          : ''
+        this.editor.getText() ? this.editor.root.innerHTML : ''
       );
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-@import 'https://cdn.quilljs.com/1.3.6/quill.snow.css';
 // .container {
 //   background-color: white;
 // }

@@ -1,6 +1,10 @@
 <template>
   <div class="oak-dialog">
-    <div class="dialog" :class="visible ? 'show ' + style : 'hide ' + style">
+    <div
+      v-if="visible"
+      class="dialog"
+      :class="visible ? 'show ' + style : 'hide ' + style"
+    >
       <div :class="visible ? 'container' : 'container hidetext'">
         <div class="dialog-header">
           <div class="container" @click="$emit('close')">
@@ -57,4 +61,50 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import './styles/OakDialog.scss';
+.dialog {
+  &.show {
+    width: calc(100vw - 362px - 50px);
+    animation: slide-in 0.3s cubic-bezier(0, 1, 0.5, 1);
+    &.fullscreen {
+      width: 100vw;
+      animation: slide-in-fullscreen 0.3s cubic-bezier(0, 1, 0.5, 1);
+    }
+    @media (max-width: 767px) {
+      width: 100vw;
+      animation: slide-in-fullscreen 0.3s cubic-bezier(0, 1, 0.5, 1);
+    }
+  }
+  &.hide {
+    animation: slide-in 0.3s ease-in-out;
+  }
+}
+@keyframes slide-in-fullscreen {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100vw;
+    // width: calc(100vw - 362px - 50px);
+
+    // &.fullscreen {
+    //   width: calc(100vw - 25px);
+    // }
+
+    // @media (max-width: 767px) {
+    //   width: calc(100vw - 5px);
+    // }
+  }
+}
+@keyframes slide-in {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: calc(100vw - 362px - 50px);
+
+    // @media (max-width: 767px) {
+    //   width: calc(100vw - 5px);
+    // }
+  }
+}
 </style>
