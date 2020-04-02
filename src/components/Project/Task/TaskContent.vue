@@ -67,7 +67,12 @@
       collapseOthers
     >
       <div class="content single-column" slot="content">
-        <div>
+        <OakEditor
+          id="task-description"
+          v-bind:data="data.description"
+          @change="handleDescriptionChange"
+        />
+        <!-- <div>
           <OakClickAndEdit
             id="description"
             v-bind:alwaysEdit="alwaysEditFields.includes('description')"
@@ -89,7 +94,7 @@
               <div class="typography-5" v-else>None</div>
             </div>
           </OakClickAndEdit>
-        </div>
+        </div> -->
       </div>
     </OakAccordion>
 
@@ -186,6 +191,7 @@ import OakButton from '@/oakui/OakButton.vue';
 import OakInplaceEdit from '@/oakui/OakInplaceEdit.vue';
 import OakClickAndEdit from '@/oakui/OakClickAndEdit.vue';
 import OakText from '@/oakui/OakText.vue';
+import OakEditor from '@/oakui/OakEditor.vue';
 import ViewLog from './ViewLog.vue';
 import ClickAndEditSelect from '@/components/Lib/ClickAndEditSelect.vue';
 import Assignee from '@/components/Create/Assignee.vue';
@@ -197,14 +203,15 @@ import ViewChecklist from './ViewChecklist.vue';
 export default {
   name: 'TaskContent',
   components: {
-    OakShowdown,
+    // OakShowdown,
     OakInplaceEdit,
     ClickAndEditSelect,
     Assignee,
     OakButton,
-    OakClickAndEdit,
+    // OakClickAndEdit,
     OakText,
     OakAccordion,
+    OakEditor,
     ViewComment,
     ViewLog,
     ViewSubtask,
@@ -271,6 +278,9 @@ export default {
     },
     handleCommentChange: function() {
       this.comment[event.target.name] = event.target.value;
+    },
+    handleDescriptionChange: function(text) {
+      this.data.description = text;
     },
     fetchStageDropdown: function() {
       const stageList = [];

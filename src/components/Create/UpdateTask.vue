@@ -44,28 +44,11 @@
           @change="handleAssigneeChange"
           v-bind:teamIdList="teamIdList"
         />
-        <OakClickAndEdit
-          id="description"
-          label="Description"
-          v-bind:alwaysEdit="alwaysEditFields.includes('description')"
-        >
-          <div slot="edit-content">
-            <OakText
-              v-bind:data="data.description"
-              id="description"
-              @change="handleChange"
-              multiline
-              v-bind:rows="10"
-            />
-          </div>
-          <div slot="view-content">
-            <OakShowdown
-              v-if="data.description"
-              v-bind:source="data.description"
-            />
-            <div class="typography-5" v-else>None</div>
-          </div>
-        </OakClickAndEdit>
+        <OakEditor
+          id="task-description"
+          v-bind:data="data.description"
+          @change="handleDescriptionChange"
+        />
       </div>
 
       <div slot="dialog-footer">
@@ -85,6 +68,7 @@ import OakDialog from '@/oakui/OakDialog.vue';
 import OakText from '@/oakui/OakText.vue';
 import OakButton from '@/oakui/OakButton.vue';
 import OakClickAndEdit from '@/oakui/OakClickAndEdit.vue';
+import OakEditor from '@/oakui/OakEditor.vue';
 import ClickAndEditText from '@/components/Lib/ClickAndEditText.vue';
 import ClickAndEditSelect from '@/components/Lib/ClickAndEditSelect.vue';
 import Assignee from './Assignee.vue';
@@ -94,10 +78,11 @@ export default {
   name: 'UpdateTask',
   components: {
     OakDialog,
-    OakText,
+    // OakText,
+    OakEditor,
     OakButton,
-    OakClickAndEdit,
-    OakShowdown,
+    // OakClickAndEdit,
+    // OakShowdown,
     ClickAndEditText,
     ClickAndEditSelect,
     Assignee,
@@ -155,6 +140,9 @@ export default {
     ...mapActions(['saveTask']),
     handleChange: function() {
       this.data[event.target.name] = event.target.value;
+    },
+    handleDescriptionChange: function(text) {
+      this.data.description = text;
     },
     fetchStageDropdown: function() {
       const stageList = [];

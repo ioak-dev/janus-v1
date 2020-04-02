@@ -188,4 +188,20 @@
       display: none;
     }
   }
+
+  //  Quill styling
+  .ql-toolbar,
+  .ql-container {
+    border: none;
+  }
+
+  .ql-syntax {
+    border-radius: 4px;
+    padding: 4px;
+    background-color: var(--color-background-transparent-5);
+  }
+
+  blockquote {
+    background-color: var(--color-background-transparent-5);
+  }
 }
