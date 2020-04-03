@@ -15,7 +15,7 @@
       @dragleave="dragLeave"
     >
       <div class="top-row">
-        <div class="title typography-5">
+        <div class="title typography-4">
           <div class="task-id">{{ task.taskId }}</div>
           <div class="task-title">
             :
@@ -31,7 +31,7 @@
         <div class="left">
           <Avatar v-if="assignedToUser" v-bind:user="assignedToUser" />
         </div>
-        <div class="right typography-6">
+        <div class="right typography-3">
           Jan 31
         </div>
       </div>

@@ -21,7 +21,7 @@
       />
     </div>
     <div slot="view-content">
-      <div class="typography-5">
+      <div class="typography-4">
         {{ viewData }}
       </div>
     </div>

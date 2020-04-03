@@ -1,6 +1,6 @@
 <template>
   <div class="assigned-to">
-    <div class="typography-5 form-element-label">
+    <div class="typography-4 form-element-label">
       {{ label ? label : null }}
     </div>
     <div v-if="user" class="view-content">

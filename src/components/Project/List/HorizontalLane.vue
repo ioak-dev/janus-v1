@@ -1,7 +1,7 @@
 <template>
   <div class="lane-horizontal">
     <div
-      class="stage typography-5"
+      class="stage typography-4"
       v-bind:class="isExpanded ? 'show' : 'hide'"
       @click="toggle"
     >

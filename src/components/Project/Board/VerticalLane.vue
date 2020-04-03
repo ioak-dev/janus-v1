@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="lane-vertical" @dragover.prevent @drop.prevent="drop">
-      <div class="stage typography-5 space-bottom-2">
+      <div class="stage typography-4 space-bottom-2">
         <div class="stage-name">{{ stage.name }}</div>
         <div class="stage-actions">
           <div @click="toggleTask">

@@ -1,6 +1,6 @@
 <template>
   <div class="view-log">
-    <div class="header-row typography-5">
+    <div class="header-row typography-4">
       <div>Field</div>
       <div>From</div>
       <div>To</div>

@@ -4,8 +4,8 @@
       <div class="space-right-1">
         <Avatar v-bind:user="user" />
       </div>
-      <div class="typography-6">
-        <div class="user-name typography-5">{{ user.name }}</div>
+      <div class="typography-4">
+        <div class="user-name typography-4">{{ user.name }}</div>
         <div>{{ user.createdAt }}</div>
       </div>
     </div>

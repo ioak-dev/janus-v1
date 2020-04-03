@@ -1,179 +1,129 @@
 <template>
   <div class="task-content">
-    <OakAccordion
-      label="Basic details"
-      icon="subject"
-      group="task-sections"
-      collapseOthers
-      defaultSection
-    >
-      <div class="content" slot="content">
-        <div class="typography-5">Task Reference</div>
-        <div class="typography-5">
-          {{ task ? task.taskId : '' }}
-        </div>
-        <div class="typography-5">Parent</div>
-        <div class="typography-5">
-          {{
-            task && task.parentTaskId
-              ? getTaskById(task.parentTaskId).taskId
-              : ''
-          }}
-        </div>
-        <div class="typography-5">Title</div>
-        <div class="title-section">
-          <OakInplaceEdit v-bind:data="data" id="title" @blur="handleChange" />
-        </div>
-        <div class="typography-5">Type</div>
-        <div>
+    <OakTab class="task-tab" v-bind:meta="tabDetails">
+      <div slot="details">
+        <div class="content" slot="content">
+          <div class="typography-4">Task Reference</div>
+          <div class="typography-4">
+            {{ task ? task.taskId : '' }}
+          </div>
+          <div class="typography-4">Parent</div>
+          <div class="typography-4">
+            {{
+              task && task.parentTaskId
+                ? getTaskById(task.parentTaskId).taskId
+                : ''
+            }}
+          </div>
+          <div class="typography-4">Title</div>
+          <div class="title-section">
+            <OakInplaceEdit
+              v-bind:data="data"
+              id="title"
+              @blur="handleChange"
+            />
+          </div>
+          <div class="typography-4">Type</div>
+          <div>
+            <ClickAndEditSelect
+              v-bind:data="data"
+              id="type"
+              v-bind:alwaysEditFields="alwaysEditFields"
+              v-bind:elements="['Epic', 'Story', 'Task', 'Sub-Task', 'Bug']"
+              @change="handleChange"
+            />
+          </div>
+          <div class="typography-4">Stage</div>
           <ClickAndEditSelect
             v-bind:data="data"
-            id="type"
+            id="stageId"
             v-bind:alwaysEditFields="alwaysEditFields"
-            v-bind:elements="['Epic', 'Story', 'Task', 'Sub-Task', 'Bug']"
+            v-bind:objects="stageDropDown"
             @change="handleChange"
           />
+          <div class="typography-4">Priority</div>
+          <ClickAndEditSelect
+            v-bind:data="data"
+            id="priority"
+            v-bind:alwaysEditFields="alwaysEditFields"
+            v-bind:elements="['Could have', 'Should have', 'Must have']"
+            @change="handleChange"
+          />
+          <div class="typography-4">Assigned to</div>
+          <Assignee
+            v-bind:id="data.assignedTo"
+            @remove="clearAssignee"
+            @change="handleAssigneeChange"
+            v-bind:teamIdList="teamIdList"
+          />
         </div>
-        <div class="typography-5">Stage</div>
-        <ClickAndEditSelect
-          v-bind:data="data"
-          id="stageId"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          v-bind:objects="stageDropDown"
-          @change="handleChange"
-        />
-        <div class="typography-5">Priority</div>
-        <ClickAndEditSelect
-          v-bind:data="data"
-          id="priority"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          v-bind:elements="['Could have', 'Should have', 'Must have']"
-          @change="handleChange"
-        />
-        <div class="typography-5">Assigned to</div>
-        <Assignee
-          v-bind:id="data.assignedTo"
-          @remove="clearAssignee"
-          @change="handleAssigneeChange"
-          v-bind:teamIdList="teamIdList"
-        />
       </div>
-    </OakAccordion>
-
-    <OakAccordion
-      label="Description"
-      icon="text_fields"
-      group="task-sections"
-      collapseOthers
-    >
-      <div class="content single-column" slot="content">
-        <OakEditor
-          id="task-description"
-          v-bind:data="data.description"
-          @change="handleDescriptionChange"
-        />
-        <!-- <div>
-          <OakClickAndEdit
-            id="description"
-            v-bind:alwaysEdit="alwaysEditFields.includes('description')"
-          >
-            <div slot="edit-content">
-              <OakText
-                v-bind:data="data.description"
-                id="description"
-                @change="handleChange"
-                multiline
-                v-bind:rows="10"
-              />
-            </div>
-            <div slot="view-content">
-              <OakShowdown
-                v-if="data.description"
-                v-bind:source="data.description"
-              />
-              <div class="typography-5" v-else>None</div>
-            </div>
-          </OakClickAndEdit>
-        </div> -->
-      </div>
-    </OakAccordion>
-
-    <OakAccordion
-      label="Checklist"
-      icon="playlist_add_check"
-      group="task-sections"
-      collapseOthers
-    >
-      <div class="content single-column" slot="content">
-        <ViewChecklist v-bind:task="task" @viewUpdated="$emit('viewUpdated')" />
-      </div>
-    </OakAccordion>
-
-    <OakAccordion
-      label="Sub task"
-      icon="call_merge"
-      group="task-sections"
-      collapseOthers
-    >
-      <div class="content single-column" slot="content">
-        <ViewSubtask v-bind:task="task" @viewUpdated="$emit('viewUpdated')" />
-      </div>
-    </OakAccordion>
-
-    <OakAccordion
-      label="Comments"
-      icon="chat_bubble_outline"
-      group="task-sections"
-      collapseOthers
-    >
-      <div class="content single-column comments-section" slot="content">
-        <div v-for="item in comments" v-bind:key="item._id">
-          <ViewComment v-bind:comment="item" />
+      <div slot="description">
+        <div class="content single-column" slot="content">
+          <OakEditor
+            id="task-description"
+            v-bind:data="data.description"
+            @change="handleDescriptionChange"
+          />
         </div>
-        <OakText
-          v-if="comment.showNew"
-          id="text"
-          v-bind:data="comment.text"
-          @change="handleCommentChange"
-          multiline
-          v-bind:rows="10"
-        />
-        <div class="action">
-          <OakButton
+      </div>
+      <div slot="checklist">
+        <div class="content single-column" slot="content">
+          <ViewChecklist
+            v-bind:task="task"
+            @viewUpdated="$emit('viewUpdated')"
+          />
+        </div>
+      </div>
+      <div slot="subtask">
+        <div class="content single-column" slot="content">
+          <ViewSubtask v-bind:task="task" @viewUpdated="$emit('viewUpdated')" />
+        </div>
+      </div>
+      <div slot="comments">
+        <div class="content single-column comments-section" slot="content">
+          <div v-for="item in comments" v-bind:key="item._id">
+            <ViewComment v-bind:comment="item" />
+          </div>
+          <OakText
             v-if="comment.showNew"
-            theme="primary"
-            variant="animate in"
-            @click="saveComment"
-            label="Save Comment"
+            id="text"
+            v-bind:data="comment.text"
+            @change="handleCommentChange"
+            multiline
+            v-bind:rows="10"
           />
-          <OakButton
-            v-if="!comment.showNew"
-            theme="primary"
-            variant="animate in"
-            @click="toggleAddComment"
-            label="Add Comment"
-          />
-          <OakButton
-            v-if="comment.showNew"
-            theme="primary"
-            variant="animate in"
-            @click="toggleAddComment"
-            label="Cancel"
-          />
+          <div class="action">
+            <OakButton
+              v-if="comment.showNew"
+              theme="primary"
+              variant="animate in"
+              @click="saveComment"
+              label="Save Comment"
+            />
+            <OakButton
+              v-if="!comment.showNew"
+              theme="primary"
+              variant="animate in"
+              @click="toggleAddComment"
+              label="Add Comment"
+            />
+            <OakButton
+              v-if="comment.showNew"
+              theme="primary"
+              variant="animate in"
+              @click="toggleAddComment"
+              label="Cancel"
+            />
+          </div>
         </div>
       </div>
-    </OakAccordion>
-
-    <OakAccordion
-      label="Activity"
-      icon="history"
-      group="task-sections"
-      collapseOthers
-    >
-      <div class="content single-column" slot="content">
-        <ViewLog v-bind:logs="logs" />
+      <div slot="activity">
+        <div class="content single-column" slot="content">
+          <ViewLog v-bind:logs="logs" />
+        </div>
       </div>
-    </OakAccordion>
+    </OakTab>
     <div class="action">
       <OakButton
         theme="primary"
@@ -188,6 +138,7 @@
 import OakAccordion from '@/oakui/OakAccordion.vue';
 import OakShowdown from '@/oakui/OakShowdown.vue';
 import OakButton from '@/oakui/OakButton.vue';
+import OakTab from '@/oakui/OakTab.vue';
 import OakInplaceEdit from '@/oakui/OakInplaceEdit.vue';
 import OakClickAndEdit from '@/oakui/OakClickAndEdit.vue';
 import OakText from '@/oakui/OakText.vue';
@@ -210,7 +161,7 @@ export default {
     OakButton,
     // OakClickAndEdit,
     OakText,
-    OakAccordion,
+    OakTab,
     OakEditor,
     ViewComment,
     ViewLog,
@@ -240,6 +191,22 @@ export default {
       teamIdList: [],
       stageDropDown: [],
       alwaysEditFields: ['type', 'stageId', 'priority'],
+      tabDetails: [
+        { slotName: 'details', label: 'Basic details', icon: 'subject' },
+        { slotName: 'description', label: 'Description', icon: 'text_fields' },
+        {
+          slotName: 'checklist',
+          label: 'Checklist',
+          icon: 'playlist_add_check',
+        },
+        { slotName: 'subtask', label: 'Sub task', icon: 'call_merge' },
+        {
+          slotName: 'comments',
+          label: 'Comments',
+          icon: 'chat_bubble_outline',
+        },
+        { slotName: 'activity', label: 'Activity', icon: 'history' },
+      ],
     };
   },
   computed: {
@@ -315,19 +282,25 @@ export default {
   display: grid;
   grid-template-rows: auto;
   row-gap: 10px;
-  .content {
-    padding: 20px 10px;
-    // margin: 50px;
-    background-color: var(--color-background-transparent-3);
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    row-gap: 20px;
-    column-gap: 20px;
-    &.single-column {
+  .task-tab {
+    background-color: var(--color-background-4);
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    .content {
+      background-color: var(--color-background-transparent-4);
       padding: 20px 10px;
+      // margin: 50px;
       display: grid;
-      grid-template-columns: auto;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      row-gap: 20px;
+      column-gap: 20px;
+      &.single-column {
+        padding: 20px 10px;
+        display: grid;
+        grid-template-columns: auto;
+      }
     }
   }
 }

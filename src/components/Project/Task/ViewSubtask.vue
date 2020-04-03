@@ -4,7 +4,7 @@
       <SubtaskRow v-bind:subtask="item" />
     </div>
     <div class="create-sub-task" v-if="data.showNew">
-      <div class="typography-5">Type</div>
+      <div class="typography-4">Type</div>
       <div>
         <OakSelect
           v-bind:data="data.type"
@@ -13,9 +13,9 @@
           v-bind:elements="['Task', 'Sub-Task', 'Bug']"
         />
       </div>
-      <div class="typography-5">Title</div>
+      <div class="typography-4">Title</div>
       <OakText id="title" v-bind:data="data.title" @change="handleChange" />
-      <div class="typography-5">Description</div>
+      <div class="typography-4">Description</div>
       <OakText
         id="description"
         v-bind:data="data.description"

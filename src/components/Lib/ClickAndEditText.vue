@@ -12,7 +12,7 @@
       />
     </div>
     <div slot="view-content">
-      <div class="typography-5">
+      <div class="typography-4">
         {{ data[id] ? data[id] : 'None' }}
       </div>
     </div>

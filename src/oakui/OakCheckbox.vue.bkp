@@ -9,7 +9,7 @@
           v-bind:id="id"
           @change="handleChange"
         />
-        <label class="typography-5" v-bind:htmlFor="this.id">
+        <label class="typography-3" v-bind:htmlFor="this.id">
           {{ label }}
         </label>
       </label>

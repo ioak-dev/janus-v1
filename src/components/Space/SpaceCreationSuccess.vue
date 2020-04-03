@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div className="typography-3 space-bottom-4">
+    <div className="typography-4 space-bottom-4">
       Space {{ name }} has been setup and is available now
     </div>
     <OakButton

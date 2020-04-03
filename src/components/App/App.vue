@@ -52,7 +52,7 @@ body {
     // bottom: 8px;
     // left: 10px;
     position: relative;
-    font-size: var(--metric-typography-5);
+    font-size: var(--metric-typography-4);
     color: var(--color-foreground-2);
     text-transform: capitalize;
   }

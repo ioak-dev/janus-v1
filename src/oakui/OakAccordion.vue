@@ -1,7 +1,7 @@
 <template>
   <div class="accordion-section">
     <div
-      class="header typography-5"
+      class="header typography-3"
       v-bind:class="isExpanded ? 'show' : 'hide'"
       @click="toggle"
     >
