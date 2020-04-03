@@ -41,12 +41,26 @@
       v-bind:visible="editTask"
       v-bind:task="task"
     />
+    <OakDialog @close="toggleTask" v-bind:visible="editTask" fullscreen>
+      <div slot="dialog-body">
+        <OakButton
+          label="Detailed View"
+          theme="secondary"
+          variant="animate in"
+          @click="openDetailedView"
+        />
+        <TaskContent v-bind:task="task" />
+      </div>
+    </OakDialog>
   </div>
 </template>
 
 <script>
 import { sendMessage } from '@/events/MessageService';
 import { mapGetters, mapActions } from 'vuex';
+import OakDialog from '@/oakui/OakDialog.vue';
+import OakButton from '@/oakui/OakButton.vue';
+import TaskContent from '../Task/TaskContent.vue';
 import UpdateTask from '@/components/Create/UpdateTask.vue';
 import Avatar from '@/components/Avatar/Avatar.vue';
 
@@ -55,6 +69,9 @@ export default {
   components: {
     UpdateTask,
     Avatar,
+    OakDialog,
+    TaskContent,
+    OakButton,
   },
   props: {
     task: {
@@ -68,8 +85,13 @@ export default {
       dragClass: '',
     };
   },
+  watch: {
+    task: function(newvalue, oldvalue) {
+      console.log(oldvalue.taskId, newvalue.taskId);
+    },
+  },
   computed: {
-    ...mapGetters(['getProfile', 'getUserById']),
+    ...mapGetters(['getProfile', 'getUserById', 'getCommentsForTask']),
     assignedToUser: function() {
       return this.getUserById(this.task.assignedTo);
     },
@@ -115,6 +137,16 @@ export default {
     },
     toggleTask: function() {
       this.editTask = !this.editTask;
+    },
+    openDetailedView: function() {
+      this.$router.push({
+        name: 'TaskView',
+        params: {
+          space: this.getProfile.space,
+          projectId: this.task.projectId,
+          taskId: this.task.taskId,
+        },
+      });
     },
   },
 };

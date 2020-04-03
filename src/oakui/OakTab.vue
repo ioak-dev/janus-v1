@@ -63,6 +63,7 @@ export default {
   display: flex;
   flex-direction: column;
   .header {
+    user-select: none;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(25px, 200px));
     @media (max-width: 767px) {

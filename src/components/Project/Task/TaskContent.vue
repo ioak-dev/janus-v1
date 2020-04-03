@@ -82,7 +82,7 @@
       </div>
       <div slot="comments">
         <div class="content single-column comments-section" slot="content">
-          <div v-for="item in comments" v-bind:key="item._id">
+          <div v-for="item in getCommentsForTask" v-bind:key="item._id">
             <ViewComment v-bind:comment="item" />
           </div>
           <OakText
@@ -170,8 +170,6 @@ export default {
   },
   props: {
     task: Object,
-    comments: Array,
-    logs: Array,
   },
   data: function() {
     return {
@@ -215,6 +213,8 @@ export default {
       'getStagesByProjectId',
       'getProjectById',
       'getTaskById',
+      'getLogs',
+      'getCommentsForTask',
     ]),
     projectDropDown: function() {
       const projectList = [];
@@ -223,13 +223,16 @@ export default {
       );
       return projectList;
     },
+    logs: function() {
+      return this.getLogs('Task');
+    },
   },
   created() {
-    this.data = { ...this.task };
+    this.postTaskUpdateAction(this.task);
   },
   watch: {
     task: function() {
-      this.data = { ...this.task };
+      this.postTaskUpdateAction(this.task);
     },
     'data.projectId': function(newProjectId, oldProjectId) {
       if (newProjectId && oldProjectId !== newProjectId) {
@@ -239,7 +242,13 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['saveTask', 'saveTaskComment']),
+    ...mapActions([
+      'saveTask',
+      'saveTaskComment',
+      'fetchTaskComments',
+      'fetchTaskChecklistitems',
+      'fetchLogs',
+    ]),
     handleChange: function() {
       this.data[event.target.name] = event.target.value;
     },
@@ -272,6 +281,14 @@ export default {
     toggleAddComment: function() {
       this.comment.showNew = !this.comment.showNew;
       this.comment.text = '';
+    },
+    postTaskUpdateAction: function(task) {
+      this.data = { ...task };
+      if (this.task) {
+        this.fetchTaskComments(this.task._id);
+        this.fetchTaskChecklistitems(this.task._id);
+        this.fetchLogs({ domain: 'Task', reference: this.task._id });
+      }
     },
   },
 };

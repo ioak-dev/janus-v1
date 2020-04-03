@@ -1,11 +1,7 @@
 <template>
   <div class="task-view app-content">
     <div class="task-view-content">
-      <TaskContent
-        v-bind:task="task"
-        v-bind:comments="getCommentsForTask"
-        v-bind:logs="logs"
-      />
+      <TaskContent v-bind:task="task" />
     </div>
   </div>
 </template>
@@ -19,28 +15,9 @@ export default {
     TaskContent,
   },
   computed: {
-    ...mapGetters(['getTaskByTaskId', 'getCommentsForTask', 'getLogs']),
+    ...mapGetters(['getTaskByTaskId']),
     task: function() {
       return this.getTaskByTaskId(this.$route.params?.taskId);
-    },
-    logs: function() {
-      return this.getLogs('Task');
-    },
-  },
-  methods: {
-    ...mapActions([
-      'fetchTaskComments',
-      'fetchLogs',
-      'fetchTaskChecklistitems',
-    ]),
-  },
-  watch: {
-    task: function() {
-      if (this.task) {
-        this.fetchTaskComments(this.task._id);
-        this.fetchTaskChecklistitems(this.task._id);
-        this.fetchLogs({ domain: 'Task', reference: this.task._id });
-      }
     },
   },
 };

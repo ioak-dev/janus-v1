@@ -15,6 +15,7 @@
           v-if="item.field === 'assignedTo' && getUserById(item.before)"
           v-bind:user="getUserById(item.before)"
         />
+        <div v-if="item.field === 'description'" v-html="item.before" />
         <div v-else>{{ item.before }}</div>
       </div>
       <div>
@@ -23,6 +24,7 @@
           v-if="item.field === 'assignedTo' && getUserById(item.after)"
           v-bind:user="getUserById(item.after)"
         />
+        <div v-if="item.field === 'description'" v-html="item.after" />
         <div v-else>{{ item.after }}</div>
       </div>
       <div>
