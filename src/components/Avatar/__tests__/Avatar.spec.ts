@@ -16,7 +16,7 @@ describe('Avatar.vue', () => {
       },
     });
     expect(wrapper.contains('.avatar')).toBeTruthy();
-    expect(wrapper.find('.avatar').text()).toEqual('Ar');
+    expect(wrapper.find('.avatar').text()).toEqual('JD');
   });
 
   it('should not show avatar when user is not passed', () => {
