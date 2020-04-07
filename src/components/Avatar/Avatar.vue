@@ -1,7 +1,9 @@
 <template>
   <div class="avatar" v-if="user">
-    <div class="avatar-icon">{{ user.name.substring(0, 2) }}</div>
-    <div v-if="showName" class="avatar-name">{{ user.name }}</div>
+    <div class="avatar-icon">
+      {{ user.firstName.substring(0, 1) }}{{ user.lastName.substring(0, 1) }}
+    </div>
+    <div v-if="showName" class="avatar-name">{{ user.firstName }}</div>
   </div>
 </template>
 <script>
