@@ -10,7 +10,8 @@ describe('Avatar.vue', () => {
     const wrapper = shallowMount(Avatar, {
       propsData: {
         user: {
-          name: 'Arun',
+          firstName: 'John',
+          lastName: 'Doe',
         },
       },
     });
