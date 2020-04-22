@@ -18,7 +18,11 @@
       <div class="members">
         <div class="member" v-for="member in data.members" v-bind:key="member">
           {{
-            getUserById(member) ? getUserById(member).name : getUserById(member)
+            getUserById(member)
+              ? `${getUserById(member).firstName} ${
+                  getUserById(member).lastName
+                }`
+              : getUserById(member)
           }}
         </div>
       </div>
@@ -46,7 +50,10 @@ export default {
     peopleList: function() {
       const people = [];
       this.getUsers?.forEach(item => {
-        people.push({ key: item._id, value: item.name });
+        people.push({
+          key: item._id,
+          value: `${item.firstName} ${item.lastName}`,
+        });
       });
       return people;
     },

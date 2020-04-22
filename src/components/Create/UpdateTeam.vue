@@ -24,7 +24,9 @@
           >
             {{
               getUserById(member)
-                ? getUserById(member).name
+                ? `${getUserById(member).firstName} ${
+                    getUserById(member).lastName
+                  }`
                 : getUserById(member)
             }}
           </div>
@@ -80,7 +82,10 @@ export default {
     peopleList: function() {
       const people = [];
       this.getUsers?.forEach(item => {
-        people.push({ key: item._id, value: item.name });
+        people.push({
+          key: item._id,
+          value: `${item.firstName} ${item.lastName}`,
+        });
       });
       return people;
     },

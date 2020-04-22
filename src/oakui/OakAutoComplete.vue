@@ -72,7 +72,7 @@ export default {
     z-index: 1;
     // margin-top: -20px;
     padding: 8px 0px;
-    background-color: var(--color-background-5);
+    background-color: var(--color-background-2);
     box-shadow: 0 0 0 1px rgba(111, 119, 130, 0.15),
       0 5px 20px 0 rgba(21, 27, 38, 0.08);
     .element {
