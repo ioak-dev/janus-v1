@@ -48,6 +48,20 @@
             @change="handleAssigneeChange"
             v-bind:teamIdList="teamIdList"
           />
+          <div class="typography-4">Title</div>
+          <div class="title-section">
+            <OakInplaceEdit
+              v-bind:data="data"
+              id="title"
+              @blur="handleChange"
+            />
+          </div>
+          <div class="typography-4">Description</div>
+          <OakEditor
+            id="task-description"
+            v-bind:data="data.description"
+            @change="handleDescriptionChange"
+          />
         </div>
       </div>
       <div slot="description">
