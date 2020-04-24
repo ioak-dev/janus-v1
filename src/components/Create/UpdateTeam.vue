@@ -1,61 +1,48 @@
 <template>
   <div>
-    <OakDialog @close="$emit('close')" v-bind:visible="visible">
-      <div slot="dialog-body">
-        <ClickAndEditText
-          v-bind:data="data"
-          id="name"
-          label="Team Name"
-          v-bind:alwaysEditFields="[]"
-          @change="handleChange"
-        />
-        <OakAutoComplete
-          label="Search People"
-          @search="handlePeopleSearch"
-          @change="handlePeopleChange"
-          v-bind:objects="peopleSearchList"
-          id="people-search-update-team"
-        />
-        <div class="members">
-          <div
-            class="member"
-            v-for="member in data.members"
-            v-bind:key="member"
-          >
-            {{
-              getUserById(member)
-                ? `${getUserById(member).firstName} ${
-                    getUserById(member).lastName
-                  }`
-                : getUserById(member)
-            }}
-          </div>
+    <div class="modal-body">
+      <div class="formelement-label">Team name</div>
+      <OakText v-bind:data="data.name" id="name" @change="handleChange" />
+      <div class="formelement-label">Search Members</div>
+      <OakAutoComplete
+        @search="handlePeopleSearch"
+        @change="handlePeopleChange"
+        v-bind:objects="peopleSearchList"
+        id="people-search-update-team"
+      />
+      <div class="members">
+        <div class="member" v-for="member in data.members" v-bind:key="member">
+          {{
+            getUserById(member)
+              ? `${getUserById(member).firstName} ${
+                  getUserById(member).lastName
+                }`
+              : getUserById(member)
+          }}
         </div>
       </div>
-      <div slot="dialog-footer">
-        <OakButton
-          theme="primary"
-          variant="animate in"
-          @click="save"
-          label="Save"
-        />
-      </div>
-    </OakDialog>
+    </div>
+    <div class="modal-footer">
+      <OakButton
+        theme="primary"
+        variant="animate in"
+        @click="save"
+        label="Save"
+      />
+    </div>
   </div>
 </template>
 <script>
-import OakDialog from '@/oakui/OakDialog.vue';
 import OakButton from '@/oakui/OakButton.vue';
 import { mapActions, mapGetters } from 'vuex';
-import ClickAndEditText from '@/components/Lib/ClickAndEditText.vue';
 import OakAutoComplete from '@/oakui/OakAutoComplete.vue';
+import OakText from '@/oakui/OakText.vue';
 
 export default {
   name: 'UpdateTeam',
   components: {
-    OakDialog,
     OakButton,
-    ClickAndEditText,
+    OakText,
     OakAutoComplete,
   },
   props: {

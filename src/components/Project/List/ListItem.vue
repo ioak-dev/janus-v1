@@ -6,8 +6,12 @@
       @drop.prevent="drop"
       @dragover.prevent="dragOver"
       @dragleave="dragLeave"
+      draggable="true"
+      @dragstart="dragStart"
+      @dragend="dragEnd"
+      @click="toggleTask"
     >
-      <div class="action">
+      <!-- <div class="action">
         <i
           class="material-icons action-move"
           draggable="true"
@@ -18,7 +22,7 @@
           >drag_indicator</i
         >
         <i class="material-icons action-click" @click="toggleTask">edit</i>
-      </div>
+      </div> -->
       <div>{{ task.taskId }}</div>
       <div class="task-title">{{ task.title }}</div>
       <!-- <div>{{ task.assignedTo }}</div> -->
@@ -27,11 +31,15 @@
       </div>
       <div>{{ task.priority }}</div>
     </div>
-    <UpdateTask
+    <OakModal
       @close="toggleTask"
       v-bind:visible="editTask"
-      v-bind:task="task"
-    />
+      label="Quick Edit - Task"
+    >
+      <div slot="modal-container">
+        <UpdateTask v-bind:task="task" />
+      </div>
+    </OakModal>
   </div>
 </template>
 
@@ -40,9 +48,10 @@ import { mapActions, mapGetters } from 'vuex';
 import { sendMessage } from '@/events/MessageService';
 import UpdateTask from '@/components/Create/UpdateTask.vue';
 import Avatar from '@/components/Avatar/Avatar.vue';
+import OakModal from '@/oakui/OakModal.vue';
 export default {
   name: 'ListItem',
-  components: { UpdateTask, Avatar },
+  components: { OakModal, UpdateTask, Avatar },
   props: {
     task: Object,
   },
@@ -96,10 +105,12 @@ export default {
 
 <style scoped lang="scss">
 .list-item {
+  border-bottom: 1px solid var(--color-background-3);
+  border-radius: 6px;
+  padding: 0 10px;
   height: 36px;
   line-height: 36px;
   cursor: default;
-  border-bottom: 1px solid var(--color-background-transparent-3);
   display: grid;
   grid-template-columns: 60px 1fr 3fr 1fr 1fr;
   overflow: hidden;
@@ -117,7 +128,7 @@ export default {
     }
   }
   &:hover {
-    background-color: var(--color-background-transparent-3);
+    background-color: var(--color-background-3);
     .action {
       color: var(--color-foreground-1);
       .action-move {
@@ -129,7 +140,7 @@ export default {
     background-color: var(--color-tertiary-1);
   }
   &.source-spot {
-    background-color: var(--color-background-transparent-3);
+    background-color: var(--color-background-3);
     border-bottom: 1px solid var(--color-primary-1);
   }
   display: grid;

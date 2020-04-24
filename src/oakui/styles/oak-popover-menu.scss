@@ -85,8 +85,8 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       padding: 0px 20px;
-      height: 40px;
-      line-height: 40px;
+      height: var(--metric-formelement-height);
+      line-height: var(--metric-formelement-height);
       &:hover {
         background-color: var(--color-popover-theme);
       }

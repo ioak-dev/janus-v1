@@ -23,26 +23,22 @@
       v-bind:stage="stageStub"
       v-bind:alwaysEditFields="['name', 'projectId']"
     />
-    <UpdateTeam
+    <!-- <UpdateTeam
       @close="toggleTeam"
       v-bind:visible="newTeam"
       v-bind:team="teamStub"
       v-bind:alwaysEditFields="['name']"
-    />
-    <UpdateTask
-      @close="toggleTask"
-      v-bind:visible="newTask"
-      v-bind:task="taskStub"
-      v-bind:alwaysEditFields="[
-        'projectId',
-        'stageId',
-        'type',
-        'title',
-        'description',
-        'priority',
-        'assignedTo',
-      ]"
-    />
+    /> -->
+    <OakModal @close="toggleTeam" v-bind:visible="newTeam" label="New Team">
+      <div slot="modal-container">
+        <UpdateTeam v-bind:team="teamStub" />
+      </div>
+    </OakModal>
+    <OakModal @close="toggleTask" v-bind:visible="newTask" label="New Task">
+      <div slot="modal-container">
+        <UpdateTask v-bind:task="taskStub" />
+      </div>
+    </OakModal>
   </div>
 </template>
 <script>
@@ -51,6 +47,7 @@ import UpdateTask from '@/components/Create/UpdateTask.vue';
 import UpdateStage from '@/components/Create/UpdateStage.vue';
 import UpdateTeam from '@/components/Create/UpdateTeam.vue';
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
+import OakModal from '@/oakui/OakModal.vue';
 
 const projectStub = {
     name: '',
@@ -116,8 +113,9 @@ export default {
     OakPopoverMenu,
     UpdateProject,
     UpdateTask,
-    UpdateStage,
     UpdateTeam,
+    UpdateStage,
+    OakModal,
   },
   methods: {
     toggleProject: function() {

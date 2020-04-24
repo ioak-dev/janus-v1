@@ -84,7 +84,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .lane-horizontal {
-  // user-select: none;
+  padding-bottom: 10px;
+  user-select: none;
   .container {
     // margin-left: 20px;
     overflow-y: hidden;
@@ -94,7 +95,7 @@ export default {
     height: 60px;
     line-height: 60px;
     &.show {
-      border-bottom: 1px solid var(--color-background-transparent-2);
+      border-bottom: 1px solid var(--color-background-3);
     }
     color: var(--color-foreground-2);
     font-size: 0.9em;

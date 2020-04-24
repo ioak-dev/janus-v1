@@ -4,6 +4,7 @@
       <OakText
         id="auto-complete"
         v-bind:label="label"
+        v-bind:placeholder="placeholder"
         @focus="onFocus"
         @change="$emit('search')"
       />
@@ -27,6 +28,7 @@ export default {
   components: { OakText },
   props: {
     label: String,
+    placeholder: String,
     objects: Array,
     id: String,
   },
@@ -65,25 +67,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.oak-auto-complete {
-  position: relative;
-  .results {
-    position: fixed;
-    z-index: 1;
-    // margin-top: -20px;
-    padding: 8px 0px;
-    background-color: var(--color-background-2);
-    box-shadow: 0 0 0 1px rgba(111, 119, 130, 0.15),
-      0 5px 20px 0 rgba(21, 27, 38, 0.08);
-    .element {
-      cursor: pointer;
-      padding: 0px 20px;
-      height: 40px;
-      line-height: 40px;
-      &:hover {
-        background-color: var(--color-background-3);
-      }
-    }
-  }
-}
+@import './styles/oak-auto-complete.scss';
 </style>

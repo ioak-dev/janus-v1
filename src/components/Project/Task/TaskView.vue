@@ -1,5 +1,5 @@
 <template>
-  <div class="task-view app-content">
+  <div class="task-view app-content" v-bind:class="styleClass">
     <div class="task-view-content">
       <TaskContent v-bind:task="task" />
     </div>
@@ -15,15 +15,40 @@ export default {
     TaskContent,
   },
   computed: {
-    ...mapGetters(['getTaskByTaskId']),
+    ...mapGetters(['getTaskByTaskId', 'getProject']),
     task: function() {
       return this.getTaskByTaskId(this.$route.params?.taskId);
     },
+    styleClass: function() {
+      if (this.getProject?.image) {
+        return 'background-present';
+      }
+      return 'background-not-present';
+    },
+  },
+  watch: {
+    getProject: function() {
+      if (this.getProject?.image) {
+        document.getElementsByClassName(
+          'task-view'
+        )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
+      }
+    },
+  },
+  mounted() {
+    if (this.getProject?.image) {
+      document.getElementsByClassName(
+        'task-view'
+      )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
+    }
   },
 };
 </script>
 <style lang="scss" scoped>
 .task-view {
+  &.background-present {
+    background-size: cover !important;
+  }
   background-color: var(--color-background-1);
   height: calc(100vh - 60px);
   overflow-y: auto;

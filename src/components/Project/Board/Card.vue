@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- <div class="shadow-card" v-bind:class="shadowCard ? 'show' : 'hide'">
-      placehere
-    </div> -->
     <div
       v-bind:class="dragClass"
       class="card"
@@ -36,42 +33,31 @@
         </div>
       </div>
     </div>
-    <UpdateTask
+    <OakModal
       @close="toggleTask"
       v-bind:visible="editTask"
-      v-bind:task="task"
-    />
-    <OakDialog @close="toggleTask" v-bind:visible="editTask" fullscreen>
-      <div slot="dialog-body">
-        <OakButton
-          label="Detailed View"
-          theme="secondary"
-          variant="animate in"
-          @click="openDetailedView"
-        />
-        <TaskContent v-bind:task="task" />
+      label="Quick Edit - Task"
+    >
+      <div slot="modal-container">
+        <UpdateTask v-bind:task="task" />
       </div>
-    </OakDialog>
+    </OakModal>
   </div>
 </template>
 
 <script>
 import { sendMessage } from '@/events/MessageService';
 import { mapGetters, mapActions } from 'vuex';
-import OakDialog from '@/oakui/OakDialog.vue';
-import OakButton from '@/oakui/OakButton.vue';
-import TaskContent from '../Task/TaskContent.vue';
 import UpdateTask from '@/components/Create/UpdateTask.vue';
 import Avatar from '@/components/Avatar/Avatar.vue';
+import OakModal from '@/oakui/OakModal.vue';
 
 export default {
   name: 'Card',
   components: {
     UpdateTask,
     Avatar,
-    OakDialog,
-    TaskContent,
-    OakButton,
+    OakModal,
   },
   props: {
     task: {
@@ -85,11 +71,11 @@ export default {
       dragClass: '',
     };
   },
-  watch: {
-    task: function(newvalue, oldvalue) {
-      console.log(oldvalue.taskId, newvalue.taskId);
-    },
-  },
+  // watch: {
+  //   task: function(newvalue, oldvalue) {
+  //     console.log(oldvalue.taskId, newvalue.taskId);
+  //   },
+  // },
   computed: {
     ...mapGetters(['getProfile', 'getUserById', 'getCommentsForTask']),
     assignedToUser: function() {
@@ -137,16 +123,6 @@ export default {
     },
     toggleTask: function() {
       this.editTask = !this.editTask;
-    },
-    openDetailedView: function() {
-      this.$router.push({
-        name: 'TaskView',
-        params: {
-          space: this.getProfile.space,
-          projectId: this.task.projectId,
-          taskId: this.task.taskId,
-        },
-      });
     },
   },
 };

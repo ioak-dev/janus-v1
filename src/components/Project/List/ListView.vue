@@ -5,7 +5,7 @@
     </div>
     <div class="content-container">
       <div class="list-view-header" v-bind:class="styleClass">
-        <div></div>
+        <!-- <div></div> -->
         <div>Task Id</div>
         <div>Title</div>
         <div>Assigned to</div>
@@ -38,6 +38,22 @@ export default {
       return 'background-not-present';
     },
   },
+  watch: {
+    getProject: function() {
+      if (this.getProject?.image) {
+        document.getElementsByClassName(
+          'list-view'
+        )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
+      }
+    },
+  },
+  mounted() {
+    if (this.getProject?.image) {
+      document.getElementsByClassName(
+        'list-view'
+      )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
+    }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -49,10 +65,6 @@ export default {
   .list-view-header,
   .list-view-content {
     background-color: var(--color-background-2);
-    border-bottom: 1px solid var(--color-background-1);
-  }
-  .content-container {
-    margin: 20px 40px;
   }
   display: flex;
   flex-direction: column;
@@ -60,19 +72,39 @@ export default {
   .list-view-header {
     height: 36px;
     line-height: 36px;
-    border-bottom: 1px solid var(--color-background-5);
+    border-bottom: 1px solid var(--color-background-3);
     display: grid;
     grid-template-columns: 60px 1fr 3fr 1fr 1fr;
   }
   .list-view-content {
-    // margin: 0 20px;
-    overflow-x: auto;
+    padding: 0 10px;
     overflow-y: auto;
   }
 
   .list-view-header {
+    padding: 0 20px;
     display: grid;
     grid-template-columns: 60px repeat(4, minmax(25px, 1fr));
+  }
+  .toolbar-container {
+    &.background-not-present {
+      background-color: var(--color-background-2);
+      border-bottom: 1px solid var(--color-background-1);
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+        0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    }
+    &.background-present {
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2);
+      background-color: var(--color-background-transparent-1);
+    }
+  }
+
+  .content-container {
+    overflow-y: auto;
+    border-radius: 6px;
+    margin: 20px 50px;
+    box-shadow: var(--bs-lg);
   }
 }
 </style>

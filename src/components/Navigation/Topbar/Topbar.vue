@@ -49,7 +49,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .topbar {
-  background-color: var(--color-background-2);
+  background-color: var(--color-background-3);
   display: flex;
   height: 100%;
   align-content: center;

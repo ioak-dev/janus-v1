@@ -31,10 +31,10 @@ export default {
 .toolbar {
   // height: 60px;
   // line-height: 60px;
-  height: 72px;
-  line-height: 72px;
-  // background-color: var(--color-background-2);
-  border-bottom: 1px solid var(--color-background-transparent-3);
+  height: 36px;
+  line-height: 36px;
+  // background-color: var(--color-background-transparent-4);
+  // border-bottom: 1px solid var(--color-background-transparent-3);
   display: flex;
   justify-content: space-between;
   align-items: center;

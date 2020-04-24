@@ -15,14 +15,6 @@
                 : ''
             }}
           </div>
-          <div class="typography-4">Title</div>
-          <div class="title-section">
-            <OakInplaceEdit
-              v-bind:data="data"
-              id="title"
-              @blur="handleChange"
-            />
-          </div>
           <div class="typography-4">Type</div>
           <div>
             <ClickAndEditSelect
@@ -60,6 +52,15 @@
       </div>
       <div slot="description">
         <div class="content single-column" slot="content">
+          <!-- <div class="typography-4">Title</div> -->
+          <div class="title-section">
+            <OakInplaceEdit
+              v-bind:data="data"
+              id="title"
+              @blur="handleChange"
+            />
+          </div>
+          <!-- <div class="typography-4">Description</div> -->
           <OakEditor
             id="task-description"
             v-bind:data="data.description"

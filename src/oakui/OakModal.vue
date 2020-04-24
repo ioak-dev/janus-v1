@@ -1,39 +1,44 @@
 <template>
-  <div class="oak-dialog">
+  <div class="oak-modal" :class="style">
     <div
       v-if="nodeVisible"
-      class="dialog"
+      class="modal"
       :class="visible ? 'show ' + style : 'hide ' + style"
     >
       <div :class="visible ? 'container' : 'container hidetext'">
-        <div class="dialog-header">
-          <div class="container" @click="$emit('close')">
-            <i class="material-icons">close</i>
-            <div class="text-esc">
-              esc
+        <div class="modal-header">
+          <div class="container">
+            <div class="title">{{ label }}</div>
+            <div>
+              <i class="material-icons" @click="$emit('close')">
+                close
+              </i>
             </div>
           </div>
         </div>
-        <div v-if="$slots['dialog-container']" class="dialog-container">
-          <slot name="dialog-container" />
+        <div v-if="$slots['modal-container']" class="modal-container">
+          <slot name="modal-container" />
         </div>
-        <div v-if="$slots['dialog-body']" class="dialog-body">
-          <slot name="dialog-body" />
+        <div v-if="$slots['modal-body']" class="modal-body">
+          <slot name="modal-body" />
         </div>
-        <div v-if="$slots['dialog-footer']" class="dialog-footer">
-          <slot name="dialog-footer" />
+        <div v-if="$slots['modal-footer']" class="modal-footer">
+          <slot name="modal-footer" />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { sendMessage } from '../events/MessageService';
 export default {
-  name: 'OakDialog',
+  name: 'OakModal',
   props: {
     visible: Boolean,
     small: Boolean,
     fullscreen: Boolean,
+    label: String,
+    noheader: Boolean,
   },
   data() {
     return {
@@ -48,6 +53,7 @@ export default {
     getStyle() {
       let style = '';
       style += this.small ? ' small' : '';
+      style += this.noheader ? ' noheader' : '';
       style += this.fullscreen ? ' fullscreen' : '';
       return style;
     },
@@ -61,6 +67,7 @@ export default {
   },
   watch: {
     visible: function(newValue, oldValue) {
+      sendMessage('modal', newValue);
       if (newValue != oldValue) {
         if (newValue) {
           this.nodeVisible = newValue;
@@ -75,5 +82,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import './styles/OakDialog.scss';
+@import './styles/oak-modal.scss';
 </style>

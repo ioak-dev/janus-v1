@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="theme_dark themecolor_1">
     <!-- <AuthInit /> -->
+    <Backdrop />
     <Notification />
     <!-- <Navigation /> -->
     <Container />
@@ -12,6 +13,7 @@ import { mapGetters } from 'vuex';
 import Notification from '@/components/Notification/Notification.vue';
 // import AuthInit from '@/components/Auth/AuthInit.vue';
 import Container from './Container.vue';
+import Backdrop from './Backdrop.vue';
 // import Navigation from '@/components/Navigation/Navigation.vue';
 export default {
   name: 'App',
@@ -20,6 +22,7 @@ export default {
     // AuthInit,
     // Navigation,
     Container,
+    Backdrop,
   },
   computed: {
     ...mapGetters(['getProfile']),
@@ -96,5 +99,34 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--color-foreground-2);
   border-radius: 6px;
+}
+
+.modal-body {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 0 20px;
+  margin: 10px 0 20px 0;
+  display: grid;
+}
+
+.modal-footer {
+  // border-top: 1px solid var(--color-background-5);
+  background-color: var(--color-background-2);
+  height: 50px;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+
+  // &::before {
+  //     position: fixed;
+  //     display: inline-block;
+  //     content: "";
+  //     border-top: 2px solid var(--color-foreground-2);
+  //     width: 90%;
+  //     // margin: 0 1rem;
+  //     // transform: translateY(-1rem);
+  // }
 }
 </style>

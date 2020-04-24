@@ -5,10 +5,10 @@
       @pageChanged="pageChanged"
       v-bind:pageSizes="['10', '20', '30']"
     />
-    <div>
+    <div class="form-view">
       <OakText
-        label="search text"
         v-bind:data="searchText"
+        placeholder="Search for background images"
         id="image-search-text"
         @change="handleSearchTextChange"
       />
@@ -75,6 +75,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .image-search {
+  .form-view {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr auto;
+    column-gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
   .search-results {
     display: grid;
     grid-template-columns: auto auto auto auto;

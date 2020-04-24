@@ -20,19 +20,11 @@
         </div>
       </div>
     </div>
-    <UpdateTask
-      @close="toggleTask"
-      v-bind:visible="newTask"
-      v-bind:task="taskStub"
-      v-bind:alwaysEditFields="[
-        'project',
-        'stage',
-        'type',
-        'title',
-        'description',
-        'priority',
-      ]"
-    />
+    <OakModal @close="toggleTask" v-bind:visible="newTask" label="New Task">
+      <div slot="modal-container">
+        <UpdateTask v-bind:task="taskStub" />
+      </div>
+    </OakModal>
   </div>
 </template>
 <script>
@@ -40,10 +32,12 @@ import { mapGetters, mapActions } from 'vuex';
 import Card from './Card';
 import { receiveMessage } from '@/events/MessageService';
 import UpdateTask from '@/components/Create/UpdateTask.vue';
+import OakModal from '@/oakui/OakModal.vue';
 
 export default {
   name: 'VerticalLane',
   components: {
+    OakModal,
     Card,
     UpdateTask,
   },

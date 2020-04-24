@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="oak-editor-quill">
     <!-- <div id="toolbar">
       <button class="ql-bold">Bold</button>
       <button class="ql-italic">Italic</button>
@@ -71,6 +71,7 @@ export default {
         'list',
         'color',
         'font',
+        'indent',
       ],
     });
 
@@ -100,4 +101,7 @@ export default {
 // .container {
 //   background-color: white;
 // }
+.oak-editor-quill {
+  background-color: var(--color-background-5) !important;
+}
 </style>

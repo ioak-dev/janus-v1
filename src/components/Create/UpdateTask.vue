@@ -1,59 +1,57 @@
 <template>
   <div>
-    <OakDialog @close="handleClose" v-bind:visible="visible">
-      <div slot="dialog-body">
-        <ClickAndEditSelect
-          v-bind:data="data"
-          id="projectId"
-          label="Project"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          v-bind:objects="projectDropDown"
-          @change="handleChange"
-        />
-        <ClickAndEditSelect
-          v-bind:data="data"
-          id="stageId"
-          label="Stage"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          v-bind:objects="stageDropDown"
-          @change="handleChange"
-        />
-        <ClickAndEditSelect
-          v-bind:data="data"
-          id="type"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          v-bind:elements="['Epic', 'Story', 'Task', 'Sub-Task', 'Bug']"
-          @change="handleChange"
-        />
-        <ClickAndEditSelect
-          v-bind:data="data"
-          id="priority"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          v-bind:elements="['Could have', 'Should have', 'Must have']"
-          @change="handleChange"
-        />
-        <ClickAndEditText
-          v-bind:data="data"
-          id="title"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          @change="handleChange"
-        />
-        <Assignee
-          v-bind:id="data.assignedTo"
-          @remove="clearAssignee"
-          @change="handleAssigneeChange"
-          v-bind:teamIdList="teamIdList"
-        />
-        <div class="form-element-label">Description</div>
-        <OakEditor
-          v-bind:id="'task-description-' + task._id"
-          v-bind:data="data.description"
-          @change="handleDescriptionChange"
-          alwaysEdit
+    <div class="modal-body two-column">
+      <div v-if="!task.taskId" class="typography-4">Project</div>
+      <OakSelect
+        v-if="!task.taskId"
+        v-bind:data="data.projectId"
+        id="projectId"
+        @change="handleChange"
+        v-bind:objects="projectDropDown"
+      />
+      <div v-if="!task.taskId" class="typography-4">Stage</div>
+      <OakSelect
+        v-if="!task.taskId"
+        v-bind:data="data.stageId"
+        id="stageId"
+        @change="handleChange"
+        v-bind:objects="stageDropDown"
+      />
+      <div class="typography-4">Task type</div>
+      <OakSelect
+        v-bind:data="data.type"
+        id="type"
+        @change="handleChange"
+        v-bind:elements="['Epic', 'Story', 'Task', 'Sub-Task', 'Bug']"
+      />
+      <div class="typography-4">Title</div>
+      <OakText v-bind:data="data['title']" id="title" @change="handleChange" />
+      <div class="typography-4">Assignee</div>
+      <Assignee
+        v-bind:id="data.assignedTo"
+        @remove="clearAssignee"
+        @change="handleAssigneeChange"
+        v-bind:teamIdList="teamIdList"
+      />
+      <div class="typography-4">Description</div>
+      <OakEditor
+        v-bind:id="'task-description-' + task._id"
+        v-bind:data="data.description"
+        @change="handleDescriptionChange"
+        alwaysEdit
+      />
+    </div>
+    <div class="modal-footer">
+      <div>
+        <OakButton
+          v-if="task.taskId"
+          theme="primary"
+          variant="animate in"
+          @click="openDetailedView"
+          label="Detailed View"
         />
       </div>
-
-      <div slot="dialog-footer">
+      <div>
         <OakButton
           theme="primary"
           variant="animate in"
@@ -61,7 +59,7 @@
           label="Save"
         />
       </div>
-    </OakDialog>
+    </div>
   </div>
 </template>
 <script>
@@ -71,33 +69,24 @@ import OakText from '@/oakui/OakText.vue';
 import OakButton from '@/oakui/OakButton.vue';
 import OakClickAndEdit from '@/oakui/OakClickAndEdit.vue';
 import OakEditor from '@/oakui/OakEditor.vue';
+import OakSelect from '@/oakui/OakSelect.vue';
 import ClickAndEditText from '@/components/Lib/ClickAndEditText.vue';
 import ClickAndEditSelect from '@/components/Lib/ClickAndEditSelect.vue';
 import Assignee from './Assignee.vue';
 import { mapActions, mapGetters } from 'vuex';
+import { sendMessage } from '../../events/MessageService';
 
 export default {
   name: 'UpdateTask',
   components: {
-    OakDialog,
-    // OakText,
     OakEditor,
     OakButton,
-    // OakClickAndEdit,
-    // OakShowdown,
-    ClickAndEditText,
-    ClickAndEditSelect,
+    OakText,
+    OakSelect,
     Assignee,
   },
   props: {
-    visible: Boolean,
     task: Object,
-    alwaysEditFields: {
-      type: Array,
-      default: function() {
-        return [];
-      },
-    },
   },
   data: function() {
     return {
@@ -115,7 +104,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getProjects', 'getStagesByProjectId', 'getProjectById']),
+    ...mapGetters([
+      'getProjects',
+      'getStagesByProjectId',
+      'getProjectById',
+      'getProfile',
+    ]),
     projectDropDown: function() {
       const projectList = [];
       this.getProjects.forEach(item =>
@@ -166,7 +160,25 @@ export default {
     handleAssigneeChange: function(key) {
       this.data.assignedTo = key;
     },
+    openDetailedView: function() {
+      sendMessage('modal', false);
+      this.$router.push({
+        name: 'TaskView',
+        params: {
+          space: this.getProfile.space,
+          projectId: this.task.projectId,
+          taskId: this.task.taskId,
+        },
+      });
+    },
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.two-column {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 20px;
+  column-gap: 10px;
+}
+</style>

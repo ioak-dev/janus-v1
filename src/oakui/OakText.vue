@@ -1,6 +1,6 @@
 <template>
   <div class="oak-text-field">
-    <label class="form-element-label">{{ label }}</label>
+    <label v-if="label" class="form-element-label">{{ label }}</label>
     <input
       v-if="!multiline"
       :disabled="disabled"
