@@ -12,6 +12,9 @@ const getters = {
   getTasks: (state: any) => {
     return state.tasks;
   },
+  getEpicTasks: (state: any) => {
+    return state.tasks.filter((item: any) => item.type === 'Epic');
+  },
   getTasksByStage: (state: any) => (stageId: string) => {
     return state.tasks.filter((item: any) => {
       return item.stageId === stageId;

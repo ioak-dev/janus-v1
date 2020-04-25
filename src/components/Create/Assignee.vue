@@ -12,7 +12,6 @@
     <div v-else class="edit-content">
       <OakAutoComplete
         v-bind:id="'search-assignee-' + Math.random()"
-        @search="handlePeopleSearch"
         @change="key => $emit('change', key)"
         v-bind:objects="peopleSearchList"
       />
@@ -49,7 +48,10 @@ export default {
       const people = [];
       team?.forEach(userId => {
         const userItem = this.getUserById(userId);
-        people.push({ key: userItem._id, value: userItem.name });
+        people.push({
+          key: userItem._id,
+          value: `${userItem.firstName} ${userItem.lastName}`,
+        });
       });
       return people;
     },

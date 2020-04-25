@@ -6,6 +6,8 @@ import TeamMembers from '@/components/Team/TeamMembers.vue';
 import BoardView from '@/components/Project/Board/BoardView.vue';
 import ListView from '@/components/Project/List/ListView.vue';
 import TaskView from '@/components/Project/Task/TaskView.vue';
+import PlanningView from '@/components/Project/Planning/PlanningView.vue';
+import TeamView from '@/components/Project/Team/TeamView.vue';
 import CreateSpace from '@/components/Space/CreateSpace.vue';
 import Login from '@/components/Auth/Login.vue';
 import ProjectChangeBackground from '@/components/Project/Background/ProjectChangeBackground.vue';
@@ -46,6 +48,24 @@ const routes = [
     path: '/:space/:projectId/list',
     component: ListView,
     name: 'ListView',
+    meta: {
+      context: 'Project',
+      middleware: [readSpace, readProject, authenticate],
+    },
+  },
+  {
+    path: '/:space/:projectId/planning',
+    component: PlanningView,
+    name: 'PlanningView',
+    meta: {
+      context: 'Project',
+      middleware: [readSpace, readProject, authenticate],
+    },
+  },
+  {
+    path: '/:space/:projectId/team',
+    component: TeamView,
+    name: 'TeamView',
     meta: {
       context: 'Project',
       middleware: [readSpace, readProject, authenticate],

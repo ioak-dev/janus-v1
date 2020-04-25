@@ -16,6 +16,20 @@
     </router-link>
     <router-link
       class="nav-item"
+      v-bind:key="`${getProject._id}_planning`"
+      v-bind:to="`/${getProfile.space}/${getProject._id}/planning`"
+    >
+      Planning
+    </router-link>
+    <router-link
+      class="nav-item"
+      v-bind:key="`${getProject._id}_team`"
+      v-bind:to="`/${getProfile.space}/${getProject._id}/team`"
+    >
+      Team
+    </router-link>
+    <router-link
+      class="nav-item"
       v-bind:key="`${getProject._id}_changebackground`"
       v-bind:to="`/${getProfile.space}/${getProject._id}/changebackground`"
     >

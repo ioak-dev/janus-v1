@@ -10,7 +10,6 @@
       />
       <OakAutoComplete
         label="Search People"
-        @search="handlePeopleSearch"
         @change="handlePeopleChange"
         v-bind:objects="peopleSearchList"
         id="people-search"
@@ -78,9 +77,6 @@ export default {
     },
     save: function() {
       this.saveTeam(this.data);
-    },
-    handlePeopleSearch: function() {
-      this.searchText = event.target.value;
     },
     handlePeopleChange: function(key) {
       if (!this.data.members) {

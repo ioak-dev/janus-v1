@@ -10,6 +10,7 @@ import image from '../store/modules/image';
 import taskComment from '../store/modules/taskComment';
 import log from '../store/modules/log';
 import taskChecklistitem from '../store/modules/taskChecklistitem';
+import taskAttachment from '../store/modules/taskAttachment';
 
 Vue.use(Vuex);
 
@@ -28,5 +29,6 @@ export default new Vuex.Store({
     taskComment,
     log,
     taskChecklistitem,
+    taskAttachment,
   },
 });

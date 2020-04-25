@@ -1,57 +1,41 @@
 <template>
   <div>
-    <OakDialog @close="$emit('close')" v-bind:visible="visible">
-      <div slot="dialog-body">
-        <ClickAndEditText
-          v-bind:data="data"
-          id="name"
-          label="Project Name"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          @change="handleChange"
-        />
-        <ClickAndEditSelect
-          v-bind:data="data"
-          id="type"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          v-bind:elements="['Kanban', 'Scrum']"
-          @change="handleChange"
-        />
-      </div>
-      <div slot="dialog-footer">
-        <OakButton
-          theme="primary"
-          variant="animate in"
-          @click="save"
-          label="Save"
-        />
-      </div>
-    </OakDialog>
+    <div class="modal-body two-column">
+      <div class="typography-4">Project Methodology</div>
+      <OakSelect
+        v-bind:data="data.type"
+        id="type"
+        @change="handleChange"
+        v-bind:elements="['Kanban', 'Scrum']"
+      />
+      <div class="typography-4">Project</div>
+      <OakText v-bind:data="data.name" id="name" @change="handleChange" />
+    </div>
+    <div class="modal-footer">
+      <OakButton
+        theme="primary"
+        variant="animate in"
+        @click="save"
+        label="Save"
+      />
+    </div>
   </div>
 </template>
 <script>
-import OakDialog from '@/oakui/OakDialog.vue';
+import OakText from '@/oakui/OakText.vue';
 import OakButton from '@/oakui/OakButton.vue';
+import OakSelect from '@/oakui/OakSelect.vue';
 import { mapActions } from 'vuex';
-import ClickAndEditText from '@/components/Lib/ClickAndEditText.vue';
-import ClickAndEditSelect from '@/components/Lib/ClickAndEditSelect.vue';
 
 export default {
   name: 'UpdateProject',
   components: {
-    OakDialog,
+    OakText,
     OakButton,
-    ClickAndEditText,
-    ClickAndEditSelect,
+    OakSelect,
   },
   props: {
-    visible: Boolean,
     project: Object,
-    alwaysEditFields: {
-      type: Array,
-      default: function() {
-        return [];
-      },
-    },
   },
   data: function() {
     return {
@@ -77,4 +61,13 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.two-column {
+  padding-bottom: 50px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  row-gap: 20px;
+  column-gap: 10px;
+}
+</style>

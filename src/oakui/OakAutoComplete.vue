@@ -6,13 +6,13 @@
         v-bind:label="label"
         v-bind:placeholder="placeholder"
         @focus="onFocus"
-        @change="$emit('search')"
+        @change="handleSearch"
       />
     </div>
     <div class="results" v-if="isSearchOn">
       <div
         class="element"
-        v-for="item in objects"
+        v-for="item in filteredList"
         v-bind:key="item.key"
         @click="selected(item.key)"
       >
@@ -35,6 +35,7 @@ export default {
   data: function() {
     return {
       isSearchOn: false,
+      searchCriteria: '',
     };
   },
   created() {
@@ -50,6 +51,13 @@ export default {
       }
     });
   },
+  computed: {
+    filteredList: function() {
+      return this.objects.filter(item =>
+        item.value?.toLowerCase().includes(this.searchCriteria.toLowerCase())
+      );
+    },
+  },
   methods: {
     // onBlur() {
     //   console.log('blur');
@@ -62,6 +70,9 @@ export default {
     selected(key) {
       this.isSearchOn = false;
       this.$emit('change', key);
+    },
+    handleSearch() {
+      this.searchCriteria = event.target.value;
     },
   },
 };

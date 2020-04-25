@@ -11,24 +11,20 @@
       right
       mobilize
     />
-    <UpdateProject
+    <OakModal
       @close="toggleProject"
       v-bind:visible="newProject"
-      v-bind:project="projectStub"
-      v-bind:alwaysEditFields="['name', 'type']"
-    />
-    <UpdateStage
-      @close="toggleStage"
-      v-bind:visible="newStage"
-      v-bind:stage="stageStub"
-      v-bind:alwaysEditFields="['name', 'projectId']"
-    />
-    <!-- <UpdateTeam
-      @close="toggleTeam"
-      v-bind:visible="newTeam"
-      v-bind:team="teamStub"
-      v-bind:alwaysEditFields="['name']"
-    /> -->
+      label="New Project"
+    >
+      <div slot="modal-container">
+        <UpdateProject v-bind:project="projectStub" />
+      </div>
+    </OakModal>
+    <OakModal @close="toggleStage" v-bind:visible="newStage" label="New Stage">
+      <div slot="modal-container">
+        <UpdateStage v-bind:stage="stageStub" />
+      </div>
+    </OakModal>
     <OakModal @close="toggleTeam" v-bind:visible="newTeam" label="New Team">
       <div slot="modal-container">
         <UpdateTeam v-bind:team="teamStub" />
@@ -75,6 +71,14 @@ const projectStub = {
 
 export default {
   name: 'CreateNew',
+  components: {
+    OakPopoverMenu,
+    UpdateProject,
+    UpdateTask,
+    UpdateTeam,
+    UpdateStage,
+    OakModal,
+  },
   data: function() {
     return {
       newProject: false,
@@ -108,14 +112,6 @@ export default {
         },
       ],
     };
-  },
-  components: {
-    OakPopoverMenu,
-    UpdateProject,
-    UpdateTask,
-    UpdateTeam,
-    UpdateStage,
-    OakModal,
   },
   methods: {
     toggleProject: function() {

@@ -64,22 +64,9 @@
           />
         </div>
       </div>
-      <div slot="description">
+      <div slot="attachments">
         <div class="content single-column" slot="content">
-          <!-- <div class="typography-4">Title</div> -->
-          <div class="title-section">
-            <OakInplaceEdit
-              v-bind:data="data"
-              id="title"
-              @blur="handleChange"
-            />
-          </div>
-          <!-- <div class="typography-4">Description</div> -->
-          <OakEditor
-            id="task-description"
-            v-bind:data="data.description"
-            @change="handleDescriptionChange"
-          />
+          <Attachment v-bind:task="task" />
         </div>
       </div>
       <div slot="checklist">
@@ -150,18 +137,16 @@
   </div>
 </template>
 <script>
-import OakAccordion from '@/oakui/OakAccordion.vue';
-import OakShowdown from '@/oakui/OakShowdown.vue';
 import OakButton from '@/oakui/OakButton.vue';
 import OakTab from '@/oakui/OakTab.vue';
 import OakInplaceEdit from '@/oakui/OakInplaceEdit.vue';
-import OakClickAndEdit from '@/oakui/OakClickAndEdit.vue';
 import OakText from '@/oakui/OakText.vue';
 import OakEditor from '@/oakui/OakEditor.vue';
 import ViewLog from './ViewLog.vue';
 import ClickAndEditSelect from '@/components/Lib/ClickAndEditSelect.vue';
 import Assignee from '@/components/Create/Assignee.vue';
 import ViewComment from './ViewComment.vue';
+import Attachment from './Attachment.vue';
 import { mapActions, mapGetters } from 'vuex';
 import ViewSubtask from './ViewSubtask.vue';
 import ViewChecklist from './ViewChecklist.vue';
@@ -182,6 +167,7 @@ export default {
     ViewLog,
     ViewSubtask,
     ViewChecklist,
+    Attachment,
   },
   props: {
     task: Object,
@@ -206,7 +192,7 @@ export default {
       alwaysEditFields: ['type', 'stageId', 'priority'],
       tabDetails: [
         { slotName: 'details', label: 'Basic details', icon: 'subject' },
-        { slotName: 'description', label: 'Description', icon: 'text_fields' },
+        { slotName: 'attachments', label: 'Attachments', icon: 'attach_file' },
         {
           slotName: 'checklist',
           label: 'Checklist',

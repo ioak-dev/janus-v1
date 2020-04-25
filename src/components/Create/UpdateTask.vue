@@ -177,7 +177,8 @@ export default {
 <style lang="scss" scoped>
 .two-column {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto 1fr;
+  align-items: center;
   row-gap: 20px;
   column-gap: 10px;
 }

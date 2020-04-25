@@ -1,58 +1,41 @@
 <template>
   <div>
-    <OakDialog @close="$emit('close')" v-bind:visible="visible">
-      <div slot="dialog-body">
-        <ClickAndEditSelect
-          v-bind:data="data"
-          id="projectId"
-          label="Project"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          v-bind:objects="projectDropDown"
-          @change="handleChange"
-        />
-        <ClickAndEditText
-          v-bind:data="data"
-          id="name"
-          label="Stage Name"
-          v-bind:alwaysEditFields="alwaysEditFields"
-          @change="handleChange"
-        />
-      </div>
-      <div slot="dialog-footer">
-        <OakButton
-          theme="primary"
-          variant="animate in"
-          @click="save"
-          label="Save"
-        />
-      </div>
-    </OakDialog>
+    <div class="modal-body two-column">
+      <div class="typography-4">Project</div>
+      <OakSelect
+        v-bind:data="data.projectId"
+        id="projectId"
+        @change="handleChange"
+        v-bind:objects="projectDropDown"
+      />
+      <div class="typography-4">Stage Name</div>
+      <OakText v-bind:data="data.name" id="name" @change="handleChange" />
+    </div>
+    <div class="modal-footer">
+      <OakButton
+        theme="primary"
+        variant="animate in"
+        @click="save"
+        label="Save"
+      />
+    </div>
   </div>
 </template>
 <script>
-import OakDialog from '@/oakui/OakDialog.vue';
+import OakText from '@/oakui/OakText.vue';
 import OakButton from '@/oakui/OakButton.vue';
 import { mapActions, mapGetters } from 'vuex';
-import ClickAndEditText from '@/components/Lib/ClickAndEditText.vue';
-import ClickAndEditSelect from '@/components/Lib/ClickAndEditSelect.vue';
+import OakSelect from '@/oakui/OakSelect.vue';
 
 export default {
   name: 'UpdateStage',
   components: {
-    OakDialog,
+    OakSelect,
+    OakText,
     OakButton,
-    ClickAndEditText,
-    ClickAndEditSelect,
   },
   props: {
-    visible: Boolean,
     stage: Object,
-    alwaysEditFields: {
-      type: Array,
-      default: function() {
-        return [];
-      },
-    },
   },
   data: function() {
     return {
@@ -88,4 +71,13 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.two-column {
+  padding-bottom: 50px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  row-gap: 20px;
+  column-gap: 10px;
+}
+</style>

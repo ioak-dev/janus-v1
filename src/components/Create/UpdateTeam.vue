@@ -1,11 +1,10 @@
 <template>
   <div>
-    <div class="modal-body">
+    <div class="modal-body two-column">
       <div class="formelement-label">Team name</div>
       <OakText v-bind:data="data.name" id="name" @change="handleChange" />
       <div class="formelement-label">Search Members</div>
       <OakAutoComplete
-        @search="handlePeopleSearch"
         @change="handlePeopleChange"
         v-bind:objects="peopleSearchList"
         id="people-search-update-team"
@@ -112,6 +111,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.two-column {
+  padding-bottom: 50px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  row-gap: 20px;
+  column-gap: 10px;
+}
 .member {
   padding: 10px 0px;
   border-bottom: 1px solid var(--color-background-2);

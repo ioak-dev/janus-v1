@@ -39,7 +39,7 @@ const getters = {
   findTeamByIdList: (state: any) => (idList: any) => {
     const teamList: any = [];
     idList?.forEach((id: string) => teamList.push(...findTeam(id)?.members));
-    return teamList;
+    return [...new Set(teamList)];
   },
 };
 
