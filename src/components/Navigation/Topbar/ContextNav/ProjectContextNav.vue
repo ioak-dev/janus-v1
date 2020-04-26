@@ -2,24 +2,15 @@
   <div class="nav-menu">
     <router-link
       class="nav-item"
-      v-bind:key="`${getProject._id}_board`"
-      v-bind:to="`/${getProfile.space}/${getProject._id}/board`"
+      v-bind:key="`${getProject._id}_main`"
+      v-bind:to="`/${getProfile.space}/${getProject._id}/main?view=board`"
+      v-bind:class="
+        $route.path.startsWith(`/${getProfile.space}/${getProject._id}/main`)
+          ? 'main-route-active'
+          : ''
+      "
     >
-      Board
-    </router-link>
-    <router-link
-      class="nav-item"
-      v-bind:key="`${getProject._id}_list`"
-      v-bind:to="`/${getProfile.space}/${getProject._id}/list`"
-    >
-      List
-    </router-link>
-    <router-link
-      class="nav-item"
-      v-bind:key="`${getProject._id}_planning`"
-      v-bind:to="`/${getProfile.space}/${getProject._id}/planning`"
-    >
-      Planning
+      Task
     </router-link>
     <router-link
       class="nav-item"
@@ -35,15 +26,6 @@
     >
       Change Background
     </router-link>
-    <div class="task-link" v-for="taskId in getTaskToView" v-bind:key="taskId">
-      <router-link
-        class="nav-item"
-        v-bind:key="`${getProject._id}_task`"
-        v-bind:to="`/${getProfile.space}/${getProject._id}/task/${taskId}`"
-      >
-        {{ taskId }}
-      </router-link>
-    </div>
   </div>
 </template>
 <script>
@@ -65,8 +47,4 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import './ContextNav.scss';
-.task-link {
-  display: inherit;
-  white-space: nowrap;
-}
 </style>

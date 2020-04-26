@@ -22,7 +22,7 @@
         v-bind:data="data.type"
         id="type"
         @change="handleChange"
-        v-bind:elements="['Epic', 'Story', 'Task', 'Sub-Task', 'Bug']"
+        v-bind:elements="['Epic', 'Story', 'Task', 'Sub-task', 'Defect']"
       />
       <div class="typography-4">Title</div>
       <OakText v-bind:data="data['title']" id="title" @change="handleChange" />
@@ -163,12 +163,8 @@ export default {
     openDetailedView: function() {
       sendMessage('modal', false);
       this.$router.push({
-        name: 'TaskView',
-        params: {
-          space: this.getProfile.space,
-          projectId: this.task.projectId,
-          taskId: this.task.taskId,
-        },
+        path: `/${this.getProfile.space}/${this.task.projectId}/main`,
+        query: { view: 'task', taskid: this.task.taskId },
       });
     },
   },

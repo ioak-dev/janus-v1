@@ -4,6 +4,12 @@
       class="stage typography-4"
       v-bind:class="isExpanded ? 'show' : 'hide'"
       @click="toggle"
+      draggable="true"
+      @dragover.prevent="dragOver"
+      @dragstart="dragStart"
+      @dragend="dragEnd"
+      @drop.prevent="drop"
+      @dragleave="dragLeave"
     >
       <i
         class="material-icons"
@@ -17,21 +23,29 @@
       v-bind:class="isExpanded ? 'show' : 'hide'"
       ref="container"
     >
-      <div v-for="task in tasks" v-bind:key="task.id" v-bind:id="task.id">
-        <ListItem v-bind:task="task" />
+      <template v-if="tasks.length > 0">
+        <div v-for="task in tasks" v-bind:key="task.id" v-bind:id="task.id">
+          <ListItem v-bind:task="task" />
+        </div>
+      </template>
+      <div v-else>
+        <EmptyListItem v-bind:stage="stage" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import ListItem from './ListItem.vue';
+import EmptyListItem from './EmptyListItem.vue';
+import { sendMessage } from '../../../events/MessageService';
 
 export default {
   name: 'HorizontalLane',
   components: {
     ListItem,
+    EmptyListItem,
   },
   props: {
     stage: Object,
@@ -45,12 +59,7 @@ export default {
     this.updateScrollHeight();
   },
   methods: {
-    drop(e) {
-      // const id = e.dataTransfer.getData('id');
-      // const listItem = document.getElementById(id);
-      // listItem.style.display = 'block';
-      // e.target.appendChild(listItem);
-    },
+    ...mapActions(['moveStage', 'saveTask']),
     toggle: function() {
       this.isExpanded = !this.isExpanded;
     },
@@ -64,6 +73,38 @@ export default {
         }
       }, 0);
     },
+    dragStart(e) {
+      this.dragClass = 'source-spot';
+      e.dataTransfer.setData('id', this.stage._id);
+      e.dataTransfer.setData('domain', 'stage');
+      setTimeout(() => {
+        // e.target.style.display = 'none';
+        console.log('here you can set display as none');
+      }, 0);
+    },
+    dragEnd() {
+      this.dragClass = '';
+      sendMessage('dragging', false);
+    },
+    dragOver(e) {
+      this.dragClass =
+        this.dragClass === 'source-spot' ? this.dragClass : 'destination-spot';
+    },
+    dragLeave(e) {
+      this.dragClass =
+        this.dragClass === 'destination-spot' ? '' : this.dragClass;
+    },
+    drop(e) {
+      const type = e.dataTransfer.getData('domain');
+      const id = e.dataTransfer.getData('id');
+      this.dragClass = '';
+      if (type === 'task') {
+        const task = this.getTaskById(id);
+        this.saveTask({ ...task, stageId: this.stage._id });
+      } else if (type === 'stage') {
+        this.moveStage({ moveStageId: id, afterStageId: this.stage._id });
+      }
+    },
   },
   watch: {
     tasks: function() {
@@ -74,7 +115,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getTasksByStage']),
+    ...mapGetters(['getTasksByStage', 'getTaskById']),
     tasks: function() {
       const taskList = this.getTasksByStage(this.stage._id);
       return taskList;

@@ -21,7 +21,7 @@
               v-bind:data="data"
               id="type"
               v-bind:alwaysEditFields="alwaysEditFields"
-              v-bind:elements="['Epic', 'Story', 'Task', 'Sub-Task', 'Bug']"
+              v-bind:elements="['Epic', 'Story', 'Task', 'Sub-task', 'Defect']"
               @change="handleChange"
             />
           </div>

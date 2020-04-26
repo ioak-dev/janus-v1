@@ -6,7 +6,7 @@ import TeamMembers from '@/components/Team/TeamMembers.vue';
 import BoardView from '@/components/Project/Board/BoardView.vue';
 import ListView from '@/components/Project/List/ListView.vue';
 import TaskView from '@/components/Project/Task/TaskView.vue';
-import PlanningView from '@/components/Project/Planning/PlanningView.vue';
+import MainView from '@/components/Project/Main/MainView.vue';
 import TeamView from '@/components/Project/Team/TeamView.vue';
 import CreateSpace from '@/components/Space/CreateSpace.vue';
 import Login from '@/components/Auth/Login.vue';
@@ -36,27 +36,9 @@ const routes = [
     name: 'Login',
   },
   {
-    path: '/:space/:projectId/board',
-    component: BoardView,
-    name: 'BoardView',
-    meta: {
-      context: 'Project',
-      middleware: [readSpace, readProject, authenticate],
-    },
-  },
-  {
-    path: '/:space/:projectId/list',
-    component: ListView,
-    name: 'ListView',
-    meta: {
-      context: 'Project',
-      middleware: [readSpace, readProject, authenticate],
-    },
-  },
-  {
-    path: '/:space/:projectId/planning',
-    component: PlanningView,
-    name: 'PlanningView',
+    path: '/:space/:projectId/main',
+    component: MainView,
+    name: 'MainView',
     meta: {
       context: 'Project',
       middleware: [readSpace, readProject, authenticate],

@@ -10,7 +10,7 @@
           v-bind:data="data.type"
           id="type"
           @change="handleChange"
-          v-bind:elements="['Task', 'Sub-Task', 'Bug']"
+          v-bind:elements="['Task', 'Sub-task', 'Defect']"
         />
       </div>
       <div class="typography-4">Title</div>

@@ -24,6 +24,7 @@
         <i class="material-icons action-click" @click="toggleTask">edit</i>
       </div> -->
       <div>{{ task.taskId }}</div>
+      <div>{{ task.type }}</div>
       <div class="task-title">{{ task.title }}</div>
       <!-- <div>{{ task.assignedTo }}</div> -->
       <div>
@@ -68,9 +69,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['moveTask']),
+    ...mapActions(['moveTask', 'moveStage']),
     dragStart(e) {
       this.dragClass = 'source-spot';
+      e.dataTransfer.setData('domain', 'task');
       e.dataTransfer.setData('id', this.task._id);
       setTimeout(() => {
         // e.target.style.display = 'none';
@@ -89,9 +91,14 @@ export default {
         this.dragClass === 'destination-spot' ? '' : this.dragClass;
     },
     drop(e) {
+      const type = e.dataTransfer.getData('domain');
       const id = e.dataTransfer.getData('id');
       this.dragClass = '';
-      this.moveTask({ moveTaskId: id, afterTaskId: this.task._id });
+      if (type === 'task') {
+        this.moveTask({ moveTaskId: id, afterTaskId: this.task._id });
+      } else if (type === 'stage') {
+        this.moveStage({ moveStageId: id, afterStageId: this.task.stageId });
+      }
       // const listItem = document.getElementById(id);
       // listItem.style.display = 'block';
       // e.target.appendChild(listItem);
@@ -105,14 +112,12 @@ export default {
 
 <style scoped lang="scss">
 .list-item {
-  border-bottom: 1px solid var(--color-background-3);
+  border-bottom: 1px solid var(--color-background-2);
   border-radius: 6px;
-  padding: 0 10px;
+  padding: 0 20px;
   height: 36px;
   line-height: 36px;
   cursor: default;
-  display: grid;
-  grid-template-columns: 60px 1fr 3fr 1fr 1fr;
   overflow: hidden;
   .action {
     height: 36px;
@@ -144,7 +149,8 @@ export default {
     border-bottom: 1px solid var(--color-primary-1);
   }
   display: grid;
-  grid-template-columns: 60px repeat(4, minmax(25px, 1fr));
+  grid-template-columns: repeat(5, minmax(25px, 1fr));
+  column-gap: 20px;
   .action {
     width: 10px;
   }

@@ -11,27 +11,7 @@
       @click="toggleTask"
       @dragleave="dragLeave"
     >
-      <div class="top-row">
-        <div class="title typography-4">
-          <div class="task-id">{{ task.taskId }}</div>
-          <div class="task-title">
-            :
-            {{
-              task.title.length > 100
-                ? task.title.substring(0, 100) + '...'
-                : task.title
-            }}
-          </div>
-        </div>
-      </div>
-      <div class="bottom-row">
-        <div class="left">
-          <Avatar v-if="assignedToUser" v-bind:user="assignedToUser" />
-        </div>
-        <div class="right typography-3">
-          Jan 31
-        </div>
-      </div>
+      <CardPreview v-bind:task="task" />
     </div>
     <OakModal
       @close="toggleTask"
@@ -49,15 +29,15 @@
 import { sendMessage } from '@/events/MessageService';
 import { mapGetters, mapActions } from 'vuex';
 import UpdateTask from '@/components/Create/UpdateTask.vue';
-import Avatar from '@/components/Avatar/Avatar.vue';
 import OakModal from '@/oakui/OakModal.vue';
+import CardPreview from './CardPreview.vue';
 
 export default {
   name: 'Card',
   components: {
     UpdateTask,
-    Avatar,
     OakModal,
+    CardPreview,
   },
   props: {
     task: {
@@ -78,15 +58,13 @@ export default {
   // },
   computed: {
     ...mapGetters(['getProfile', 'getUserById', 'getCommentsForTask']),
-    assignedToUser: function() {
-      return this.getUserById(this.task.assignedTo);
-    },
   },
   methods: {
-    ...mapActions(['moveTask']),
+    ...mapActions(['moveTask', 'moveStage']),
     dragStart(e) {
       this.dragClass = 'source-spot';
       e.dataTransfer.setData('id', this.task._id);
+      e.dataTransfer.setData('domain', 'task');
       setTimeout(() => {
         // e.target.style.display = 'none';
         console.log('here you can set display as none');
@@ -114,9 +92,14 @@ export default {
         this.dragClass === 'destination-spot' ? '' : this.dragClass;
     },
     drop(e) {
+      const type = e.dataTransfer.getData('domain');
       const id = e.dataTransfer.getData('id');
       this.dragClass = '';
-      this.moveTask({ moveTaskId: id, afterTaskId: this.task._id });
+      if (type === 'task') {
+        this.moveTask({ moveTaskId: id, afterTaskId: this.task._id });
+      } else if (type === 'stage') {
+        this.moveStage({ moveStageId: id, afterStageId: this.task.stageId });
+      }
       // const listItem = document.getElementById(id);
       // listItem.style.display = 'block';
       // e.target.appendChild(listItem);
@@ -146,31 +129,8 @@ export default {
     background-color: var(--color-background-transparent-4);
   }
 
-  .top-row {
-    .task-id,
-    .task-title {
-      display: inline;
-    }
-  }
-  .bottom-row {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .left,
-    .right {
-      display: flex;
-      align-items: center;
-    }
-  }
-}
-.shadow-card {
-  &.show {
-    display: block;
-  }
-  &.hide {
-    display: none;
-  }
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: 4px;
 }
 </style>

@@ -17,7 +17,7 @@
         class="project-container"
       >
         <router-link
-          v-bind:to="`/${getProfile.space}/${project._id}/board`"
+          v-bind:to="`/${getProfile.space}/${project._id}/main?view=board`"
           v-bind:class="
             $route.path.startsWith(`/${getProfile.space}/${project._id}`)
               ? 'project-route-active'

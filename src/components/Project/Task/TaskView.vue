@@ -11,13 +11,16 @@ import { sendMessage } from '@/events/MessageService';
 import TaskContent from './TaskContent.vue';
 export default {
   name: 'TaskView',
+  props: {
+    taskId: String,
+  },
   components: {
     TaskContent,
   },
   computed: {
     ...mapGetters(['getTaskByTaskId', 'getProject']),
     task: function() {
-      return this.getTaskByTaskId(this.$route.params?.taskId);
+      return this.getTaskByTaskId(this.taskId);
     },
     styleClass: function() {
       if (this.getProject?.image) {

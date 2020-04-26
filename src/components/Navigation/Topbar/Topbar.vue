@@ -3,7 +3,7 @@
     <div class="left">
       <menu-icon @click="$emit('sidebarToggled')" />
       <!-- <Logo class="logo-container desktop-only" v-if="!getProfile.sidebar" /> -->
-      <ThumbnailSection />
+      <ThumbnailSection class="desktop-only" />
       <div class="left-nav-container">
         <div class="title-row-container"><title-row /></div>
         <context-nav />
