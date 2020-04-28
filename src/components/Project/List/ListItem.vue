@@ -11,7 +11,7 @@
       @dragend="dragEnd"
       @click="toggleTask"
     >
-      <div class="one-liner">{{ task.taskId }}</div>
+      <div class="one-liner" data-test="task-id">{{ task.taskId }}</div>
       <div>
         <TaskTypeBadge v-bind:type="task.type" />
         <div class="one-liner">{{ task.type }}</div>

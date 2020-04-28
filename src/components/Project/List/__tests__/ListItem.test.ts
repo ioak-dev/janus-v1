@@ -18,6 +18,7 @@ const task = {
   priority: null,
   assignedTo: 1,
   parentTaskId: null,
+  taskId: 'test-1',
 };
 
 describe('ListItem.vue', () => {
@@ -57,6 +58,6 @@ describe('ListItem.vue', () => {
       },
     });
     expect(wrapper.contains('.list-item')).toBeTruthy();
-    expect(wrapper.find('.task-title').text()).toEqual('test title');
+    expect(wrapper.find("[data-test='task-id']").text()).toEqual('test-1');
   });
 });
