@@ -11,26 +11,24 @@
       @dragend="dragEnd"
       @click="toggleTask"
     >
-      <!-- <div class="action">
-        <i
-          class="material-icons action-move"
-          draggable="true"
-          @dragover.prevent="dragOver"
-          @dragstart="dragStart"
-          @dragend="dragEnd"
-          @dragleave="dragLeave"
-          >drag_indicator</i
-        >
-        <i class="material-icons action-click" @click="toggleTask">edit</i>
-      </div> -->
-      <div>{{ task.taskId }}</div>
-      <div>{{ task.type }}</div>
-      <div class="task-title">{{ task.title }}</div>
-      <!-- <div>{{ task.assignedTo }}</div> -->
+      <div class="one-liner">{{ task.taskId }}</div>
       <div>
-        <Avatar v-if="assignedToUser" v-bind:user="assignedToUser" showName />
+        <TaskTypeBadge v-bind:type="task.type" />
+        <div class="one-liner">{{ task.type }}</div>
       </div>
-      <div>{{ task.priority }}</div>
+      <div class="one-liner">{{ task.title }}</div>
+      <div>
+        <Avatar
+          v-if="assignedToUser"
+          v-bind:user="assignedToUser"
+          showName
+          size="small"
+        />
+      </div>
+      <div>
+        <TaskPriorityBadge v-bind:priority="task.priority" />
+        <div class="one-liner">{{ task.priority }}</div>
+      </div>
     </div>
     <OakModal
       @close="toggleTask"
@@ -50,9 +48,18 @@ import { sendMessage } from '@/events/MessageService';
 import UpdateTask from '@/components/Create/UpdateTask.vue';
 import Avatar from '@/components/Avatar/Avatar.vue';
 import OakModal from '@/oakui/OakModal.vue';
+import TaskTypeBadge from '../Task/TaskTypeBadge.vue';
+import TaskPriorityBadge from '../Task/TaskPriorityBadge.vue';
+
 export default {
   name: 'ListItem',
-  components: { OakModal, UpdateTask, Avatar },
+  components: {
+    OakModal,
+    UpdateTask,
+    Avatar,
+    TaskTypeBadge,
+    TaskPriorityBadge,
+  },
   props: {
     task: Object,
   },
@@ -117,6 +124,13 @@ export default {
   padding: 0 20px;
   height: 36px;
   line-height: 36px;
+  // justify-items: flex-start;
+  div {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: flex-start;
+    column-gap: 10px;
+  }
   cursor: default;
   overflow: hidden;
   .action {

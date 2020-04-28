@@ -18,12 +18,25 @@
         @click="save"
         label="Save"
       />
+      <OakButton
+        theme="primary"
+        variant="animate in"
+        @click="toggleDeletePrompt"
+        label="Delete"
+      />
     </div>
+    <OakPrompt
+      v-bind:visible="showDeletePrompt"
+      v-bind:text="`Are you sure you want to delete the stage? (${stage.name})`"
+      @click="remove"
+      @close="toggleDeletePrompt"
+    />
   </div>
 </template>
 <script>
 import OakText from '@/oakui/OakText.vue';
 import OakButton from '@/oakui/OakButton.vue';
+import OakPrompt from '@/oakui/OakPrompt.vue';
 import { mapActions, mapGetters } from 'vuex';
 import OakSelect from '@/oakui/OakSelect.vue';
 
@@ -33,6 +46,7 @@ export default {
     OakSelect,
     OakText,
     OakButton,
+    OakPrompt,
   },
   props: {
     stage: Object,
@@ -40,6 +54,7 @@ export default {
   data: function() {
     return {
       data: {},
+      showDeletePrompt: false,
     };
   },
   created() {
@@ -61,12 +76,18 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['saveStage']),
+    ...mapActions(['saveStage', 'deleteStage']),
     handleChange: function() {
       this.data[event.target.name] = event.target.value;
     },
     save: function() {
       this.saveStage(this.data);
+    },
+    remove: function() {
+      this.deleteStage(this.stage._id);
+    },
+    toggleDeletePrompt: function() {
+      this.showDeletePrompt = !this.showDeletePrompt;
     },
   },
 };

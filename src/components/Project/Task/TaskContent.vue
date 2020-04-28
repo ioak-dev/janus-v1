@@ -2,66 +2,8 @@
   <div class="task-content">
     <OakTab class="task-tab" v-bind:meta="tabDetails">
       <div slot="details">
-        <div class="content" slot="content">
-          <div class="typography-4">Task Reference</div>
-          <div class="typography-4">
-            {{ task ? task.taskId : '' }}
-          </div>
-          <div class="typography-4">Parent</div>
-          <div class="typography-4">
-            {{
-              task && task.parentTaskId
-                ? getTaskById(task.parentTaskId).taskId
-                : ''
-            }}
-          </div>
-          <div class="typography-4">Type</div>
-          <div>
-            <ClickAndEditSelect
-              v-bind:data="data"
-              id="type"
-              v-bind:alwaysEditFields="alwaysEditFields"
-              v-bind:elements="['Epic', 'Story', 'Task', 'Sub-task', 'Defect']"
-              @change="handleChange"
-            />
-          </div>
-          <div class="typography-4">Stage</div>
-          <ClickAndEditSelect
-            v-bind:data="data"
-            id="stageId"
-            v-bind:alwaysEditFields="alwaysEditFields"
-            v-bind:objects="stageDropDown"
-            @change="handleChange"
-          />
-          <div class="typography-4">Priority</div>
-          <ClickAndEditSelect
-            v-bind:data="data"
-            id="priority"
-            v-bind:alwaysEditFields="alwaysEditFields"
-            v-bind:elements="['Could have', 'Should have', 'Must have']"
-            @change="handleChange"
-          />
-          <div class="typography-4">Assigned to</div>
-          <Assignee
-            v-bind:id="data.assignedTo"
-            @remove="clearAssignee"
-            @change="handleAssigneeChange"
-            v-bind:teamIdList="teamIdList"
-          />
-          <div class="typography-4">Title</div>
-          <div class="title-section">
-            <OakInplaceEdit
-              v-bind:data="data"
-              id="title"
-              @blur="handleChange"
-            />
-          </div>
-          <div class="typography-4">Description</div>
-          <OakEditor
-            id="task-description"
-            v-bind:data="data.description"
-            @change="handleDescriptionChange"
-          />
+        <div class="content single-column" slot="content">
+          <ViewDetails v-bind:task="task" />
         </div>
       </div>
       <div slot="attachments">
@@ -126,43 +68,27 @@
         </div>
       </div>
     </OakTab>
-    <div class="action">
-      <OakButton
-        theme="primary"
-        variant="animate in"
-        @click="save"
-        label="Save"
-      />
-    </div>
   </div>
 </template>
 <script>
 import OakButton from '@/oakui/OakButton.vue';
 import OakTab from '@/oakui/OakTab.vue';
-import OakInplaceEdit from '@/oakui/OakInplaceEdit.vue';
 import OakText from '@/oakui/OakText.vue';
-import OakEditor from '@/oakui/OakEditor.vue';
 import ViewLog from './ViewLog.vue';
-import ClickAndEditSelect from '@/components/Lib/ClickAndEditSelect.vue';
-import Assignee from '@/components/Create/Assignee.vue';
 import ViewComment from './ViewComment.vue';
 import Attachment from './Attachment.vue';
 import { mapActions, mapGetters } from 'vuex';
 import ViewSubtask from './ViewSubtask.vue';
 import ViewChecklist from './ViewChecklist.vue';
+import ViewDetails from './ViewDetails.vue';
 
 export default {
   name: 'TaskContent',
   components: {
-    // OakShowdown,
-    OakInplaceEdit,
-    ClickAndEditSelect,
-    Assignee,
     OakButton,
-    // OakClickAndEdit,
     OakText,
     OakTab,
-    OakEditor,
+    ViewDetails,
     ViewComment,
     ViewLog,
     ViewSubtask,
@@ -187,8 +113,6 @@ export default {
         text: '',
         showNew: false,
       },
-      teamIdList: [],
-      stageDropDown: [],
       alwaysEditFields: ['type', 'stageId', 'priority'],
       tabDetails: [
         { slotName: 'details', label: 'Basic details', icon: 'subject' },
@@ -228,18 +152,12 @@ export default {
       return this.getLogs('Task');
     },
   },
-  created() {
+  mounted() {
     this.postTaskUpdateAction(this.task);
   },
   watch: {
     task: function() {
       this.postTaskUpdateAction(this.task);
-    },
-    'data.projectId': function(newProjectId, oldProjectId) {
-      if (newProjectId && oldProjectId !== newProjectId) {
-        this.fetchStageDropdown();
-        this.teamIdList = this.getProjectById(newProjectId).teamIdList;
-      }
     },
   },
   methods: {
@@ -258,16 +176,6 @@ export default {
     },
     handleDescriptionChange: function(text) {
       this.data.description = text;
-    },
-    fetchStageDropdown: function() {
-      const stageList = [];
-      this.getStagesByProjectId(this.data.projectId).forEach(item =>
-        stageList.push({ key: item._id, value: item.name })
-      );
-      this.stageDropDown = stageList;
-    },
-    save: function() {
-      this.saveTask(this.data);
     },
     saveComment: function() {
       this.saveTaskComment({ taskId: this.task._id, text: this.comment.text });
@@ -301,12 +209,12 @@ export default {
   grid-template-rows: auto;
   row-gap: 10px;
   .task-tab {
-    background-color: var(--color-background-4);
+    background-color: var(--color-background-2);
     border-radius: 4px;
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
       0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
     .content {
-      background-color: var(--color-background-transparent-4);
+      // background-color: var(--color-background-transparent-4);
       padding: 20px 10px;
       // margin: 50px;
       display: grid;

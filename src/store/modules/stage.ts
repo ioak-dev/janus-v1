@@ -47,6 +47,18 @@ const actions = {
     dispatch('fetchStages');
     // commit('UPDATE_PROJECTS', response.data.data);
   },
+  async deleteStage({ commit, dispatch, rootState }: any, id: any) {
+    const response = await axios.delete(
+      `${baseUrl}/stage/${rootState.profile.space}/${id}`,
+      {
+        headers: {
+          Authorization: `${rootState.profile.auth.token}`,
+        },
+      }
+    );
+    dispatch('fetchStages');
+    // commit('UPDATE_PROJECTS', response.data.data);
+  },
   async moveStage({ commit, dispatch, rootState }: any, payload: any) {
     const moveStage: any = state.stages.find(
       (item: any) => item._id === payload.moveStageId

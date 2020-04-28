@@ -21,11 +21,7 @@
           :label="item"
           collapseOthers
         >
-          <!-- {{ findTeamById(item) }} -->
-          <div>{{ item }}</div>
-          <div>
-            <i class="material-icons" @click="removeTeam(item)">delete</i>
-          </div>
+          <TeamPreview v-bind:id="item" @remove="removeTeam(item)" />
         </div>
       </div>
     </div>
@@ -34,11 +30,11 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import OakAutoComplete from '@/oakui/OakAutoComplete.vue';
-import OakAccordion from '@/oakui/OakAccordion.vue';
+import TeamPreview from './TeamPreview.vue';
 
 export default {
   name: 'TeamView',
-  components: { OakAutoComplete },
+  components: { OakAutoComplete, TeamPreview },
   computed: {
     ...mapGetters(['getProject', 'getTeams', 'findTeamById']),
     styleClass: function() {
@@ -126,14 +122,10 @@ export default {
     overflow: auto;
     height: calc(100vh - 60px);
     .team-list {
-      display: flex;
-      flex-direction: column;
-      .team-record {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        border-bottom: 1px solid var(--color-background-3);
-      }
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 20px;
+      row-gap: 20px;
     }
   }
 }

@@ -2,29 +2,13 @@
   <div class="card-preview">
     <div class="row-one">
       <div class="left">
-        <div class="task-type story" v-if="task.type === 'Story'">
-          <i class="material-icons">menu_book</i>
-        </div>
-        <div class="task-type task" v-if="task.type === 'Task'">
-          <i class="material-icons">bookmark</i>
-        </div>
-        <div class="task-type sub-task" v-if="task.type === 'Sub-task'">
-          <i class="material-icons">book</i>
-        </div>
-        <div class="task-type defect" v-if="task.type === 'Defect'">
-          <i class="material-icons">bug_report</i>
-        </div>
+        <TaskTypeBadge v-bind:type="task.type" />
         <div class="preview">
           <div class="typography-5">{{ task.taskId }}</div>
         </div>
       </div>
       <div class="right">
-        <div class="task-status complete" v-if="task.status === 'complete'">
-          <i class="material-icons">check_circle</i>
-        </div>
-        <div class="task-status archived" v-if="task.status === 'archived'">
-          <i class="material-icons">archive</i>
-        </div>
+        <Avatar v-if="assignedToUser" v-bind:user="assignedToUser" />
       </div>
     </div>
     <div class="row-two">
@@ -35,16 +19,10 @@
     </div>
     <div class="row-three">
       <div class="left">
-        <div
-          v-if="getSubtasksByTaskId(task._id).length > 0"
-          class="subtask-count"
-        >
-          <div class="icon"><i class="material-icons">call_merge</i></div>
-          <div class="count">
-            {{ getSubtasksByTaskId(task._id).length }}
-          </div>
-        </div>
-        <div><Avatar v-if="assignedToUser" v-bind:user="assignedToUser" /></div>
+        <TaskPriorityBadge v-bind:priority="task.priority" />
+        <TaskChildCountBadge v-bind:taskId="task._id" />
+        <TaskAttachmentCountBadge v-bind:taskId="task._id" />
+        <TaskStatusBadge v-bind:status="task.status" />
       </div>
       <div class="right typography-3">
         Jan 31
@@ -54,12 +32,22 @@
 </template>
 <script>
 import Avatar from '@/components/Avatar/Avatar.vue';
+import TaskTypeBadge from '../Task/TaskTypeBadge.vue';
+import TaskPriorityBadge from '../Task/TaskPriorityBadge.vue';
+import TaskStatusBadge from '../Task/TaskStatusBadge.vue';
+import TaskChildCountBadge from '../Task/TaskChildCountBadge.vue';
+import TaskAttachmentCountBadge from '../Task/TaskAttachmentCountBadge.vue';
 import { mapGetters } from 'vuex';
 export default {
   name: 'CardPreview',
   props: { task: Object },
   components: {
     Avatar,
+    TaskTypeBadge,
+    TaskPriorityBadge,
+    TaskStatusBadge,
+    TaskChildCountBadge,
+    TaskAttachmentCountBadge,
   },
   computed: {
     ...mapGetters(['getUserById', 'getSubtasksByTaskId']),
@@ -90,18 +78,6 @@ export default {
       }
     }
     .left {
-      .task-type {
-        &.story {
-          color: var(--color-warning);
-        }
-        &.defect {
-          color: var(--color-failure);
-        }
-        &.task,
-        &.sub-task {
-          color: var(--color-primary-1);
-        }
-      }
     }
     .right {
       .task-status {
@@ -119,6 +95,7 @@ export default {
     -webkit-box-orient: vertical;
   }
   .row-three {
+    margin-top: 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -130,12 +107,6 @@ export default {
       .material-icons {
         display: flex;
         align-items: center;
-      }
-      .subtask-count {
-        display: flex;
-        align-items: center;
-        color: var(--color-secondary-1);
-        // background-color: var(--color-primary-1);
       }
     }
   }

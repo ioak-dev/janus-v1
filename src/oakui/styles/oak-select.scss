@@ -1,0 +1,15 @@
+.oak-select {
+  .select {
+    width: 100%;
+    background-color: var(--color-formelement-bg-1);
+    color: var(--color-formelement-fg);
+    outline: none;
+    border: none;
+    height: var(--metric-formelement-height);
+    line-height: var(--metric-formelement-height);
+    padding: var(--metric-formelement-padding);
+    option {
+      font-size: 1.2em;
+    }
+  }
+}

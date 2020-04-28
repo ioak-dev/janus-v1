@@ -2,16 +2,42 @@
   <div class="list-view">
     <div class="content-container">
       <div class="list-view-header">
-        <!-- <div></div> -->
-        <div>Task Id</div>
-        <div>Type</div>
-        <div>Title</div>
-        <div>Assigned to</div>
-        <div>Priority</div>
+        <SortableField
+          @click="sort"
+          v-bind:sortCriteria="sortCriteria"
+          field="taskId"
+          label="Task Id"
+        />
+        <SortableField
+          @click="sort"
+          v-bind:sortCriteria="sortCriteria"
+          field="type"
+          label="Type"
+        /><SortableField
+          @click="sort"
+          v-bind:sortCriteria="sortCriteria"
+          field="title"
+          label="Title"
+        />
+        <SortableField
+          @click="sort"
+          v-bind:sortCriteria="sortCriteria"
+          field="assignedTo"
+          label="Assigned To"
+        />
+        <SortableField
+          @click="sort"
+          v-bind:sortCriteria="sortCriteria"
+          field="priority"
+          label="Priority"
+        />
       </div>
       <div class="list-view-content">
         <div v-for="stage in getStagesByProjectId()" v-bind:key="stage._id">
-          <horizontal-lane v-bind:stage="stage" />
+          <horizontal-lane
+            v-bind:stage="stage"
+            v-bind:sortCriteria="sortCriteria"
+          />
         </div>
       </div>
     </div>
@@ -20,13 +46,35 @@
 <script>
 import { mapGetters } from 'vuex';
 import HorizontalLane from './HorizontalLane.vue';
+import SortableField from './SortableField.vue';
 export default {
   name: 'ListView',
   components: {
     HorizontalLane,
+    SortableField,
+  },
+  data: function() {
+    return {
+      sortCriteria: {
+        field: '',
+        ascending: true,
+      },
+    };
   },
   computed: {
     ...mapGetters(['getStagesByProjectId', 'getProject']),
+  },
+  methods: {
+    sort: function(key) {
+      if (this.sortCriteria.field === key) {
+        this.sortCriteria.ascending = !this.sortCriteria.ascending;
+      } else {
+        this.sortCriteria = {
+          field: key,
+          ascending: true,
+        };
+      }
+    },
   },
 };
 </script>
@@ -53,6 +101,7 @@ export default {
   }
 
   .list-view-header {
+    user-select: none;
     padding: 0 30px;
     display: grid;
     column-gap: 20px;

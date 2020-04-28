@@ -3,21 +3,6 @@
     <router-link class="test" v-bind:to="`/${getProfile.space}/home`">
       Home
     </router-link>
-    <router-link to="/createspace">
-      Create Space
-    </router-link>
-    <router-link
-      v-if="!getProfile.auth.isAuth"
-      v-bind:to="`/${getProfile.space}/login?signin=y`"
-    >
-      Login
-    </router-link>
-    <router-link
-      v-if="!getProfile.auth.isAuth"
-      v-bind:to="`/${getProfile.space}/login?signup=y`"
-    >
-      Sign up
-    </router-link>
   </div>
 </template>
 <script>

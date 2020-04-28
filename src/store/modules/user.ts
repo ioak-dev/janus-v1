@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { newMessageId, sendMessage } from '@/events/MessageService';
 
 const baseUrl = process.env.VUE_APP_ROOT_API;
 
@@ -43,6 +44,45 @@ const actions = {
       }
     );
     commit('UPDATE_USERS', response.data.data);
+  },
+  async saveUser({ commit, dispatch, rootState }: any, payload: any) {
+    const messageId = newMessageId();
+    sendMessage('notification', true, {
+      id: messageId,
+      type: 'running',
+      message: payload._id
+        ? `Updating user (${payload.name})`
+        : `Creating user (${payload.name})`,
+    });
+    const response = await axios.put(
+      `${baseUrl}/user/${rootState.profile.space}/`,
+      payload,
+      {
+        headers: {
+          Authorization: `${rootState.profile.auth.token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      sendMessage('notification', true, {
+        id: messageId,
+        type: 'success',
+        message: payload._id
+          ? `User (${payload.name}) updated`
+          : `User (${payload.name}) created`,
+        duration: 3000,
+      });
+    } else {
+      sendMessage('notification', true, {
+        id: messageId,
+        type: 'failure',
+        message: payload._id
+          ? `User (${payload.name}) failed to update`
+          : `User (${payload.name}) failed to create`,
+      });
+    }
+    // commit('UPDATE_PROJECTS', response.data.data);
+    dispatch('fetchUsers');
   },
 };
 

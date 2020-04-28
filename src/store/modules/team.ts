@@ -97,7 +97,7 @@ const actions = {
       });
     }
     // commit('UPDATE_PROJECTS', response.data.data);
-    dispatch('fetchTasks');
+    dispatch('fetchTeams');
   },
 };
 

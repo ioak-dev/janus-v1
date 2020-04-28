@@ -10,20 +10,14 @@
         @drop.prevent="drop"
         @dragleave="dragLeave"
       >
-        <div class="stage-name">{{ stage.name }}</div>
+        <div class="stage-name" @click="toggleStage">{{ stage.name }}</div>
         <div class="header-actions">
           <!-- <div @click="toggleTask">
             <i class="material-icons">add</i>
           </div> -->
-          <OakPopoverMenu
-            v-bind:elements="laneActionElements"
-            data="option 1"
-            v-bind:id="`lane-${stage._id}`"
-            right
-            theme="primary"
-          >
-            <div slot="label"><i class="material-icons">more_vert</i></div>
-          </OakPopoverMenu>
+          <div @click="toggleTask">
+            <i class="material-icons">add</i>
+          </div>
         </div>
       </div>
       <div class="container">
@@ -67,7 +61,6 @@ export default {
   name: 'VerticalLane',
   components: {
     OakModal,
-    OakPopoverMenu,
     Card,
     UpdateTask,
     UpdateStage,
@@ -91,18 +84,6 @@ export default {
         parentTaskId: null,
         projectId: '',
       },
-      laneActionElements: [
-        {
-          label: 'New Task',
-          action: this.toggleTask,
-          icon: 'library_add_check',
-        },
-        {
-          label: 'Rename Stage',
-          action: this.toggleStage,
-          icon: 'text_fields',
-        },
-      ],
     };
   },
   methods: {

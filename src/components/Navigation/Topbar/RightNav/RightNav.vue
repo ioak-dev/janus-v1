@@ -1,10 +1,11 @@
 <template>
   <div class="right-nav">
-    <CreateNew class="nav-item" />
+    <CreateNew v-if="userEmail" class="nav-item" />
     <UserAccount class="nav-item" />
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import UserAccount from './UserAccount.vue';
 import CreateNew from './CreateNew.vue';
 export default {
@@ -12,6 +13,12 @@ export default {
   components: {
     UserAccount,
     CreateNew,
+  },
+  computed: {
+    ...mapGetters(['getProfile']),
+    userEmail: function() {
+      return this?.getProfile?.auth?.email;
+    },
   },
 };
 </script>

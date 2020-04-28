@@ -49,6 +49,7 @@ export default {
   },
   props: {
     stage: Object,
+    sortCriteria: Object,
   },
   data: function() {
     return {
@@ -115,9 +116,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getTasksByStage', 'getTaskById']),
+    ...mapGetters(['getTasksByStageSorted', 'getTaskById']),
     tasks: function() {
-      const taskList = this.getTasksByStage(this.stage._id);
+      const taskList = this.getTasksByStageSorted(
+        this.stage._id,
+        this.sortCriteria
+      );
       return taskList;
     },
   },

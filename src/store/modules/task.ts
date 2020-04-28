@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { sendMessage, newMessageId } from '@/events/MessageService';
+import { isEmptyOrSpaces } from '@/Utils';
 
 const baseUrl = process.env.VUE_APP_ROOT_API;
 
@@ -19,6 +20,40 @@ const getters = {
     return state.tasks.filter((item: any) => {
       return item.stageId === stageId;
     });
+  },
+  getTasksByStageSorted: (state: any, rootState: any) => (
+    stageId: string,
+    sortCriteria: any
+  ) => {
+    const unorderedTasksList = rootState.getTasksByStage(stageId);
+    if (isEmptyOrSpaces(sortCriteria.field)) {
+      return unorderedTasksList;
+    } else {
+      return unorderedTasksList.sort(function(a: any, b: any) {
+        let aLower = '';
+        let bLower = '';
+        if (sortCriteria.field === 'assignedTo') {
+          const aUser = rootState.getUserById(a[sortCriteria.field]);
+          const bUser = rootState.getUserById(b[sortCriteria.field]);
+          aLower = aUser
+            ? aUser.firstName?.toLowerCase() + aUser.lastName?.toLowerCase()
+            : '';
+          bLower = bUser
+            ? bUser.firstName?.toLowerCase() + bUser.lastName?.toLowerCase()
+            : '';
+        } else {
+          aLower = a[sortCriteria.field].toLowerCase();
+          bLower = b[sortCriteria.field].toLowerCase();
+        }
+        if (aLower > bLower) {
+          return sortCriteria.ascending ? 1 : -1;
+        } else if (aLower < bLower) {
+          return sortCriteria.ascending ? -1 : 1;
+        } else {
+          return 0;
+        }
+      });
+    }
   },
   getTaskByTaskId: (state: any) => (taskId: string) => {
     return state.tasks.find((item: any) => {
@@ -61,6 +96,7 @@ const actions = {
         ? `Updating task (${payload.taskId}})`
         : `Creating task (${payload.title.substring(0, 10)}..})`,
     });
+    console.log(payload);
     const response = await axios.put(
       `${baseUrl}/task/${rootState.profile.space}/${payload.projectId}`,
       payload,

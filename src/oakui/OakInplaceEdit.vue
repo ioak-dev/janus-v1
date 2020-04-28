@@ -71,12 +71,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .oak-inplace-edit {
+  height: var(--metric-formelement-height);
+  line-height: var(--metric-formelement-height);
   .editable-content,
   .view-content {
-    padding: 4px 5px; //10px 16px;
-    &.nopad {
-      padding: 0px;
-    }
+    padding: var(--metric-formelement-padding);
+    // padding: 4px 5px; //10px 16px;
+    // &.nopad {
+    //   padding: 0px;
+    // }
   }
   [contenteditable='true'] {
     border: 1px solid transparent;
