@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 import profile from '../store/modules/profile';
 import task from '../store/modules/task';
 import project from '../store/modules/project';
+import projectTeam from '../store/modules/projectTeam';
+import teamMember from '../store/modules/teamMember';
 import team from '../store/modules/team';
 import stage from '../store/modules/stage';
 import user from '../store/modules/user';
@@ -23,6 +25,8 @@ export default new Vuex.Store({
     task,
     project,
     team,
+    projectTeam,
+    teamMember,
     stage,
     user,
     image,

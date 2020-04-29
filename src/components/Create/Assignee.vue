@@ -26,7 +26,7 @@ export default {
   name: 'Assignee',
   props: {
     id: String,
-    teamIdList: Array,
+    projectId: String,
     label: String,
   },
   data: function() {
@@ -39,15 +39,24 @@ export default {
     OakAutoComplete,
   },
   computed: {
-    ...mapGetters(['getUserById', 'findTeamByIdList']),
+    ...mapGetters([
+      'getUserById',
+      'getTeamsMembersByTeamIdList',
+      'getProjectTeamsByProjectId',
+    ]),
     user: function() {
       return this.getUserById(this.id);
     },
+    teams: function() {
+      return this.getProjectTeamsByProjectId(this.projectId).map(
+        item => item.teamId
+      );
+    },
     peopleList: function() {
-      const team = this.findTeamByIdList(this.teamIdList);
+      const team = this.getTeamsMembersByTeamIdList(this.teams);
       const people = [];
-      team?.forEach(userId => {
-        const userItem = this.getUserById(userId);
+      team?.forEach(item => {
+        const userItem = this.getUserById(item.userId);
         people.push({
           key: userItem._id,
           value: `${userItem.firstName} ${userItem.lastName}`,

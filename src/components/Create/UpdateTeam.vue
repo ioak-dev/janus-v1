@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="modal-body two-column">
+    <div class="two-column">
       <div class="formelement-label">Team name</div>
       <OakText v-bind:data="data.name" id="name" @change="handleChange" />
       <div class="formelement-label">Search Members</div>

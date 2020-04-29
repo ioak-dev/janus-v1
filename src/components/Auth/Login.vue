@@ -19,7 +19,7 @@ export default {
         this.$route.query.authKey
       );
       this.$router.push({
-        name: 'Home',
+        name: 'SpaceHomeDefault',
         params: { space: this.$route.query.space },
       });
     }

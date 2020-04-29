@@ -14,6 +14,13 @@
     >
       Projects
     </router-link>
+    <router-link
+      class="nav-item"
+      v-bind:key="`${getTeam._id}_changebackground`"
+      v-bind:to="`/${getProfile.space}/${getTeam._id}/team/changebackground`"
+    >
+      Change Background
+    </router-link>
   </div>
 </template>
 <script>

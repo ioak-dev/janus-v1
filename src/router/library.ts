@@ -8,5 +8,5 @@ export function setCookie(key: string, value: string) {
 }
 
 export const redirectToLogin = (space: string) => {
-  window.location.href = `http://localhost:3010/#/${space}/login?appId=${process.env.VUE_APP_ONEAUTH_APP_ID}`;
+  window.location.href = `${process.env.VUE_APP_ONEAUTH_URL}/#/${space}/login?appId=${process.env.VUE_APP_ONEAUTH_APP_ID}`;
 };

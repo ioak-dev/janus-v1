@@ -3,6 +3,7 @@
     <div class="search-bar">
       <OakText
         id="auto-complete"
+        v-bind:data="searchCriteria"
         v-bind:label="label"
         v-bind:placeholder="placeholder"
         @focus="onFocus"
@@ -68,6 +69,7 @@ export default {
       this.isSearchOn = true;
     },
     selected(key) {
+      this.searchCriteria = '';
       this.isSearchOn = false;
       this.$emit('change', key);
     },

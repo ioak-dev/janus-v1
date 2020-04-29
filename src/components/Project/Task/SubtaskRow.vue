@@ -3,12 +3,14 @@
     <div>{{ subtask.taskId }}</div>
     <div>{{ subtask.type }}</div>
     <div>{{ subtask.title }}</div>
-    <div>{{ subtask.description }}</div>
     <div><Avatar v-bind:user="user" showName /></div>
+    <div class="action" @click="unlink">
+      <i class="material-icons">link_off</i>unlink
+    </div>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import Avatar from '@/components/Avatar/Avatar.vue';
 export default {
   name: 'SubtaskRow',
@@ -22,6 +24,12 @@ export default {
       return this.getUserById(this.subtask.createdBy);
     },
   },
+  methods: {
+    ...mapActions(['saveTask']),
+    unlink: function() {
+      this.saveTask({ ...this.subtask, parentTaskId: null });
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -30,5 +38,13 @@ export default {
   grid-template-columns: repeat(auto-fit, minmax(25px, 1fr));
   padding: 10px;
   border-bottom: 1px solid var(--color-background-2);
+  .action {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      color: var(--color-primary-1);
+    }
+  }
 }
 </style>

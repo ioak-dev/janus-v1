@@ -1,25 +1,17 @@
 <template>
-  <!-- <div class="avatar-image"> -->
-  <!-- <img
-      alt="Avatar"
-      v-bind:src="`/avatars/${reference}.svg`"
-      v-bind:class="this.size"
-    /> -->
   <img
     alt="Avatar"
     v-bind:src="`/avatars/${reference}.svg`"
     v-bind:class="this.size"
   />
-  <!-- </div> -->
 </template>
 <script>
 export default {
   name: 'AvatarImage',
-  props: { reference: Number, size: String },
+  props: { reference: String, size: String },
 };
 </script>
 <style lang="scss" scoped>
-// .avatar-image {
 img {
   margin: 0;
   width: 36px;
@@ -39,5 +31,4 @@ img {
     height: 28px;
   }
 }
-// }
 </style>

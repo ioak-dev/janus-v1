@@ -1,26 +1,31 @@
 <template>
-  <div class="app-container">
-    <div
-      class="sidebar-container"
-      v-bind:class="getProfile.sidebar ? 'show' : 'hide'"
-    >
-      <div class="sidebar-content">
-        <Sidebar @sidebarToggled="toggleSidebar" />
+  <div>
+    <div class="app-container" v-if="getProfile.space">
+      <div
+        class="sidebar-container"
+        v-bind:class="getProfile.sidebar ? 'show' : 'hide'"
+      >
+        <div class="sidebar-content">
+          <Sidebar @sidebarToggled="toggleSidebar" />
+        </div>
+      </div>
+      <div class="maincontent-container">
+        <div
+          class="topbar-container"
+          v-bind:class="getProfile.sidebar ? 'sidebar-shown' : 'sidebar-hidden'"
+        >
+          <Topbar @sidebarToggled="toggleSidebar" />
+        </div>
+        <div
+          class="maincontent-container"
+          v-bind:class="getProfile.sidebar ? 'sidebar-shown' : 'sidebar-hidden'"
+        >
+          <AppRouterView />
+        </div>
       </div>
     </div>
-    <div class="maincontent-container">
-      <div
-        class="topbar-container"
-        v-bind:class="getProfile.sidebar ? 'sidebar-shown' : 'sidebar-hidden'"
-      >
-        <Topbar @sidebarToggled="toggleSidebar" />
-      </div>
-      <div
-        class="maincontent-container"
-        v-bind:class="getProfile.sidebar ? 'sidebar-shown' : 'sidebar-hidden'"
-      >
-        <AppRouterView />
-      </div>
+    <div class="landing-container" v-else>
+      <AppRouterView />
     </div>
   </div>
 </template>

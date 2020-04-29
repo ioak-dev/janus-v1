@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="modal-body two-column">
+    <div class="two-column">
       <div v-if="!task.taskId" class="typography-4">Project</div>
       <OakSelect
         v-if="!task.taskId"
@@ -31,7 +31,7 @@
         v-bind:id="data.assignedTo"
         @remove="clearAssignee"
         @change="handleAssigneeChange"
-        v-bind:teamIdList="teamIdList"
+        v-bind:projectId="data.projectId"
       />
       <div class="typography-4">Description</div>
       <OakEditor
@@ -99,8 +99,6 @@ export default {
         description: '',
         assignedTo: '',
       },
-      teamIdList: [],
-      stageDropDown: [],
     };
   },
   computed: {
@@ -117,6 +115,13 @@ export default {
       );
       return projectList;
     },
+    stageDropDown: function() {
+      const stageList = [];
+      this.getStagesByProjectId(this.data.projectId).forEach(item =>
+        stageList.push({ key: item._id, value: item.name })
+      );
+      return stageList;
+    },
   },
   created() {
     this.data = { ...this.task };
@@ -124,12 +129,6 @@ export default {
   watch: {
     task: function() {
       this.data = { ...this.task };
-    },
-    'data.projectId': function(newProjectId, oldProjectId) {
-      if (newProjectId && oldProjectId !== newProjectId) {
-        this.fetchStageDropdown();
-        this.teamIdList = this.getProjectById(newProjectId).teamIdList;
-      }
     },
   },
   methods: {
@@ -143,13 +142,6 @@ export default {
     handleClose: function() {
       this.$emit('close');
       this.data = { ...this.task };
-    },
-    fetchStageDropdown: function() {
-      const stageList = [];
-      this.getStagesByProjectId(this.data.projectId).forEach(item =>
-        stageList.push({ key: item._id, value: item.name })
-      );
-      this.stageDropDown = stageList;
     },
     save: function() {
       this.saveTask(this.data);

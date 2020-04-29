@@ -3,7 +3,7 @@
     <OakTab class="task-tab" v-bind:meta="tabDetails">
       <div slot="details">
         <div class="content single-column" slot="content">
-          <ViewDetails v-bind:task="task" />
+          <ViewDetails v-bind:task="task" @typeChange="handleChange" />
         </div>
       </div>
       <div slot="attachments">
@@ -101,20 +101,14 @@ export default {
   data: function() {
     return {
       data: {
-        projectId: '',
-        stageId: '',
         type: '',
-        priority: '',
-        title: '',
-        description: '',
-        assignedTo: '',
       },
       comment: {
         text: '',
         showNew: false,
       },
       alwaysEditFields: ['type', 'stageId', 'priority'],
-      tabDetails: [
+      tabDetailsMaster: [
         { slotName: 'details', label: 'Basic details', icon: 'subject' },
         { slotName: 'attachments', label: 'Attachments', icon: 'attach_file' },
         {
@@ -150,6 +144,15 @@ export default {
     },
     logs: function() {
       return this.getLogs('Task');
+    },
+    tabDetails: function() {
+      if (['Task', 'Story'].includes(this.data.type)) {
+        return this.tabDetailsMaster;
+      } else {
+        return this.tabDetailsMaster.filter(
+          item => !['subtask'].includes(item.slotName)
+        );
+      }
     },
   },
   mounted() {

@@ -50,6 +50,21 @@ const actions = {
     dispatch('fetchTaskChecklistitems', payload.taskId);
     // commit('UPDATE_PROJECTS', response.data.data);
   },
+  async deleteTaskChecklistitem(
+    { commit, dispatch, rootState }: any,
+    { taskId, checklistitemId }: any
+  ) {
+    const response = await axios.delete(
+      `${baseUrl}/checklistitem/task/${rootState.profile.space}/${checklistitemId}`,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `${rootState.profile.auth.token}`,
+        },
+      }
+    );
+    dispatch('fetchTaskChecklistitems', taskId);
+  },
 };
 
 const mutations = {

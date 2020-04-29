@@ -14,7 +14,7 @@
         {{ data[id] }}
       </div>
       <div
-        class="view-content"
+        class="view-content one-liner"
         v-bind:class="nopad ? 'nopad' : ''"
         v-else
         @click="showEdit"
@@ -71,15 +71,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .oak-inplace-edit {
-  height: var(--metric-formelement-height);
-  line-height: var(--metric-formelement-height);
   .editable-content,
   .view-content {
     padding: var(--metric-formelement-padding);
-    // padding: 4px 5px; //10px 16px;
-    // &.nopad {
-    //   padding: 0px;
-    // }
+    min-height: var(--metric-formelement-height);
+    line-height: var(--metric-formelement-height);
   }
   [contenteditable='true'] {
     border: 1px solid transparent;

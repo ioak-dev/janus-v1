@@ -8,7 +8,7 @@
       iconLeft="person"
     >
       <div slot="label">
-        <Avatar v-bind:user="user" />
+        <Avatar v-bind:user="user" size="large" />
       </div>
     </OakPopoverMenu>
     <div v-if="!user && this.getProfile && this.getProfile.space">
@@ -28,24 +28,53 @@
       />
     </div>
 
-    <OakModal
+    <OakDialog
       v-bind:visible="profileDialogOpen"
       @close="toggleProfileDialog"
       label="Edit profile"
     >
-      <div slot="modal-body">
+      <div slot="dialog-body">
         <div class="edit-profile">
           <div>
             <div class="typography-6 heading">Choose Avatar</div>
-            <div class="avatar-section">
+            <div class="avatar-gender-selection">
+              <OakSwitch
+                theme="secondary"
+                v-bind:data="avatarGender"
+                v-bind:objects="[
+                  { key: 'male', value: 'Male' },
+                  { key: 'female', value: 'Female' },
+                  { key: 'all', value: 'All' },
+                ]"
+                @change="handleGenderChange"
+              />
+            </div>
+            <div
+              class="avatar-section"
+              v-if="avatarGender === 'male' || avatarGender === 'all'"
+            >
               <div
                 v-for="n in 20"
                 v-bind:key="n"
                 class="avatar-item"
-                @click="handleAvatarChange(n)"
-                v-bind:class="n === data.avatar ? 'selected' : ''"
+                @click="handleAvatarChange(`male_${n}`)"
+                v-bind:class="`male_${n}` === data.avatar ? 'selected' : ''"
               >
-                <AvatarImage v-bind:reference="n" size="large" />
+                <AvatarImage v-bind:reference="`male_${n}`" size="large" />
+              </div>
+            </div>
+            <div
+              class="avatar-section"
+              v-if="avatarGender === 'female' || avatarGender === 'all'"
+            >
+              <div
+                v-for="n in 20"
+                v-bind:key="n"
+                class="avatar-item"
+                @click="handleAvatarChange(`female_${n}`)"
+                v-bind:class="`female_${n}` === data.avatar ? 'selected' : ''"
+              >
+                <AvatarImage v-bind:reference="`female_${n}`" size="large" />
               </div>
             </div>
           </div>
@@ -58,7 +87,7 @@
           </div>
         </div>
       </div>
-      <div slot="modal-footer">
+      <div slot="dialog-footer">
         <OakButton
           label="Save"
           theme="primary"
@@ -66,14 +95,15 @@
           @click="saveProfile"
         />
       </div>
-    </OakModal>
+    </OakDialog>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
 import OakButton from '@/oakui/OakButton.vue';
-import OakModal from '@/oakui/OakModal.vue';
+import OakDialog from '@/oakui/OakDialog.vue';
+import OakSwitch from '@/oakui/OakSwitch.vue';
 import Avatar from '@/components/Avatar/Avatar.vue';
 import AvatarImage from '@/components/Avatar/AvatarImage.vue';
 export default {
@@ -81,9 +111,10 @@ export default {
   components: {
     OakPopoverMenu,
     OakButton,
-    OakModal,
+    OakDialog,
     Avatar,
     AvatarImage,
+    OakSwitch,
   },
   data: function() {
     return {
@@ -91,6 +122,7 @@ export default {
       data: {
         avatar: '',
       },
+      avatarGender: 'all',
     };
   },
   mounted() {
@@ -126,7 +158,6 @@ export default {
   },
   watch: {
     user: function() {
-      console.log(this.user);
       this.data.avatar = this.user?.avatar;
     },
   },
@@ -136,13 +167,16 @@ export default {
       this.removeAuth(this.$cookies);
     },
     oaSignin(type) {
-      window.location.href = `http://localhost:3010/#/${this.getProfile?.space}/login?type=${type}&appId=${process.env.VUE_APP_ONEAUTH_APP_ID}`;
+      window.location.href = `${process.env.VUE_APP_ONEAUTH_URL}/#/${this.getProfile?.space}/login?type=${type}&appId=${process.env.VUE_APP_ONEAUTH_APP_ID}`;
     },
     toggleProfileDialog() {
       this.profileDialogOpen = !this.profileDialogOpen;
     },
     handleAvatarChange(n) {
       this.data.avatar = n;
+    },
+    handleGenderChange() {
+      this.avatarGender = event.target.value;
     },
     saveProfile() {
       this.saveUser({ ...this.user, avatar: this.data.avatar });
@@ -160,11 +194,15 @@ export default {
     grid-auto-flow: row;
     row-gap: 40px;
     .heading {
-      border-right: 4px solid var(--color-primary-1);
-      padding-right: 4px;
+      border-left: 4px solid var(--color-primary-1);
+      padding-left: 4px;
       display: flex;
-      justify-content: flex-end;
+      justify-content: flex-start;
       margin-bottom: 16px;
+    }
+    .avatar-gender-selection {
+      display: flex;
+      justify-content: center;
     }
     .avatar-section {
       display: flex;

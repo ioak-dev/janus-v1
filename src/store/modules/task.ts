@@ -96,7 +96,6 @@ const actions = {
         ? `Updating task (${payload.taskId}})`
         : `Creating task (${payload.title.substring(0, 10)}..})`,
     });
-    console.log(payload);
     const response = await axios.put(
       `${baseUrl}/task/${rootState.profile.space}/${payload.projectId}`,
       payload,

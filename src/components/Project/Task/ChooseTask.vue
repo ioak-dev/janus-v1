@@ -27,8 +27,13 @@
           <div>Type</div>
           <div>Title</div>
         </div> -->
-          <div v-for="item in view" v-bind:key="item._id" class="record">
-            <div class="select-radio" @click="choose(item._id)">
+          <div
+            v-for="item in view"
+            v-bind:key="item._id"
+            class="record"
+            @click="choose(item._id)"
+          >
+            <div class="select-radio">
               <div v-if="item._id === chosenItem" class="active" />
             </div>
             <div>{{ item.taskId }}</div>
@@ -57,7 +62,10 @@ import { isEmptyOrSpaces } from '../../../Utils';
 export default {
   name: 'ChooseTask',
   components: { OakButton, OakSelect, OakText },
-  props: { stageDropDown: Array },
+  props: {
+    task: Object,
+    types: Array,
+  },
   data: function() {
     return {
       chosenList: [],
@@ -69,25 +77,32 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getTasks']),
+    ...mapGetters(['getTasks', 'getStagesByProjectId']),
+    permittedTasks: function() {
+      if (this.types) {
+        return this.getTasks.filter(item => this.types.includes(item.type));
+      } else {
+        return this.getTasks;
+      }
+    },
     view: function() {
       if (
         isEmptyOrSpaces(this.searchCriteria.text) &&
         isEmptyOrSpaces(this.searchCriteria.stageId)
       ) {
-        return this.getTasks;
+        return this.permittedTasks;
       } else if (isEmptyOrSpaces(this.searchCriteria.stageId)) {
-        return this.getTasks.filter(item =>
+        return this.permittedTasks.filter(item =>
           item.title
             ?.toLowerCase()
             .includes(this.searchCriteria.text.toLowerCase())
         );
       } else if (isEmptyOrSpaces(this.searchCriteria.text)) {
-        return this.getTasks.filter(
+        return this.permittedTasks.filter(
           item => item.stageId === this.searchCriteria.stageId
         );
       } else {
-        return this.getTasks.filter(item => {
+        return this.permittedTasks.filter(item => {
           if (
             item.stageId === this.searchCriteria.stageId &&
             item.title
@@ -100,6 +115,13 @@ export default {
           }
         });
       }
+    },
+    stageDropDown: function() {
+      const stageList = [];
+      this.getStagesByProjectId(this.task.projectId).forEach(item =>
+        stageList.push({ key: item._id, value: item.name })
+      );
+      return stageList;
     },
   },
   methods: {
@@ -133,6 +155,7 @@ export default {
     grid-template-columns: auto auto auto 1fr;
     column-gap: 20px;
     border-bottom: 1px solid var(--color-background-5);
+    user-select: none;
 
     .title {
       overflow: hidden;

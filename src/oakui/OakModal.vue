@@ -1,44 +1,51 @@
 <template>
-  <div class="oak-modal" :class="style">
-    <div
-      v-if="nodeVisible"
-      class="modal"
-      :class="visible ? 'show ' + style : 'hide ' + style"
-    >
-      <div :class="visible ? 'container' : 'container hidetext'">
-        <div class="modal-header">
-          <div class="container">
-            <div class="title">{{ label }}</div>
-            <div>
-              <i class="material-icons" @click="$emit('close')">
-                close
-              </i>
+  <div
+    v-if="nodeVisible"
+    class="modal-root"
+    :class="visible ? 'show ' + style : 'hide ' + style"
+  >
+    <div class="backdrop-fade" @click="$emit('close')" />
+    <div class="oak-modal">
+      <div class="modal">
+        <div :class="visible ? 'container' : 'container hidetext'">
+          <div class="modal-header">
+            <div class="left">
+              <div class="icon">
+                <!-- <i className="material-icons">blur_on</i> -->
+                N
+              </div>
+              <div class="label one-liner">{{ label }}</div>
+            </div>
+            <div class="right">
+              <div @click="$emit('close')">
+                <i class="material-icons">close</i>
+                <div class="text-esc">esc</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div v-if="$slots['modal-container']" class="modal-container">
-          <slot name="modal-container" />
-        </div>
-        <div v-if="$slots['modal-body']" class="modal-body">
-          <slot name="modal-body" />
-        </div>
-        <div v-if="$slots['modal-footer']" class="modal-footer">
-          <slot name="modal-footer" />
+          <!-- <div v-if="$slots['modal-container']" class="modal-container">
+            <slot name="modal-container" />
+          </div> -->
+          <div v-if="$slots['modal-body']" class="modal-body">
+            <slot name="modal-body" />
+          </div>
+          <div v-if="$slots['modal-footer']" class="modal-footer">
+            <slot name="modal-footer" />
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { sendMessage } from '../events/MessageService';
 export default {
   name: 'OakModal',
   props: {
     visible: Boolean,
-    small: Boolean,
-    fullscreen: Boolean,
     label: String,
+    fullscreen: Boolean,
     noheader: Boolean,
+    donotMobilize: Boolean,
   },
   data() {
     return {
@@ -52,9 +59,9 @@ export default {
   methods: {
     getStyle() {
       let style = '';
-      style += this.small ? ' small' : '';
       style += this.noheader ? ' noheader' : '';
       style += this.fullscreen ? ' fullscreen' : '';
+      style += this.donotMobilize ? '' : ' mobilize';
       return style;
     },
     escFunction(event) {
@@ -67,7 +74,6 @@ export default {
   },
   watch: {
     visible: function(newValue, oldValue) {
-      sendMessage('modal', newValue);
       if (newValue != oldValue) {
         if (newValue) {
           this.nodeVisible = newValue;

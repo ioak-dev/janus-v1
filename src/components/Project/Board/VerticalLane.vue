@@ -32,7 +32,7 @@
       </div>
     </div>
     <OakModal @close="toggleTask" v-bind:visible="newTask" label="New Task">
-      <div slot="modal-container">
+      <div slot="modal-body">
         <UpdateTask v-bind:task="taskStub" />
       </div>
     </OakModal>
@@ -41,7 +41,7 @@
       v-bind:visible="editStage"
       label="Edit Stage"
     >
-      <div slot="modal-container">
+      <div slot="modal-body">
         <UpdateStage v-bind:stage="stage" />
       </div>
     </OakModal>

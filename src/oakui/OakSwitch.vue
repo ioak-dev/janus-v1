@@ -16,7 +16,6 @@ export default {
   name: 'OakSwitch',
   props: {
     data: String,
-    labelPosition: String,
     variant: String,
     theme: String,
     objects: Array,

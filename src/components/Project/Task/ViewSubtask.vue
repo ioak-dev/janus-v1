@@ -5,14 +5,15 @@
     </div>
     <div class="create-sub-task" v-if="data.showNew">
       <div class="typography-4">Type</div>
-      <div>
+      <div v-if="taskTypes.length > 1">
         <OakSelect
           v-bind:data="data.type"
           id="type"
           @change="handleChange"
-          v-bind:elements="['Task', 'Sub-task', 'Defect']"
+          v-bind:elements="taskTypes"
         />
       </div>
+      <div v-else>{{ taskTypes[0] }}</div>
       <div class="typography-4">Title</div>
       <OakText id="title" v-bind:data="data.title" @change="handleChange" />
       <div class="typography-4">Description</div>
@@ -36,8 +37,15 @@
         v-if="!data.showNew"
         theme="primary"
         variant="animate in"
+        @click="toggleAdd"
+        label="Add existing"
+      />
+      <OakButton
+        v-if="!data.showNew"
+        theme="primary"
+        variant="animate in"
         @click="toggle"
-        label="Create Sub-task"
+        label="New"
       />
       <OakButton
         v-if="data.showNew"
@@ -47,18 +55,37 @@
         label="Cancel"
       />
     </div>
+
+    <OakModal v-bind:visible="addDialog" @close="toggleAdd">
+      <div slot="modal-body">
+        <ChooseTask
+          @choose="handleAddTask"
+          v-bind:task="task"
+          v-bind:types="taskTypes"
+        />
+      </div>
+    </OakModal>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import OakModal from '@/oakui/OakModal.vue';
 import OakButton from '@/oakui/OakButton.vue';
 import OakText from '@/oakui/OakText.vue';
 import OakSelect from '@/oakui/OakSelect.vue';
 import SubtaskRow from './SubtaskRow.vue';
+import ChooseTask from '../Task/ChooseTask.vue';
 
 export default {
   name: 'ViewSubtask',
-  components: { OakButton, OakText, OakSelect, SubtaskRow },
+  components: {
+    OakModal,
+    OakButton,
+    OakText,
+    OakSelect,
+    SubtaskRow,
+    ChooseTask,
+  },
   props: { task: Object },
   data: function() {
     return {
@@ -66,25 +93,47 @@ export default {
         showNew: false,
         title: '',
         description: '',
-        type: 'Task',
+        type: '',
       },
+      addDialog: false,
     };
   },
   computed: {
-    ...mapGetters(['getSubtasksByTaskId']),
+    ...mapGetters(['getSubtasksByTaskId', 'getTaskById']),
     subtasks: function() {
       return this.task ? this.getSubtasksByTaskId(this.task._id) : [];
+    },
+    taskTypes: function() {
+      let response = [];
+      switch (this.task.type) {
+        case 'Story':
+          response = ['Sub-task', 'Defect'];
+          break;
+        case 'Task':
+          return ['Sub-task', 'Defect'];
+      }
+      return response;
     },
   },
   methods: {
     ...mapActions(['saveTask']),
     toggle: function() {
       this.data.showNew = !this.data.showNew;
-      this.data = { ...this.data, title: '', description: '', type: 'Task' };
+      this.data = { ...this.data, title: '', description: '', type: '' };
       this.$emit('viewUpdated');
+    },
+    toggleAdd: function() {
+      this.addDialog = !this.addDialog;
     },
     handleChange: function() {
       this.data[event.target.name] = event.target.value;
+    },
+    handleAddTask: function(chosenData) {
+      this.saveTask({
+        ...this.getTaskById(chosenData),
+        parentTaskId: this.task._id,
+      });
+      this.toggleAdd();
     },
     save: function() {
       this.saveTask({
@@ -108,6 +157,12 @@ export default {
     grid-template-columns: auto 1fr;
     row-gap: 20px;
     column-gap: 20px;
+  }
+  .action {
+    display: grid;
+    grid-auto-flow: column;
+    column-gap: 20px;
+    justify-content: center;
   }
 }
 </style>

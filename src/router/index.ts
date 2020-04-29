@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/components/Home/Home.vue';
+import Landing from '@/components/Landing/Landing.vue';
 import TeamProjects from '@/components/Team/TeamProjects.vue';
 import TeamMembers from '@/components/Team/TeamMembers.vue';
 import TaskView from '@/components/Project/Task/TaskView.vue';
@@ -8,6 +9,7 @@ import MainView from '@/components/Project/Main/MainView.vue';
 import TeamView from '@/components/Project/Team/TeamView.vue';
 import Login from '@/components/Auth/Login.vue';
 import ProjectChangeBackground from '@/components/Project/Background/ProjectChangeBackground.vue';
+import TeamChangeBackground from '@/components/Team/Background/TeamChangeBackground.vue';
 
 import {
   middlewarePipeline,
@@ -24,13 +26,13 @@ const routes = [
   {
     path: '/:space/home',
     component: Home,
-    name: 'Home',
+    name: 'SpaceHome',
     meta: { middleware: [readSpace, authenticate] },
   },
   {
     path: '/:space',
     component: Home,
-    name: 'Home',
+    name: 'SpaceHomeDefault',
     meta: { middleware: [readSpace, authenticate] },
   },
   {
@@ -91,6 +93,20 @@ const routes = [
       context: 'Team',
       middleware: [readSpace, readTeam, authenticate],
     },
+  },
+  {
+    path: '/:space/:teamId/team/changebackground',
+    component: TeamChangeBackground,
+    name: 'TeamChangeBackground',
+    meta: {
+      context: 'Team',
+      middleware: [readSpace, readTeam, authenticate],
+    },
+  },
+  {
+    path: '',
+    component: Landing,
+    name: 'Landing',
   },
 ];
 

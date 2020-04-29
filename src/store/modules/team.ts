@@ -36,11 +36,6 @@ const getters = {
   findTeamById: (state: any) => (id: string) => {
     return findTeam(id);
   },
-  findTeamByIdList: (state: any) => (idList: any) => {
-    const teamList: any = [];
-    idList?.forEach((id: string) => teamList.push(...findTeam(id)?.members));
-    return [...new Set(teamList)];
-  },
 };
 
 const actions = {
@@ -59,6 +54,39 @@ const actions = {
   chooseTeam({ commit, dispatch }: any, teamId: string) {
     const team = findTeam(teamId);
     commit('UPDATE_TEAM', { teamId, team });
+  },
+  async deleteTeam({ commit, dispatch, rootState }: any, id: string) {
+    const messageId = newMessageId();
+    sendMessage('notification', true, {
+      id: messageId,
+      type: 'running',
+      message: `Deleting team (${id})`,
+    });
+    const response = await axios.delete(
+      `${baseUrl}/team/${rootState.profile.space}/${id}`,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `${rootState.profile.auth.token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      sendMessage('notification', true, {
+        id: messageId,
+        type: 'success',
+        message: `Team (${id}) deleted`,
+        duration: 3000,
+      });
+    } else {
+      sendMessage('notification', true, {
+        id: messageId,
+        type: 'failure',
+        message: `Team (${id}) failed to delete`,
+      });
+    }
+    commit('REMOVE_TEAM', response.data.data);
+    dispatch('fetchTeams');
   },
   async saveTeam({ commit, dispatch, rootState }: any, payload: any) {
     const messageId = newMessageId();
@@ -108,6 +136,10 @@ const mutations = {
   UPDATE_TEAM: (state: any, selectedTeamData: any) => {
     state.team = selectedTeamData.team;
     state.teamId = selectedTeamData.teamId;
+  },
+  REMOVE_TEAM: (state: any) => {
+    state.team = null;
+    state.teamId = null;
   },
 };
 

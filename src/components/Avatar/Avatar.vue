@@ -39,11 +39,13 @@ export default {
     &.large {
       width: 50px;
       height: 50px;
+      line-height: 50px;
     }
 
     &.small {
       width: 28px;
       height: 28px;
+      line-height: 28px;
     }
   }
   .avatar-name {

@@ -1,6 +1,7 @@
 <template>
-  <OakAccordion collapseOthers>
-    <div slot="label" class="group-label">
+  <!-- <OakAccordion collapseOthers> -->
+  <div class="checklist-group">
+    <div class="group-label">
       <OakInplaceEdit
         id="groupName"
         v-bind:data="data"
@@ -8,22 +9,31 @@
         nopad
       />
       <div class="task-count">
-        ({{ completedTasksCount }}/{{ getChecklistItemsByGroup(group).length }})
+        {{ completedTasksCount }}/{{ getChecklistItemsByGroup(group).length }}
+        <template
+          v-if="completedTasksCount === getChecklistItemsByGroup(group).length"
+        >
+          <i class="material-icons complete">check_circle</i>
+        </template>
+        <template
+          v-if="
+            completedTasksCount !== getChecklistItemsByGroup(group).length &&
+              completedTasksCount > 0
+          "
+        >
+          <i class="material-icons started">play_circle_filled</i>
+        </template>
+        <template
+          v-if="
+            completedTasksCount !== getChecklistItemsByGroup(group).length &&
+              completedTasksCount === 0
+          "
+        >
+          <i class="material-icons notstarted">play_circle_outline</i>
+        </template>
       </div>
     </div>
-    <div slot="content">
-      <div class="create-checklistitem">
-        <OakText
-          id="text"
-          v-bind:data="data.text"
-          @change="handleChange"
-        /><OakButton
-          theme="primary"
-          variant="animate in"
-          @click="save"
-          label="Add"
-        />
-      </div>
+    <div class="content">
       <div
         class="checklist-item"
         v-for="item in getChecklistItemsByGroup(group)"
@@ -48,15 +58,32 @@
             @blur="changeText(item)"
           />
         </div>
+        <div class="action">
+          <i class="material-icons" @click="removeItem(item._id)">close</i>
+        </div>
+      </div>
+      <div class="create-checklistitem">
+        <OakText
+          id="text"
+          v-bind:data="data.text"
+          @change="handleChange"
+          placeholder="Type to add new item"
+        /><OakButton
+          theme="primary"
+          variant="animate in"
+          @click="save"
+          v-if="data.text"
+          label="Add"
+        />
       </div>
     </div>
-  </OakAccordion>
+  </div>
+  <!-- </OakAccordion> -->
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import OakText from '@/oakui/OakText.vue';
 import OakButton from '@/oakui/OakButton.vue';
-import OakAccordion from '@/oakui/OakAccordion.vue';
 import OakCheckbox from '@/oakui/OakCheckbox.vue';
 import OakInplaceEdit from '@/oakui/OakInplaceEdit.vue';
 
@@ -72,7 +99,7 @@ export default {
   mounted() {
     this.data = { ...this.data, groupName: this.group };
   },
-  components: { OakText, OakButton, OakAccordion, OakCheckbox, OakInplaceEdit },
+  components: { OakText, OakButton, OakCheckbox, OakInplaceEdit },
   computed: {
     ...mapGetters(['getChecklistItemsByGroup']),
     completedTasksCount: function() {
@@ -82,7 +109,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['saveTaskChecklistitem']),
+    ...mapActions(['saveTaskChecklistitem', 'deleteTaskChecklistitem']),
     save: function() {
       this.saveTaskChecklistitem({
         text: this.data.text,
@@ -113,37 +140,75 @@ export default {
         this.saveTaskChecklistitem({ ...item, group: event.target.value });
       });
     },
+    removeItem: function(id) {
+      this.deleteTaskChecklistitem({
+        checklistitemId: id,
+        taskId: this.taskId,
+      });
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
-.group-label {
-  display: flex;
-  align-items: center;
-}
-.create-checklistitem {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  column-gap: 10px;
-  margin: 10px;
-}
 .checklist-group {
-  margin: 10px;
-}
-.checklist-item {
-  display: flex;
-  align-items: center;
-  padding: 10px 50px;
-  border-bottom: 1px solid var(--color-background-2);
-  .checklist-item-text {
-    margin-left: 10px;
-    &.complete {
-      text-decoration: line-through;
-      color: var(--color-foreground-4);
+  display: grid;
+  row-gap: 20px;
+  .group-label {
+    display: flex;
+    align-items: center;
+  }
+  .create-checklistitem {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 10px;
+    // margin: 10px;
+    margin: auto;
+    width: 80%;
+  }
+  .content {
+    display: grid;
+    grid-auto-flow: row;
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 50px;
+      border-bottom: 1px solid var(--color-background-2);
+      .checklist-item-text {
+        margin-left: 10px;
+        &.complete {
+          text-decoration: line-through;
+          color: var(--color-foreground-4);
+        }
+      }
+
+      .action {
+        visibility: hidden;
+        display: flex;
+        align-items: center;
+        .material-icons {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+        }
+      }
+      &:hover .action {
+        visibility: visible;
+      }
     }
   }
-}
-.task-count {
-  margin-left: 4px;
+  .task-count {
+    margin-left: 4px;
+    border-radius: 4px;
+    padding: 2px 6px;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-background-5);
+    .material-icons {
+      margin-left: 4px;
+      &.complete {
+        color: var(--color-success);
+      }
+    }
+  }
 }
 </style>

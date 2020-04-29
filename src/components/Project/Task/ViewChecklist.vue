@@ -4,12 +4,14 @@
       <OakText
         id="group"
         v-bind:data="data.group"
+        placeholder="Create new group"
         @change="handleChange"
       /><OakButton
         theme="primary"
         variant="animate in"
+        v-if="data.group"
         @click="saveGroup"
-        label="Create new checklist"
+        label="Save"
       />
     </div>
     <div
@@ -18,6 +20,7 @@
       class="checklist-group"
     >
       <ChecklistGroup v-bind:group="key" v-bind:taskId="task._id" />
+      <div class="hr" />
     </div>
   </div>
 </template>
@@ -65,6 +68,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .view-checklist {
+  display: grid;
   .create-checklistitem,
   .create-checklistgroup {
     display: grid;
@@ -74,6 +78,14 @@ export default {
   }
   .checklist-group {
     margin: 10px;
+    .hr {
+      height: 1px;
+      width: 60%;
+      background-color: var(--color-background-5);
+      margin: auto;
+      margin-top: 20px;
+      display: none;
+    }
   }
   .checklist-item {
     display: flex;

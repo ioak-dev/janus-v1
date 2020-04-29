@@ -1,5 +1,5 @@
 <template>
-  <div class="team-preview">
+  <div class="team-preview" v-if="team">
     <div class="content">
       <div class="name typography-6">{{ team.name }}</div>
       <div class="members-list">
@@ -58,7 +58,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'TeamPreview',
   components: { OakPrompt, OakModal },
-  props: { id: String },
+  props: { projectTeam: Object },
   data: function() {
     return {
       showDeletePrompt: false,
@@ -66,14 +66,19 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getProject', 'getUserById', 'findTeamById']),
+    ...mapGetters([
+      'getProject',
+      'getUserById',
+      'findTeamById',
+      'getTeamsMembersByTeamId',
+    ]),
     team: function() {
-      return this.findTeamById(this.id);
+      return this.findTeamById(this.projectTeam.teamId);
     },
     people: function() {
       const people = [];
-      this.team?.members?.forEach(userId => {
-        const userItem = this.getUserById(userId);
+      this.getTeamsMembersByTeamId(this.team?._id)?.forEach(item => {
+        const userItem = this.getUserById(item.userId);
         people.push(userItem);
       });
       return people;

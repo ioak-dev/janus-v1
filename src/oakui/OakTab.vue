@@ -47,9 +47,9 @@ export default {
   mounted() {
     this.activeTab =
       this.meta && this.meta.length > 0 ? this.meta[0].slotName : '';
-    console.log(document.getElementsByClassName('oak-tab')[0]);
-    console.log(document.getElementsByClassName('oak-tab')[0].clientWidth);
-    console.log(this.$refs.header.clientWidth);
+    // console.log(document.getElementsByClassName('oak-tab')[0]);
+    // console.log(document.getElementsByClassName('oak-tab')[0].clientWidth);
+    // console.log(this.$refs.header.clientWidth);
   },
   methods: {
     switchTab: function(activeTab) {

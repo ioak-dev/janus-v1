@@ -8,7 +8,7 @@
             v-bind:data="data.type"
             id="type"
             @change="handleChange"
-            v-bind:elements="['Epic', 'Story', 'Task', 'Sub-task', 'Defect']"
+            v-bind:elements="['Story', 'Task', 'Sub-task', 'Defect']"
           />
         </div>
         <div class="typography-4">Parent Task</div>
@@ -74,7 +74,7 @@
           v-bind:id="data.assignedTo"
           @remove="clearAssignee"
           @change="handleAssigneeChange"
-          v-bind:teamIdList="teamIdList"
+          v-bind:projectId="data.projectId"
         />
       </div>
     </div>
@@ -116,10 +116,11 @@
       v-bind:visible="parentSelectionDialogOpen"
       @close="toggleParentSelectionDialogOpen"
     >
-      <div slot="modal-container">
+      <div slot="modal-body">
         <ChooseTask
           @choose="handleParentTaskChange"
-          v-bind:stageDropDown="stageDropDown"
+          v-bind:task="task"
+          v-bind:types="['Story', 'Task']"
         />
       </div>
     </OakModal>
@@ -127,10 +128,11 @@
       v-bind:visible="epicSelectionDialogOpen"
       @close="toggleEpicSelectionDialogOpen"
     >
-      <div slot="modal-container">
+      <div slot="modal-body">
         <ChooseTask
           @choose="handleEpicChange"
-          v-bind:stageDropDown="stageDropDown"
+          v-bind:task="task"
+          v-bind:types="['Epic']"
         />
       </div>
     </OakModal>
@@ -190,9 +192,6 @@ export default {
       );
       return stageList;
     },
-    teamIdList: function() {
-      return this.getProjectById(this.data.projectId)?.teamIdList;
-    },
   },
   mounted() {
     this.data = { ...this.data, ...this.task };
@@ -212,6 +211,9 @@ export default {
     },
     handleChange: function() {
       this.data[event.target.name] = event.target.value;
+      if (event.target.name === 'type') {
+        this.$emit('typeChange', event);
+      }
     },
     handleDescriptionChange: function(text) {
       this.data.description = text;

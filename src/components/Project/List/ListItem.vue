@@ -35,7 +35,7 @@
       v-bind:visible="editTask"
       label="Quick Edit - Task"
     >
-      <div slot="modal-container">
+      <div slot="modal-body">
         <UpdateTask v-bind:task="task" />
       </div>
     </OakModal>

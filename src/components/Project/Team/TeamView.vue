@@ -3,25 +3,30 @@
     <!-- <div class="toolbar-container desktop-only" v-bind:class="styleClass">
       <Toolbar />
     </div> -->
-    <div class="team-content">
-      <div class="search-bar">
-        <OakAutoComplete
-          placeholder="Search for team name"
-          @change="handleChange"
-          v-bind:objects="teamList"
-          id="people-search"
-        />
-      </div>
-      <div class="team-list" v-if="getProject">
-        <div
-          v-for="item in getProject.teamIdList"
-          :key="item"
-          class="team-record"
-          group="team-list"
-          :label="item"
-          collapseOthers
-        >
-          <TeamPreview v-bind:id="item" @remove="removeTeam(item)" />
+    <div class="container">
+      <div class="team-content">
+        <div class="search-bar">
+          <OakAutoComplete
+            placeholder="Search for team name"
+            @change="handleChange"
+            v-bind:objects="teamList"
+            id="people-search"
+          />
+        </div>
+        <div class="team-list" v-if="getProject">
+          <div
+            v-for="item in getProjectTeamsByProjectId(getProject._id)"
+            :key="item._id"
+            class="team-record"
+            group="team-list"
+            :label="item"
+            collapseOthers
+          >
+            <TeamPreview
+              v-bind:projectTeam="item"
+              @remove="removeTeam(item._id)"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -36,7 +41,12 @@ export default {
   name: 'TeamView',
   components: { OakAutoComplete, TeamPreview },
   computed: {
-    ...mapGetters(['getProject', 'getTeams', 'findTeamById']),
+    ...mapGetters([
+      'getProject',
+      'getTeams',
+      'findTeamById',
+      'getProjectTeamsByProjectId',
+    ]),
     styleClass: function() {
       if (this.getProject?.image) {
         return 'background-present';
@@ -55,48 +65,34 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['saveProject']),
+    ...mapActions(['saveProject', 'saveProjectTeam', 'deleteProjectTeam']),
     handleChange: function(key) {
-      const teamIdList = this.getProject.teamIdList
-        ? this.getProject?.teamIdList
-        : [];
-      teamIdList.push(key);
-      this.saveProject({
-        ...this.getProject,
-        teamIdList: [...new Set(teamIdList)],
-      });
+      this.saveProjectTeam({ projectId: this.getProject._id, teamId: key });
     },
-    removeTeam: function(key) {
-      const teamIdList = this.getProject.teamIdList.filter(
-        item => item !== key
-      );
-      this.saveProject({
-        ...this.getProject,
-        teamIdList: [...new Set(teamIdList)],
-      });
+    removeTeam: function(id) {
+      this.deleteProjectTeam(id);
     },
   },
-  //   watch: {
-  //     getProject: function() {
-  //       if (this.getProject?.image) {
-  //         document.getElementsByClassName(
-  //           'team'
-  //         )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
-  //       }
-  //     },
-  //   },
-  //   mounted() {
-  //     if (this.getProject?.image) {
-  //       document.getElementsByClassName(
-  //         'team'
-  //       )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
-  //     }
-  //   },
+  watch: {
+    getProject: function() {
+      if (this.getProject?.image) {
+        document.getElementsByClassName(
+          'team'
+        )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
+      }
+    },
+  },
+  mounted() {
+    if (this.getProject?.image) {
+      document.getElementsByClassName(
+        'team'
+      )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
+    }
+  },
 };
 </script>
 <style lang="scss" scoped>
 .team {
-  padding: 10px 100px;
   &.background-present {
     background-size: cover !important;
   }
@@ -113,19 +109,25 @@ export default {
       background-color: var(--color-background-transparent-1);
     }
   }
-  .team-content {
-    touch-action: none;
-    display: grid;
-    grid-template-columns: auto;
-    align-content: flex-start;
-    row-gap: 10px;
-    overflow: auto;
+  .container {
     height: calc(100vh - 60px);
-    .team-list {
+    overflow: auto;
+    padding: 10px 100px;
+    .team-content {
+      touch-action: none;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 20px;
-      row-gap: 20px;
+      grid-template-columns: auto;
+      align-content: flex-start;
+      row-gap: 10px;
+      margin-top: 20px;
+      overflow: auto;
+      // height: calc(100vh - 60px);
+      .team-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 20px;
+        row-gap: 20px;
+      }
     }
   }
 }

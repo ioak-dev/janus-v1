@@ -2,6 +2,7 @@
   <div class="oak-select">
     <label v-if="label" class="form-element-label">{{ label }}</label>
     <select @change="$emit('change')" v-bind:name="id" class="select">
+      <option value="" :selected="'' === data">None</option>
       <option
         v-for="item in elements"
         :key="item"

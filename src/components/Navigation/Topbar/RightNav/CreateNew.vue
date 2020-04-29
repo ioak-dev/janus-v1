@@ -16,22 +16,22 @@
       v-bind:visible="newProject"
       label="New Project"
     >
-      <div slot="modal-container">
+      <div slot="modal-body">
         <UpdateProject v-bind:project="projectStub" />
       </div>
     </OakModal>
     <OakModal @close="toggleStage" v-bind:visible="newStage" label="New Stage">
-      <div slot="modal-container">
+      <div slot="modal-body">
         <UpdateStage v-bind:stage="stageStub" />
       </div>
     </OakModal>
     <OakModal @close="toggleTeam" v-bind:visible="newTeam" label="New Team">
-      <div slot="modal-container">
+      <div slot="modal-body">
         <UpdateTeam v-bind:team="teamStub" />
       </div>
     </OakModal>
     <OakModal @close="toggleTask" v-bind:visible="newTask" label="New Task">
-      <div slot="modal-container">
+      <div slot="modal-body">
         <UpdateTask v-bind:task="taskStub" />
       </div>
     </OakModal>

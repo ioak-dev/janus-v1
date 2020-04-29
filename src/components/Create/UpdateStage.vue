@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="modal-body two-column">
+    <div class="two-column">
       <div class="typography-4">Project</div>
       <OakSelect
         v-bind:data="data.projectId"
