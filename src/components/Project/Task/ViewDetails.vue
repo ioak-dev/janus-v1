@@ -1,75 +1,42 @@
 <template>
   <div class="view-details">
     <div class="section dense-container">
-      <div class="content">
-        <div class="typography-4">Type</div>
-        <div>
-          <OakSelect
-            v-bind:data="data.type"
-            id="type"
-            @change="handleChange"
-            v-bind:elements="['Story', 'Task', 'Sub-task', 'Defect']"
-          />
-        </div>
-        <div class="typography-4">Parent Task</div>
-        <div class="parent-task" v-if="data.parentTaskId">
-          <div class="typography-4 one-line-text">
-            {{
-              `${getTaskById(data.parentTaskId).taskId} (${
-                getTaskById(data.parentTaskId).title
-              })`
-            }}
-          </div>
-          <div
-            class="parent-task-link"
-            @click="toggleParentSelectionDialogOpen"
-          >
-            Change
-          </div>
-        </div>
-        <div class="parent-task" v-else>
-          <div
-            class="parent-task-link"
-            @click="toggleParentSelectionDialogOpen"
-          >
-            Choose
-          </div>
-        </div>
-        <div class="typography-4">Epic</div>
-        <div class="epic" v-if="data.epic">
-          <div class="typography-4 one-line-text">
-            {{
-              `${getTaskById(data.epic).taskId} (${
-                getTaskById(data.epic).title
-              })`
-            }}
-          </div>
-          <div class="epic-link" @click="toggleEpicSelectionDialogOpen">
-            Change
-          </div>
-        </div>
-        <div class="epic" v-else>
-          <div class="epic-link" @click="toggleEpicSelectionDialogOpen">
-            Choose
-          </div>
-        </div>
+      <div class="title-section">
+        <OakText
+          v-bind:data="data.title"
+          id="title"
+          label="Title"
+          @change="handleChange"
+        />
       </div>
-      <div class="content">
-        <div class="typography-4">Workflow</div>
+      <div>
+        <OakSelect
+          v-bind:data="data.type"
+          label="Task type"
+          id="type"
+          @change="handleChange"
+          v-bind:elements="['Epic', 'Story', 'Task', 'Sub-task', 'Defect']"
+        />
+      </div>
+      <div>
         <OakSelect
           v-bind:data="data.stageId"
           id="stageId"
+          label="Workflow"
           v-bind:objects="stageDropDown"
           @change="handleChange"
         />
-        <div class="typography-4">Priority</div>
+      </div>
+      <div>
         <OakSelect
           v-bind:data="data.priority"
           id="priority"
+          label="Priority"
           v-bind:elements="['Low', 'Medium', 'High', 'Critical']"
           @change="handleChange"
         />
-        <div class="typography-4">Assigned to</div>
+      </div>
+      <div>
         <Assignee
           v-bind:id="data.assignedTo"
           @remove="clearAssignee"
@@ -77,31 +44,57 @@
           v-bind:projectId="data.projectId"
         />
       </div>
-    </div>
-    <div class="hr" />
-    <div class="section container">
-      <div class="content single-column">
-        <div>
-          <div class="typography-4">Title</div>
-          <div class="title-section">
-            <OakText
-              v-bind:data="data.title"
-              id="title"
-              @change="handleChange"
-            />
-          </div>
+      <div class="parent-task" v-if="data.parentTaskId">
+        <div class="typography-4">Parent Task</div>
+        <div class="typography-4 one-line-text">
+          {{
+            `${getTaskById(data.parentTaskId).taskId} (${
+              getTaskById(data.parentTaskId).title
+            })`
+          }}
         </div>
-        <div>
-          <div class="typography-4">Description</div>
-          <OakEditor
-            v-if="data.stageId"
-            id="task-description"
-            alwaysEdit
-            v-bind:data="data.description"
-            @change="handleDescriptionChange"
-          />
+        <div class="parent-task-link" @click="toggleParentSelectionDialogOpen">
+          Change
         </div>
       </div>
+      <div class="parent-task" v-else>
+        <div class="typography-4">Parent Task</div>
+        <div class="parent-task-link" @click="toggleParentSelectionDialogOpen">
+          Choose
+        </div>
+      </div>
+      <div class="epic" v-if="data.epic">
+        <div class="typography-4">Epic</div>
+        <div class="typography-4 one-line-text">
+          {{
+            `${getTaskById(data.epic).taskId} (${getTaskById(data.epic).title})`
+          }}
+        </div>
+        <div class="epic-link" @click="toggleEpicSelectionDialogOpen">
+          Change
+        </div>
+      </div>
+      <div class="epic" v-else>
+        <div class="typography-4">Epic</div>
+        <div class="epic-link" @click="toggleEpicSelectionDialogOpen">
+          Choose
+        </div>
+      </div>
+      <!-- </div> -->
+      <!-- <div class="hr" /> -->
+      <!-- <div class="section container">
+      <div class="content single-column"> -->
+      <div>
+        <OakEditor
+          v-if="data.stageId"
+          id="task-description"
+          label="Description"
+          alwaysEdit
+          v-bind:data="data.description"
+          @change="handleDescriptionChange"
+        />
+      </div>
+      <!-- </div> -->
     </div>
 
     <div class="action">
@@ -252,13 +245,12 @@ export default {
   }
   .section {
     padding: 20px 10px;
-    .content {
-      padding: 20px 10px;
+    &.dense-container {
+      // padding: 20px 10px;
       // margin: 50px;
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto;
       align-items: center;
-      row-gap: 20px;
       column-gap: 10px;
       &.single-column {
         padding: 20px 10px;
@@ -268,8 +260,12 @@ export default {
 
       .parent-task,
       .epic {
-        display: flex;
-        align-items: center;
+        padding: 20px 0;
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: flex-start;
+        column-gap: 20px;
+
         .parent-task-link,
         .epic-link {
           user-select: none;
@@ -283,13 +279,13 @@ export default {
         }
       }
     }
-    &.dense-container {
-      @media (min-width: 768px) {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        column-gap: 100px;
-      }
-    }
+    // &.dense-container {
+    //   @media (min-width: 768px) {
+    //     display: grid;
+    //     grid-template-columns: 1fr 1fr;
+    //     column-gap: 100px;
+    //   }
+    // }
   }
   .hr {
     height: 1px;

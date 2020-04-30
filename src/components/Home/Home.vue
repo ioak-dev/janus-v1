@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="@/assets/logo.svg" />
-    <HomeContent msg="Janus, a clutter free agile management tool" />
+    <HomeContent />
   </div>
 </template>
 
@@ -21,5 +20,7 @@ export default {
   img {
     width: 400px;
   }
+  height: calc(100vh - 60px);
+  overflow: auto;
 }
 </style>

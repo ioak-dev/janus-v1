@@ -1,16 +1,18 @@
 <template>
   <div class="task-status" v-if="show">
-    <div class="complete" v-if="status === 'complete'">
-      <i class="material-icons">check_circle</i>
+    <div class="icon complete" v-if="status === 'complete'">
+      <OakIcon mat="check_circle" theme="success" />
     </div>
-    <div class="archived" v-if="status === 'archived'">
-      <i class="material-icons">archived</i>
+    <div class="icon archived" v-if="status === 'archived'">
+      <OakIcon mat="archived" color="var(--color-background-5)" />
     </div>
   </div>
 </template>
 <script>
+import OakIcon from '@/oakui/OakIcon.vue';
 export default {
   name: 'TaskStatusBadge',
+  components: { OakIcon },
   props: { status: String },
   computed: {
     show: function() {
@@ -24,15 +26,9 @@ export default {
   display: flex;
   align-items: center;
   align-content: center;
-  .material-icons {
+  .icon {
     display: flex;
     align-items: center;
-  }
-  .complete {
-    color: var(--color-success);
-  }
-  .archived {
-    color: var(--color-background-5);
   }
 }
 </style>

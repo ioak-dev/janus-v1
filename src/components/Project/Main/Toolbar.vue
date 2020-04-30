@@ -42,7 +42,7 @@
           id="toolbar-recent-task-switch"
           labelVariant="on"
           theme="primary"
-          right
+          left
         >
           <div slot="label">
             <div class="recent-tasks active" v-if="page === 'task'">
@@ -78,6 +78,7 @@ export default {
       const elements = [];
       this.getTaskToView.map(item => {
         let icon = '';
+        let svg = '';
         switch (this.getTaskByTaskId(item)?.type) {
           case 'Story':
             icon = 'menu_book';
@@ -91,11 +92,15 @@ export default {
           case 'Defect':
             icon = 'bug_report';
             break;
+          case 'Epic':
+            svg = 'epic';
+            break;
         }
         elements.push({
           label: item,
           action: () => this.switchToTask(item),
           icon,
+          svg,
         });
       });
       return elements;

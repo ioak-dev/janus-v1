@@ -1,5 +1,6 @@
 <template>
   <div class="oak-editor">
+    <label>{{ label }}</label>
     <div
       class="content-section view-section-container"
       @click="toggle"
@@ -26,6 +27,7 @@ export default {
     id: String,
     data: String,
     alwaysEdit: Boolean,
+    label: String,
   },
   data: function() {
     return {
@@ -48,6 +50,9 @@ export default {
   display: grid;
   grid-template-rows: 1fr auto;
   row-gap: 10px;
+  label {
+    font-size: 1rem;
+  }
   .action {
     display: flex;
     justify-content: flex-end;

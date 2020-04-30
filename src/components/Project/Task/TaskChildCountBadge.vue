@@ -1,15 +1,19 @@
 <template>
   <div class="task-child-count" v-if="getSubtasksByTaskId(taskId).length > 0">
-    <div class="icon"><i class="material-icons">call_merge</i></div>
+    <div class="icon">
+      <OakIcon mat="call_merge" color="var(--color-secondary-1)" />
+    </div>
     <div class="count">
       {{ getSubtasksByTaskId(taskId).length }}
     </div>
   </div>
 </template>
 <script>
+import OakIcon from '@/oakui/OakIcon.vue';
 import { mapGetters } from 'vuex';
 export default {
   name: 'TaskChildCountBadge',
+  components: { OakIcon },
   props: { taskId: String },
   computed: { ...mapGetters(['getSubtasksByTaskId']) },
 };
@@ -19,7 +23,7 @@ export default {
   display: flex;
   align-items: center;
   align-content: center;
-  .material-icons {
+  .icon {
     display: flex;
     align-items: center;
   }

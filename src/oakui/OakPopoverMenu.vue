@@ -23,15 +23,18 @@
         class="element"
         @click="element.action"
       >
-        <i v-if="element.icon" class="material-icons">{{ element.icon }}</i
-        >{{ element.label }}
+        <OakIcon v-if="element.icon" :mat="element.icon" />
+        <OakIcon v-if="element.svg" :svg="element.svg" />
+        {{ element.label }}
       </div>
     </div>
   </div>
 </template>
 <script>
+import OakIcon from '@/oakui/OakIcon.vue';
 export default {
   name: 'OakSelect',
+  components: { OakIcon },
   props: {
     id: String,
     label: String,

@@ -1,11 +1,9 @@
 <template>
   <div class="oak-text-field">
-    <label v-if="label" class="form-element-label">{{ label }}</label>
     <input
       v-if="!multiline"
       :disabled="disabled"
       autoComplete="off"
-      :placeholder="placeholder"
       :type="type ? type : 'text'"
       :name="id"
       :value="data"
@@ -14,7 +12,7 @@
       @focus="$emit('focus')"
     />
     <textarea
-      v-if="multiline"
+      v-else
       :disabled="disabled"
       :name="id"
       :value="data"
@@ -22,6 +20,9 @@
       @keyup="$emit('change')"
       @blur="blurEvent"
     />
+    <label v-if="label" :for="id" :class="data ? 'active' : ''">
+      {{ label }}
+    </label>
   </div>
 </template>
 <script>

@@ -1,22 +1,24 @@
 <template>
   <div class="task-priority" v-if="show">
-    <div class="low" v-if="priority === 'Low'">
-      <i class="material-icons">arrow_downward</i>
+    <div class="icon low" v-if="priority === 'Low'">
+      <OakIcon mat="arrow_downward" theme="success" />
     </div>
-    <div class="medium" v-if="priority === 'Medium'">
-      <i class="material-icons">import_export</i>
+    <div class="icon medium" v-if="priority === 'Medium'">
+      <OakIcon mat="import_export" />
     </div>
-    <div class="high" v-if="priority === 'High'">
-      <i class="material-icons">arrow_upward</i>
+    <div class="icon high" v-if="priority === 'High'">
+      <OakIcon mat="arrow_upward" theme="failure" />
     </div>
-    <div class="critical" v-if="priority === 'Critical'">
-      <i class="material-icons">arrow_upward</i>
+    <div class="icon critical" v-if="priority === 'Critical'">
+      <OakIcon mat="arrow_upward" color="red" />
     </div>
   </div>
 </template>
 <script>
+import OakIcon from '@/oakui/OakIcon.vue';
 export default {
   name: 'TaskPriorityBadge',
+  components: { OakIcon },
   props: { priority: String },
   computed: {
     show: function() {
@@ -35,21 +37,9 @@ export default {
   display: flex;
   align-items: center;
   align-content: center;
-  .material-icons {
+  .icon {
     display: flex;
     align-items: center;
-  }
-  .low {
-    color: var(--color-success);
-  }
-  .medium {
-    // color: var(--color-warning);
-  }
-  .high {
-    color: var(--color-failure);
-  }
-  .critical {
-    color: red;
   }
 }
 </style>

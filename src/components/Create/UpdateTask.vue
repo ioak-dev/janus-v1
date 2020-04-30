@@ -1,41 +1,44 @@
 <template>
   <div>
-    <div class="two-column">
-      <div v-if="!task.taskId" class="typography-4">Project</div>
+    <div>
       <OakSelect
         v-if="!task.taskId"
         v-bind:data="data.projectId"
         id="projectId"
+        label="Project name"
         @change="handleChange"
         v-bind:objects="projectDropDown"
       />
-      <div v-if="!task.taskId" class="typography-4">Stage</div>
       <OakSelect
         v-if="!task.taskId"
         v-bind:data="data.stageId"
+        label="Workflow"
         id="stageId"
         @change="handleChange"
         v-bind:objects="stageDropDown"
       />
-      <div class="typography-4">Task type</div>
       <OakSelect
         v-bind:data="data.type"
         id="type"
+        label="Task type"
         @change="handleChange"
         v-bind:elements="['Epic', 'Story', 'Task', 'Sub-task', 'Defect']"
       />
-      <div class="typography-4">Title</div>
-      <OakText v-bind:data="data['title']" id="title" @change="handleChange" />
-      <div class="typography-4">Assignee</div>
+      <OakText
+        v-bind:data="data['title']"
+        id="title"
+        label="Title"
+        @change="handleChange"
+      />
       <Assignee
         v-bind:id="data.assignedTo"
         @remove="clearAssignee"
         @change="handleAssigneeChange"
         v-bind:projectId="data.projectId"
       />
-      <div class="typography-4">Description</div>
       <OakEditor
         v-bind:id="'task-description-' + task._id"
+        label="Description"
         v-bind:data="data.description"
         @change="handleDescriptionChange"
         alwaysEdit

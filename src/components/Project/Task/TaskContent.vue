@@ -146,7 +146,7 @@ export default {
       return this.getLogs('Task');
     },
     tabDetails: function() {
-      if (['Task', 'Story'].includes(this.data.type)) {
+      if (['Task', 'Story', 'Epic'].includes(this.data.type)) {
         return this.tabDetailsMaster;
       } else {
         return this.tabDetailsMaster.filter(

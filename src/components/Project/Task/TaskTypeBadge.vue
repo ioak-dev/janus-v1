@@ -1,22 +1,27 @@
 <template>
   <div class="task-type" v-if="show">
-    <div class="story" v-if="type === 'Story'">
-      <i class="material-icons">menu_book</i>
+    <div class="story icon" v-if="type === 'Story'">
+      <OakIcon mat="menu_book" theme="warning" />
     </div>
-    <div class="task" v-if="type === 'Task'">
-      <i class="material-icons">bookmark</i>
+    <div class="task icon" v-if="type === 'Task'">
+      <OakIcon mat="bookmark" theme="primary" />
     </div>
-    <div class="sub-task" v-if="type === 'Sub-task'">
-      <i class="material-icons">book</i>
+    <div class="sub-task icon" v-if="type === 'Sub-task'">
+      <OakIcon mat="book" theme="primary" />
     </div>
-    <div class="defect" v-if="type === 'Defect'">
-      <i class="material-icons">bug_report</i>
+    <div class="defect icon" v-if="type === 'Defect'">
+      <OakIcon mat="bug_report" theme="failure" />
+    </div>
+    <div class="epic icon" v-if="type === 'Epic'">
+      <OakIcon svg="epic" theme="failure" />
     </div>
   </div>
 </template>
 <script>
+import OakIcon from '@/oakui/OakIcon.vue';
 export default {
   name: 'TaskTypeBadge',
+  components: { OakIcon },
   props: { type: String },
   computed: {
     show: function() {
@@ -24,7 +29,8 @@ export default {
         this.type === 'Story' ||
         this.type === 'Task' ||
         this.type === 'Sub-Task' ||
-        this.type === 'Defect'
+        this.type === 'Defect' ||
+        this.type === 'Epic'
       );
     },
   },
@@ -35,19 +41,9 @@ export default {
   display: flex;
   align-items: center;
   align-content: center;
-  .material-icons {
+  .icon {
     display: flex;
     align-items: center;
-  }
-  .story {
-    color: var(--color-warning);
-  }
-  .defect {
-    color: var(--color-failure);
-  }
-  .task,
-  .sub-task {
-    color: var(--color-primary-1);
   }
 }
 </style>

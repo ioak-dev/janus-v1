@@ -1,0 +1,11 @@
+.oak-icon {
+  display: flex;
+  .material-icons {
+    color: var(--color-foreground-1);
+    display: flex;
+    align-items: center;
+  }
+  svg {
+    fill: var(--color-foreground-1);
+  }
+}

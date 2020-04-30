@@ -84,9 +84,13 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      display: grid;
+      grid-auto-flow: column;
+      align-items: center;
+      column-gap: 10px;
       padding: 0px 20px;
-      height: var(--metric-formelement-height);
-      line-height: var(--metric-formelement-height);
+      height: 40px;
+      line-height: 40px;
       &:hover {
         background-color: var(--color-popover-theme);
       }

@@ -2,18 +2,37 @@
   <div>
     <div v-bind:class="dragClass" class="card">
       <div class="top-row">
-        <div class="task-id typography-8">{{ task.taskId }}</div>
-        <div class="task-title">{{ task.title }}</div>
+        <div>
+          <div class="task-title">{{ task.title }}</div>
+          <div class="task-description" v-html="task.description" />
+        </div>
+        <div><Avatar v-if="assignedToUser" v-bind:user="assignedToUser" /></div>
       </div>
       <div class="bottom-row">
-        <div class="left">
-          <div class="task-count">
-            {{ getSubtasksByTaskId(task._id).length }}
+        <div class="header-record">
+          <div class="subtask-column">
+            Task Id
           </div>
-          <Avatar v-if="assignedToUser" v-bind:user="assignedToUser" />
+          <div class="subtask-column">Title</div>
+          <div class="subtask-column">Another Column</div>
+          <div class="subtask-column">Assigned To</div>
         </div>
-        <div class="right typography-3">
-          Jan 31
+        <div
+          v-for="item in getSubtasksByTaskId(task._id)"
+          v-bind:key="item._id"
+          class="subtask-record"
+        >
+          <div class="subtask-column">
+            <TaskTypeBadge v-bind:type="item.type" />{{ item.taskId }}
+          </div>
+          <div class="subtask-column">{{ item.title }}</div>
+          <div class="subtask-column">{{ item.title }}</div>
+          <div>
+            <Avatar
+              v-if="getUserById(item.assignedTo)"
+              v-bind:user="getUserById(item.assignedTo)"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -35,6 +54,7 @@ import { mapGetters, mapActions } from 'vuex';
 import UpdateTask from '@/components/Create/UpdateTask.vue';
 import Avatar from '@/components/Avatar/Avatar.vue';
 import OakModal from '@/oakui/OakModal.vue';
+import TaskTypeBadge from '@/components/Project/Task/TaskTypeBadge.vue';
 
 export default {
   name: 'Card',
@@ -42,6 +62,7 @@ export default {
     UpdateTask,
     Avatar,
     OakModal,
+    TaskTypeBadge,
   },
   props: {
     task: {
@@ -114,46 +135,36 @@ export default {
 
 <style scoped lang="scss">
 .card {
-  cursor: pointer;
-  user-select: none;
   padding: 10px;
   background-color: var(--color-background-3);
-  // box-shadow: 0 1px 3px 0 var(--color-background-1);
-  border-radius: 4px;
+
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: 20px;
 
   .top-row {
     display: grid;
-    grid-template-rows: auto;
-    row-gap: 10px;
-    .task-id,
-    .task-title {
-      display: inline;
-    }
+    grid-template-columns: 1fr auto;
   }
-  .bottom-row {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 
-    .right {
+  .subtask-record,
+  .header-record {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+    padding: 10px;
+    border-bottom: 1px solid var(--color-background-5);
+    column-gap: 10px;
+
+    .subtask-column {
       display: flex;
       align-items: center;
+      justify-content: flex-start;
     }
-    .left {
-      display: grid;
-      grid-auto-flow: column;
-      column-gap: 10px;
-      .task-count {
-        height: 30px;
-        width: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        border: 2px solid var(--color-secondary-1);
-      }
-    }
+  }
+
+  .header-record {
+    border-top: 1px solid var(--color-background-5);
+    background-color: var(--color-background-5);
   }
 }
 </style>

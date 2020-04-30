@@ -101,9 +101,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .accordion-section {
-  background-color: var(--color-background-2);
+  // background-color: var(--color-background-2);
   border-radius: 4px;
   .header {
+    background-color: var(--color-background-2);
     cursor: pointer;
     user-select: none;
     display: flex;
