@@ -58,7 +58,6 @@ export default {
         style.fill = this.color;
         style.color = this.color;
       }
-      console.log(style);
       return style;
     },
   },
