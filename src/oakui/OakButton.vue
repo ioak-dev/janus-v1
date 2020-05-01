@@ -2,6 +2,8 @@
   <button class="oak-button" :class="style" @click="$emit('click')">
     <div class="button-label-container">
       <OakIcon v-if="icon" v-bind:mat="icon" size="1.2em" />
+      <OakIcon v-if="mat" v-bind:mat="mat" size="1.2em" />
+      <OakIcon v-if="fa" v-bind:fa="fa" size="1.2em" />
       <OakIcon v-if="svg" v-bind:svg="svg" size="1.2em" />
       {{ label }}
     </div>
@@ -15,7 +17,9 @@ export default {
   props: {
     label: String,
     icon: String,
+    mat: String,
     svg: String,
+    fa: String,
     action: Object,
     variant: String,
     theme: String,

@@ -14,6 +14,7 @@
           label="Delete Team"
           theme="primary"
           variant="animate in"
+          fa="fas fa-trash"
           @click="toggleDeletePrompt"
         />
       </div>

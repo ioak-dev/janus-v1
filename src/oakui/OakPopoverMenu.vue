@@ -24,6 +24,8 @@
         @click="element.action"
       >
         <OakIcon v-if="element.icon" :mat="element.icon" />
+        <OakIcon v-if="element.mat" :mat="element.mat" />
+        <OakIcon v-if="element.fa" :fa="element.fa" />
         <OakIcon v-if="element.svg" :svg="element.svg" />
         {{ element.label }}
       </div>

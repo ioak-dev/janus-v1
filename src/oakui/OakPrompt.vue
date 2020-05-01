@@ -16,6 +16,7 @@
           variant="animate in"
           align="left"
           label="No"
+          fa="fas fa-times"
         />
         <OakButton
           data-test="action-proceed"
@@ -27,6 +28,7 @@
           variant="animate out"
           align="right"
           label="Yes"
+          fa="fas fa-check"
         />
       </div>
     </div>

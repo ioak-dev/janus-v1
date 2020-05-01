@@ -7,6 +7,12 @@
     >
       {{ mat }}
     </i>
+    <i
+      v-if="fa"
+      class="fontawesome-icons"
+      :class="fa"
+      :style="{ ...primaryStyle, ...dimension }"
+    />
     <EpicIcon
       v-if="svg === 'epic'"
       :primaryStyle="primaryStyle"
@@ -30,6 +36,7 @@ export default {
   props: {
     mat: String,
     svg: String,
+    fa: String,
     size: String,
     color: String,
     accent: String,
