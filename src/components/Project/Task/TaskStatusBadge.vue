@@ -1,7 +1,7 @@
 <template>
   <div class="task-status" v-if="show">
     <div class="icon complete" v-if="status === 'complete'">
-      <OakIcon mat="check_circle" theme="success" />
+      <OakIcon mat="check_circle" color="success" />
     </div>
     <div class="icon archived" v-if="status === 'archived'">
       <OakIcon mat="archived" color="var(--color-background-5)" />

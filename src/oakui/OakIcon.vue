@@ -1,63 +1,83 @@
 <template>
   <div class="oak-icon">
-    <i v-if="mat" class="material-icons" :style="style">
+    <i
+      v-if="mat"
+      class="material-icons"
+      :style="{ ...primaryStyle, ...dimension }"
+    >
       {{ mat }}
     </i>
-    <EpicIcon v-if="svg === 'epic'" :style="style" />
-    <!-- <SendIcon v-id="svg === 'vpn'" :style="getStyle" /> -->
+    <EpicIcon
+      v-if="svg === 'epic'"
+      :primaryStyle="primaryStyle"
+      :accentStyle="accent ? accentStyle : {}"
+      :dimension="dimension"
+    />
+    <IoakIcon
+      v-if="svg === 'ioak'"
+      :primaryStyle="primaryStyle"
+      :accentStyle="accent ? accentStyle : {}"
+      :dimension="dimension"
+    />
   </div>
 </template>
 <script>
 import EpicIcon from './icons/EpicIcon.vue';
+import IoakIcon from './icons/IoakIcon.vue';
 export default {
   name: 'OakIcon',
-  components: { EpicIcon },
+  components: { EpicIcon, IoakIcon },
   props: {
     mat: String,
     svg: String,
     size: String,
     color: String,
-    theme: String,
+    accent: String,
   },
   computed: {
-    style: function() {
+    dimension: function() {
+      const dimension = {};
+      dimension.fontSize = this.size ? this.size : '24px';
+      dimension.height = this.size ? this.size : '24px';
+      dimension.width = 'auto';
+      return dimension;
+    },
+    primaryStyle: function() {
+      return this.getStyle(this.color);
+    },
+    accentStyle: function() {
+      return this.getStyle(this.accent);
+    },
+  },
+  methods: {
+    getStyle: function(colorVar) {
       const style = {};
-      style.fontSize = `${this.size}px`;
-      style.height = `${this.size}px`;
-      style.width = 'auto';
-      switch (this.theme) {
+      let chosenColor = '';
+      switch (colorVar) {
         case 'primary':
-          style.fill = 'var(--color-primary-1)';
-          style.color = 'var(--color-primary-1)';
+          chosenColor = 'var(--color-primary-1)';
           break;
         case 'secondary':
-          style.fill = 'var(--color-secondary-1)';
-          style.color = 'var(--color-secondary-1)';
+          chosenColor = 'var(--color-secondary-1)';
           break;
         case 'tertiary':
-          style.fill = 'var(--color-tertiary-1)';
-          style.color = 'var(--color-tertiary-1)';
+          chosenColor = 'var(--color-tertiary-1)';
           break;
         case 'success':
-          style.fill = 'var(--color-success)';
-          style.color = 'var(--color-success)';
+          chosenColor = 'var(--color-success)';
           break;
         case 'failure':
-          style.fill = 'var(--color-failure)';
-          style.color = 'var(--color-failure)';
+          chosenColor = 'var(--color-failure)';
           break;
         case 'warning':
-          style.fill = 'var(--color-warning)';
-          style.color = 'var(--color-warning)';
+          chosenColor = 'var(--color-warning)';
           break;
         default:
-          style.fill = 'var(--color-foreground-1)';
-          style.color = 'var(--color-foreground-1)';
+          chosenColor = colorVar || 'var(--color-foreground-1)';
       }
-      if (this.color) {
-        style.fill = this.color;
-        style.color = this.color;
-      }
+      style.fill = chosenColor;
+      style.color = chosenColor;
+      style.stroke = chosenColor;
       return style;
     },
   },

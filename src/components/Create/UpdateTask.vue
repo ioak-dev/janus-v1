@@ -51,6 +51,7 @@
           theme="primary"
           variant="animate in"
           @click="openDetailedView"
+          icon="visibility"
           label="Detailed View"
         />
       </div>
@@ -59,6 +60,7 @@
           theme="primary"
           variant="animate in"
           @click="save"
+          icon="check"
           label="Save"
         />
       </div>

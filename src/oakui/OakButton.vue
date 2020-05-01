@@ -1,14 +1,21 @@
 <template>
   <button class="oak-button" :class="style" @click="$emit('click')">
-    {{ label }}
+    <div class="button-label-container">
+      <OakIcon v-if="icon" v-bind:mat="icon" size="1.2em" />
+      <OakIcon v-if="svg" v-bind:svg="svg" size="1.2em" />
+      {{ label }}
+    </div>
   </button>
 </template>
 <script>
+import OakIcon from './OakIcon.vue';
 export default {
   name: 'OakButton',
+  components: { OakIcon },
   props: {
     label: String,
     icon: String,
+    svg: String,
     action: Object,
     variant: String,
     theme: String,

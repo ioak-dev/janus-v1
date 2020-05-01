@@ -3,6 +3,14 @@
     <div class="container" v-if="getTeam">
       <div class="action">
         <OakButton
+          v-if="teamNameDirty"
+          label="Save"
+          icon="check"
+          theme="primary"
+          variant="animate none"
+          @click="save"
+        />
+        <OakButton
           label="Delete Team"
           theme="primary"
           variant="animate in"
@@ -11,15 +19,16 @@
       </div>
 
       <div>
-        <div class="typography-6">Name</div>
-        <OakText v-bind:data="getTeam.name" id="name" @change="handleChange" />
-      </div>
-      <div>
-        <div class="typography-6">Members</div>
+        <OakText
+          v-bind:data="data.name"
+          id="name"
+          label="Team name"
+          @change="handleChange"
+        />
         <OakAutoComplete
           @change="addMember"
           v-bind:objects="peopleList"
-          placeholder="Type to search people"
+          label="Search to add members"
           id="people-search"
         />
       </div>
@@ -54,6 +63,10 @@ export default {
   data: function() {
     return {
       showDeletePrompt: false,
+      teamNameDirty: false,
+      data: {
+        name: '',
+      },
     };
   },
   computed: {
@@ -83,6 +96,7 @@ export default {
   methods: {
     ...mapActions(['saveTeam', 'deleteTeam', 'saveTeamMember']),
     handleChange: function() {
+      this.teamNameDirty = true;
       this.data[event.target.name] = event.target.value;
     },
     toggleDeletePrompt: function() {
@@ -94,9 +108,13 @@ export default {
     remove: function() {
       this.deleteTeam(this.getTeam._id);
     },
+    save: function() {
+      this.saveTeam({ ...this.getTeam, ...this.data });
+    },
   },
   watch: {
     getTeam: function() {
+      this.data = { ...this.data, ...this.getTeam };
       if (this.getTeam?.image) {
         document.getElementsByClassName(
           'team-members'
@@ -105,6 +123,7 @@ export default {
     },
   },
   mounted() {
+    this.data = { ...this.data, ...this.getTeam };
     if (this.getTeam?.image) {
       document.getElementsByClassName(
         'team-members'
@@ -144,8 +163,10 @@ export default {
     row-gap: 30px;
     background-color: var(--color-background-2);
     .action {
-      display: flex;
+      display: grid;
+      grid-auto-flow: column;
       justify-content: flex-end;
+      column-gap: 20px;
     }
   }
 }

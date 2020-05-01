@@ -1,27 +1,33 @@
 <template>
   <div>
-    <div class="two-column">
-      <div class="typography-4">Project</div>
+    <div>
       <OakSelect
         v-bind:data="data.projectId"
         id="projectId"
+        label="Project"
         @change="handleChange"
         v-bind:objects="projectDropDown"
       />
-      <div class="typography-4">Stage Name</div>
-      <OakText v-bind:data="data.name" id="name" @change="handleChange" />
+      <OakText
+        v-bind:data="data.name"
+        id="name"
+        label="Workflow Name"
+        @change="handleChange"
+      />
     </div>
     <div class="modal-footer">
       <OakButton
         theme="primary"
         variant="animate in"
         @click="save"
+        icon="check"
         label="Save"
       />
       <OakButton
         theme="primary"
         variant="animate in"
         @click="toggleDeletePrompt"
+        icon="delete"
         label="Delete"
       />
     </div>

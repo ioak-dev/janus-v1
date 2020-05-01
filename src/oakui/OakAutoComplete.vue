@@ -10,7 +10,10 @@
         @change="handleSearch"
       />
     </div>
-    <div class="results" v-if="isSearchOn">
+    <div
+      class="results"
+      v-if="isSearchOn && filteredList && filteredList.length > 0"
+    >
       <div
         class="element"
         v-for="item in filteredList"

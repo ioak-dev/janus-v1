@@ -1,19 +1,19 @@
 <template>
   <div class="task-type" v-if="show">
     <div class="story icon" v-if="type === 'Story'">
-      <OakIcon mat="menu_book" theme="warning" />
+      <OakIcon mat="menu_book" color="warning" />
     </div>
     <div class="task icon" v-if="type === 'Task'">
-      <OakIcon mat="bookmark" theme="primary" />
+      <OakIcon mat="bookmark" color="primary" />
     </div>
     <div class="sub-task icon" v-if="type === 'Sub-task'">
-      <OakIcon mat="book" theme="primary" />
+      <OakIcon mat="book" color="primary" />
     </div>
     <div class="defect icon" v-if="type === 'Defect'">
-      <OakIcon mat="bug_report" theme="failure" />
+      <OakIcon mat="bug_report" color="failure" />
     </div>
     <div class="epic icon" v-if="type === 'Epic'">
-      <OakIcon svg="epic" theme="failure" />
+      <OakIcon svg="epic" color="failure" />
     </div>
   </div>
 </template>

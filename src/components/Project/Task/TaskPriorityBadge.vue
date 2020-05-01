@@ -1,13 +1,13 @@
 <template>
   <div class="task-priority" v-if="show">
     <div class="icon low" v-if="priority === 'Low'">
-      <OakIcon mat="arrow_downward" theme="success" />
+      <OakIcon mat="arrow_downward" color="success" />
     </div>
     <div class="icon medium" v-if="priority === 'Medium'">
       <OakIcon mat="import_export" />
     </div>
     <div class="icon high" v-if="priority === 'High'">
-      <OakIcon mat="arrow_upward" theme="failure" />
+      <OakIcon mat="arrow_upward" color="failure" />
     </div>
     <div class="icon critical" v-if="priority === 'Critical'">
       <OakIcon mat="arrow_upward" color="red" />

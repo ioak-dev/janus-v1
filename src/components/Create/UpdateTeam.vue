@@ -1,13 +1,17 @@
 <template>
   <div>
-    <div class="two-column">
-      <div class="formelement-label">Team name</div>
-      <OakText v-bind:data="data.name" id="name" @change="handleChange" />
-      <div class="formelement-label">Search Members</div>
+    <div>
+      <OakText
+        v-bind:data="data.name"
+        id="name"
+        label="Team name"
+        @change="handleChange"
+      />
       <OakAutoComplete
         @change="handlePeopleChange"
         v-bind:objects="peopleSearchList"
         id="people-search-update-team"
+        label="Search members"
       />
       <div class="members">
         <div class="member" v-for="member in data.members" v-bind:key="member">
