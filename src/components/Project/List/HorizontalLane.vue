@@ -50,6 +50,7 @@ export default {
   props: {
     stage: Object,
     sortCriteria: Object,
+    searchCriteria: String,
   },
   data: function() {
     return {
@@ -120,7 +121,8 @@ export default {
     tasks: function() {
       const taskList = this.getTasksByStageSorted(
         this.stage._id,
-        this.sortCriteria
+        this.sortCriteria,
+        this.searchCriteria
       );
       return taskList;
     },

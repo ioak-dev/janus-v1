@@ -67,6 +67,7 @@
           id="text"
           v-bind:data="data.text"
           @change="handleChange"
+          label="Add new item"
           placeholder="Type to add new item"
         /><OakButton
           theme="primary"
@@ -158,12 +159,13 @@ export default {
     align-items: center;
   }
   .create-checklistitem {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    column-gap: 10px;
-    // margin: 10px;
-    margin: auto;
-    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px 50px;
+    @media (max-width: 767px) {
+      padding: 0;
+    }
   }
   .content {
     display: grid;
@@ -172,9 +174,11 @@ export default {
       display: flex;
       align-items: center;
       padding: 10px 50px;
+      @media (max-width: 767px) {
+        padding: 0;
+      }
       border-bottom: 1px solid var(--color-background-2);
       .checklist-item-text {
-        margin-left: 10px;
         &.complete {
           text-decoration: line-through;
           color: var(--color-foreground-4);

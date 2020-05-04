@@ -30,6 +30,11 @@ export function authenticate({ to, from, next, nextVue }: any) {
             auth: { ...sessionResponse.data.data, isAuth: true },
           });
           next();
+        })
+        .catch(error => {
+          if (error.response.status === 401 || error.response.status === 404) {
+            redirectToLogin(to.params.space);
+          }
         });
     } else {
       redirectToLogin(to.params.space);

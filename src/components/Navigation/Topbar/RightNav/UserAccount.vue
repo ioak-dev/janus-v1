@@ -167,7 +167,7 @@ export default {
       this.removeAuth(this.$cookies);
     },
     oaSignin(type) {
-      window.location.href = `${process.env.VUE_APP_ONEAUTH_URL}/#/${this.getProfile?.space}/login?type=${type}&appId=${process.env.VUE_APP_ONEAUTH_APP_ID}`;
+      window.location.href = `${process.env.VUE_APP_ONEAUTH_URL}/#/space/${this.getProfile?.space}/login?type=${type}&appId=${process.env.VUE_APP_ONEAUTH_APP_ID}`;
     },
     toggleProfileDialog() {
       this.profileDialogOpen = !this.profileDialogOpen;

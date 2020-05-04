@@ -23,9 +23,29 @@ const getters = {
   },
   getTasksByStageSorted: (state: any, rootState: any) => (
     stageId: string,
-    sortCriteria: any
+    sortCriteria: any,
+    searchCriteria: any
   ) => {
-    const unorderedTasksList = rootState.getTasksByStage(stageId);
+    const unorderedTasksList = rootState
+      .getTasksByStage(stageId)
+      .filter((item: any) => {
+        if (searchCriteria?.text) {
+          if (
+            (searchCriteria.field &&
+              searchCriteria.text === item[searchCriteria.field]) ||
+            item.title
+              ?.toLowerCase()
+              .includes(searchCriteria.text.toLowerCase()) ||
+            item.taskId
+              ?.toLowerCase()
+              .includes(searchCriteria.text.toLowerCase())
+          ) {
+            return true;
+          }
+          return false;
+        }
+        return true;
+      });
     if (isEmptyOrSpaces(sortCriteria.field)) {
       return unorderedTasksList;
     } else {
@@ -42,8 +62,8 @@ const getters = {
             ? bUser.firstName?.toLowerCase() + bUser.lastName?.toLowerCase()
             : '';
         } else {
-          aLower = a[sortCriteria.field].toLowerCase();
-          bLower = b[sortCriteria.field].toLowerCase();
+          aLower = a[sortCriteria.field]?.toLowerCase();
+          bLower = b[sortCriteria.field]?.toLowerCase();
         }
         if (aLower > bLower) {
           return sortCriteria.ascending ? 1 : -1;

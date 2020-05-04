@@ -28,6 +28,11 @@
         Jan 31
       </div>
     </div>
+    <div class="row-four" v-if="epic">
+      <div>
+        <EpicBadge v-bind:epic="epic" />
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -37,6 +42,7 @@ import TaskPriorityBadge from '../Task/TaskPriorityBadge.vue';
 import TaskStatusBadge from '../Task/TaskStatusBadge.vue';
 import TaskChildCountBadge from '../Task/TaskChildCountBadge.vue';
 import TaskAttachmentCountBadge from '../Task/TaskAttachmentCountBadge.vue';
+import EpicBadge from '../Task/EpicBadge.vue';
 import { mapGetters } from 'vuex';
 export default {
   name: 'CardPreview',
@@ -48,11 +54,15 @@ export default {
     TaskStatusBadge,
     TaskChildCountBadge,
     TaskAttachmentCountBadge,
+    EpicBadge,
   },
   computed: {
-    ...mapGetters(['getUserById', 'getSubtasksByTaskId']),
+    ...mapGetters(['getUserById', 'getSubtasksByTaskId', 'getTaskById']),
     assignedToUser: function() {
       return this.getUserById(this.task.assignedTo);
+    },
+    epic: function() {
+      return this.getTaskById(this.task.epic);
     },
   },
 };
@@ -109,6 +119,11 @@ export default {
         align-items: center;
       }
     }
+  }
+  .row-four {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
   //   .top-row {
   //     display: grid;

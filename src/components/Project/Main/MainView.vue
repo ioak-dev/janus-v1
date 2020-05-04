@@ -1,22 +1,25 @@
 <template>
   <div class="planning" v-bind:class="styleClass">
     <!-- <img v-bind:src="getProject.image" />{{ getProject.image }} -->
-    <div class="toolbar-container desktop-only" v-bind:class="styleClass">
-      <Toolbar @viewTypeChange="switchView" />
+    <div class="left">
+      <div class="toolbar-container desktop-only" v-bind:class="styleClass">
+        <Toolbar @viewTypeChange="switchView" />
+      </div>
+      <div class="planning-content">
+        <ListView v-if="view === 'list'" />
+        <BoardView v-if="view === 'board'" />
+        <SprintView v-if="view === 'sprint'" />
+        <TaskView v-if="view === 'task'" v-bind:taskId="selectedRecentTask" />
+      </div>
     </div>
-    <div class="planning-content">
-      <ListView v-if="view === 'list'" />
-      <BoardView v-if="view === 'board'" />
-      <EpicView v-if="view === 'epic'" />
-      <SprintView v-if="view === 'sprint'" />
-      <TaskView v-if="view === 'task'" v-bind:taskId="selectedRecentTask" />
+    <div class="right">
+      <Toolbar />
     </div>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Toolbar from './Toolbar.vue';
-import EpicView from './EpicView.vue';
 import SprintView from './SprintView.vue';
 import BoardView from '../Board/BoardView.vue';
 import ListView from '../List/ListView.vue';
@@ -27,17 +30,12 @@ export default {
     Toolbar,
     ListView,
     BoardView,
-    EpicView,
     SprintView,
     TaskView,
   },
   data: function() {
     return {
-      view: 'epic',
-      views: [
-        { key: 'epic', value: 'Epic' },
-        { key: 'sprint', value: 'Sprint' },
-      ],
+      view: '',
       selectedRecentTask: '',
     };
   },

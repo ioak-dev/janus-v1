@@ -4,14 +4,14 @@
       <OakText
         id="group"
         v-bind:data="data.group"
-        placeholder="Create new group"
+        label="Create new group"
         @change="handleChange"
       /><OakButton
         theme="primary"
         variant="animate in"
         v-if="data.group"
         @click="saveGroup"
-        label="Save"
+        label="Create"
       />
     </div>
     <div
@@ -71,13 +71,13 @@ export default {
   display: grid;
   .create-checklistitem,
   .create-checklistgroup {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    column-gap: 10px;
+    display: flex;
     margin: 10px;
+    align-items: center;
+    justify-content: flex-start;
   }
   .checklist-group {
-    margin: 10px;
+    margin-top: 10px;
     .hr {
       height: 1px;
       width: 60%;

@@ -24,13 +24,6 @@
         </router-link>
         <router-link
           class="nav-item"
-          v-bind:key="`${getProject._id}_epic`"
-          v-bind:to="`/${getProfile.space}/${getProject._id}/main?view=epic`"
-        >
-          Epic
-        </router-link>
-        <router-link
-          class="nav-item"
           v-bind:key="`${getProject._id}_sprint`"
           v-bind:to="`/${getProfile.space}/${getProject._id}/main?view=sprint`"
         >
@@ -49,21 +42,24 @@
               {{ $route.query.taskid || 'Recent' }}
             </div>
             <div class="recent-tasks" v-else>
-              Recent Tasks
+              Recent
             </div>
           </div>
         </OakPopoverMenu>
       </template>
     </div>
-    <div>Right</div>
+    <div>
+      <TaskFilter v-if="['board', 'list'].includes(page)" />
+    </div>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
+import TaskFilter from './TaskFilter.vue';
 export default {
   name: 'Toolbar',
-  components: { OakPopoverMenu },
+  components: { OakPopoverMenu, TaskFilter },
   computed: {
     ...mapGetters([
       'getProfile',
@@ -145,7 +141,7 @@ export default {
   .left {
     display: grid;
     grid-auto-flow: column;
-    column-gap: 20px;
+    column-gap: 10px;
     a {
       text-decoration: none;
       color: white;
@@ -171,6 +167,9 @@ export default {
         background-color: var(--color-primary-1);
       }
     }
+  }
+
+  .right {
   }
 }
 </style>
