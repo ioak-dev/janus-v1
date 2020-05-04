@@ -40,6 +40,13 @@ describe('ListItem.vue', () => {
           email: 'test@test.com',
         };
       },
+      getTaskById: (state: any) => (id: string) => {
+        return {
+          _id: id,
+          taskId: 'test-1',
+          title: 'test title',
+        };
+      },
     };
     actions = {
       removeAuth: () => jest.fn(),
