@@ -50,7 +50,7 @@ export default {
   props: {
     stage: Object,
     sortCriteria: Object,
-    searchCriteria: String,
+    searchCriteria: Object,
   },
   data: function() {
     return {
