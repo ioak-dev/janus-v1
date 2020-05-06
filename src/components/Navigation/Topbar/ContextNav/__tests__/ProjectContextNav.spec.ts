@@ -38,8 +38,15 @@ describe('ProjectContextNav.vue', () => {
       getTaskToView: () => {
         return null;
       },
-      getRolesByProjectId: () => {
-        return null;
+      getRolesByProjectId: (state: any) => (id: string) => {
+        return [
+          {
+            _id: 1,
+            type: 'ProjectAdministrator',
+            userId: '2',
+            domainId: '1',
+          },
+        ];
       },
     };
     actions = {
