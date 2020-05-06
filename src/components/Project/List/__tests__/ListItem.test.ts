@@ -16,7 +16,7 @@ const task = {
   title: 'test title',
   description: 'test description',
   priority: null,
-  assignedTo: 1,
+  assignedTo: [1],
   parentTaskId: null,
   taskId: 'test-1',
 };
