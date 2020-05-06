@@ -38,6 +38,9 @@ describe('ProjectContextNav.vue', () => {
       getTaskToView: () => {
         return null;
       },
+      getRolesByProjectId: () => {
+        return null;
+      },
     };
     actions = {
       removeAuth: () => jest.fn(),
