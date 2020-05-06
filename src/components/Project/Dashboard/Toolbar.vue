@@ -11,21 +11,27 @@
         <router-link
           class="nav-item"
           v-bind:key="`${getProject._id}_board`"
-          v-bind:to="`/${getProfile.space}/${getProject._id}/main?view=board`"
+          v-bind:to="
+            `/${getProfile.space}/${getProject._id}/dashboard?view=board`
+          "
         >
           Board
         </router-link>
         <router-link
           class="nav-item"
           v-bind:key="`${getProject._id}_list`"
-          v-bind:to="`/${getProfile.space}/${getProject._id}/main?view=list`"
+          v-bind:to="
+            `/${getProfile.space}/${getProject._id}/dashboard?view=list`
+          "
         >
           List
         </router-link>
         <router-link
           class="nav-item"
           v-bind:key="`${getProject._id}_sprint`"
-          v-bind:to="`/${getProfile.space}/${getProject._id}/main?view=sprint`"
+          v-bind:to="
+            `/${getProfile.space}/${getProject._id}/dashboard?view=sprint`
+          "
         >
           Sprint
         </router-link>
@@ -118,7 +124,7 @@ export default {
     switchToTask(taskid) {
       this.$emit('viewTypeChange', 'task', taskid);
       this.$router.push({
-        path: `/${this.getProfile.space}/${this.getProject._id}/main`,
+        path: `/${this.getProfile.space}/${this.getProject._id}/dashboard`,
         query: { view: 'task', taskid },
       });
     },

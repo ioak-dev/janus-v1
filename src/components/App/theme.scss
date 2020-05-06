@@ -303,4 +303,12 @@
   h1 {
     font-size: var(--metric-typography-12) !important;
   }
+
+  .action-section {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+  }
 }

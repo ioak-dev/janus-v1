@@ -17,22 +17,22 @@
       label="New Project"
     >
       <div slot="modal-body">
-        <UpdateProject v-bind:project="projectStub" />
+        <UpdateProject v-bind:project="projectStub" @success="toggleProject" />
       </div>
     </OakModal>
     <OakModal @close="toggleStage" v-bind:visible="newStage" label="New Stage">
       <div slot="modal-body">
-        <UpdateStage v-bind:stage="stageStub" />
+        <UpdateStage v-bind:stage="stageStub" @success="toggleStage" />
       </div>
     </OakModal>
     <OakModal @close="toggleTeam" v-bind:visible="newTeam" label="New Team">
       <div slot="modal-body">
-        <UpdateTeam v-bind:team="teamStub" />
+        <UpdateTeam v-bind:team="teamStub" @success="toggleTeam" />
       </div>
     </OakModal>
     <OakModal @close="toggleTask" v-bind:visible="newTask" label="New Task">
       <div slot="modal-body">
-        <UpdateTask v-bind:task="taskStub" />
+        <UpdateTask v-bind:task="taskStub" @success="toggleTask" />
       </div>
     </OakModal>
   </div>
@@ -64,11 +64,11 @@ const projectStub = {
     title: '',
     description: '',
     priority: '',
-    assignedTo: null,
+    assignedTo: [],
     parentTaskId: null,
     projectId: '',
   };
-
+import { mapGetters } from 'vuex';
 export default {
   name: 'CreateNew',
   components: {
@@ -113,13 +113,20 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapGetters(['getProject']),
+  },
   methods: {
     toggleProject: function() {
-      this.projectStub = { ...this.projectStub, projectStub };
+      this.projectStub = { ...this.projectStub, ...projectStub };
       this.newProject = !this.newProject;
     },
     toggleTask: function() {
-      this.taskStub = { ...this.taskStub, taskStub };
+      this.taskStub = {
+        ...taskStub,
+        assignedTo: [],
+        projectId: this.getProject?._id,
+      };
       this.newTask = !this.newTask;
     },
     toggleStage: function() {

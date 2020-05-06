@@ -26,3 +26,58 @@ export function newMessageId() {
 export function newId() {
   return Math.random();
 }
+
+export function httpHandleRequest(
+  messageId: any,
+  action: string,
+  reference: string
+) {
+  sendMessage('notification', true, {
+    id: messageId,
+    type: 'running',
+    message: `${action} ${reference ? `(${reference})` : ''} - In progress`,
+  });
+}
+
+export function httpHandleResponse(
+  messageId: any,
+  response: any,
+  action: string,
+  reference: string
+) {
+  if (response.status === 200) {
+    sendMessage('notification', true, {
+      id: messageId,
+      type: 'success',
+      message: `${action} ${reference ? `(${reference})` : ''} - Success`,
+      duration: 3000,
+    });
+    return true;
+  } else {
+    sendMessage('notification', true, {
+      id: messageId,
+      type: 'failure',
+      message: `${action} ${
+        reference ? `(${reference})` : ''
+      } - Failed with error ${response.status}`,
+      duration: 3000,
+    });
+    return false;
+  }
+}
+
+export function httpHandleError(
+  messageId: any,
+  error: any,
+  action: string,
+  reference: string
+) {
+  sendMessage('notification', true, {
+    id: messageId,
+    type: 'failure',
+    message: `${action} ${
+      reference ? `(${reference})` : ''
+    } - Failed with ${error}`,
+  });
+  return false;
+}

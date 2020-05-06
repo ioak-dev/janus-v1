@@ -1,4 +1,10 @@
 import axios from 'axios';
+import {
+  newMessageId,
+  httpHandleRequest,
+  httpHandleResponse,
+  httpHandleError,
+} from '@/events/MessageService';
 
 const state = {
   projects: [],
@@ -56,17 +62,37 @@ const actions = {
     }
   },
   async saveProject({ commit, dispatch, rootState }: any, payload: any) {
-    const response = await axios.put(
-      `${baseUrl}/project/${rootState.profile.space}/`,
-      payload,
-      {
-        headers: {
-          Authorization: `${rootState.profile.auth.token}`,
-        },
+    const action = 'Save Project';
+    const messageId = newMessageId();
+    httpHandleRequest(messageId, action, payload.name.substring(0, 10));
+    try {
+      const response = await axios.put(
+        `${baseUrl}/project/${rootState.profile.space}/`,
+        payload,
+        {
+          headers: {
+            Authorization: `${rootState.profile.auth.token}`,
+          },
+        }
+      );
+      const outcome = httpHandleResponse(
+        messageId,
+        response,
+        action,
+        payload.name.substring(0, 10)
+      );
+      if (outcome) {
+        dispatch('fetchProjects');
       }
-    );
-    dispatch('fetchProjects');
-    // commit('UPDATE_PROJECTS', response.data.data);
+      return outcome;
+    } catch (error) {
+      return httpHandleError(
+        messageId,
+        error,
+        action,
+        payload.name.substring(0, 10)
+      );
+    }
   },
 };
 

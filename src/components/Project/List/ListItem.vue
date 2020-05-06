@@ -22,9 +22,9 @@
       <div class="one-liner">{{ task.title }}</div>
       <div>
         <Avatar
-          v-if="assignedToUser"
-          v-bind:user="assignedToUser"
-          showName
+          v-for="member in members"
+          v-bind:user="member"
+          v-bind:key="member._id"
           size="small"
         />
       </div>
@@ -39,7 +39,7 @@
       label="Quick Edit - Task"
     >
       <div slot="modal-body">
-        <UpdateTask v-bind:task="task" />
+        <UpdateTask v-bind:task="task" @success="toggleTask" />
       </div>
     </OakModal>
   </div>
@@ -76,8 +76,12 @@ export default {
   },
   computed: {
     ...mapGetters(['getUserById', 'getTaskById']),
-    assignedToUser: function() {
-      return this.getUserById(this.task.assignedTo);
+    members: function() {
+      const memberList = [];
+      this.task.assignedTo?.forEach(item =>
+        memberList.push(this.getUserById(item))
+      );
+      return memberList;
     },
   },
   methods: {

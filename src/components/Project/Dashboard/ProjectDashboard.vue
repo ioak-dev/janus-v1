@@ -25,7 +25,7 @@ import BoardView from '../Board/BoardView.vue';
 import ListView from '../List/ListView.vue';
 import TaskView from '../Task/TaskView.vue';
 export default {
-  name: 'PlanningView',
+  name: 'ProjectDashboard',
   components: {
     Toolbar,
     ListView,

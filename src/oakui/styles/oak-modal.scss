@@ -34,6 +34,10 @@
       transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 
       margin: auto;
+      border-top: 2px solid var(--color-transparent);
+      &.error {
+        border-top: 2px solid var(--color-failure);
+      }
 
       .container {
         min-width: 50vw;

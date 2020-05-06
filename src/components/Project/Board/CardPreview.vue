@@ -8,7 +8,16 @@
         </div>
       </div>
       <div class="right">
-        <Avatar v-if="assignedToUser" v-bind:user="assignedToUser" />
+        <template v-for="(member, index) in members">
+          <Avatar
+            v-if="index < 2"
+            v-bind:user="member"
+            v-bind:key="member._id"
+          />
+        </template>
+        <div v-if="members.length > 2" class="members-more">
+          {{ `+${members.length - 2}` }}
+        </div>
       </div>
     </div>
     <div class="row-two">
@@ -64,6 +73,13 @@ export default {
     epic: function() {
       return this.getTaskById(this.task.epic);
     },
+    members: function() {
+      const memberList = [];
+      this.task.assignedTo?.forEach(item =>
+        memberList.push(this.getUserById(item))
+      );
+      return memberList;
+    },
   },
 };
 </script>
@@ -76,8 +92,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .left,
-    .right {
+    .left {
       display: grid;
       grid-auto-flow: column;
       column-gap: 6px;
@@ -87,13 +102,21 @@ export default {
         align-items: center;
       }
     }
-    .left {
-    }
     .right {
-      .task-status {
-        &.complete {
-          color: var(--color-success);
-        }
+      display: grid;
+      grid-auto-flow: column;
+      column-gap: 4px;
+      overflow: hidden;
+      .members-more {
+        border: 1px solid var(--color-foreground-1);
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8em;
       }
     }
   }

@@ -2,38 +2,34 @@
   <div class="nav-menu">
     <router-link
       class="nav-item"
-      v-bind:key="`${getProject._id}_main`"
-      v-bind:to="`/${getProfile.space}/${getProject._id}/main?view=board`"
+      v-bind:key="`${getProject._id}_dashboard`"
+      v-bind:to="`/${getProfile.space}/${getProject._id}/dashboard?view=board`"
       v-bind:class="
-        $route.path.startsWith(`/${getProfile.space}/${getProject._id}/main`)
+        $route.path.startsWith(
+          `/${getProfile.space}/${getProject._id}/dashboard`
+        )
           ? 'main-route-active'
           : ''
       "
     >
-      Project
+      Dashboard
     </router-link>
     <router-link
       class="nav-item"
-      v-bind:key="`${getProject._id}_team`"
-      v-bind:to="`/${getProfile.space}/${getProject._id}/team`"
-    >
-      Team
-    </router-link>
-    <router-link
-      class="nav-item"
-      v-bind:key="`${getProject._id}_administrators`"
-      v-bind:to="`/${getProfile.space}/${getProject._id}/administrators`"
       v-if="isProjectAdministrator"
+      v-bind:key="`${getProject._id}_administration`"
+      v-bind:to="
+        `/${getProfile.space}/${getProject._id}/administration?view=team`
+      "
+      v-bind:class="
+        $route.path.startsWith(
+          `/${getProfile.space}/${getProject._id}/administration`
+        )
+          ? 'main-route-active'
+          : ''
+      "
     >
-      Administrators
-    </router-link>
-    <router-link
-      class="nav-item"
-      v-bind:key="`${getProject._id}_changebackground`"
-      v-bind:to="`/${getProfile.space}/${getProject._id}/changebackground`"
-      v-if="isProjectAdministrator"
-    >
-      Change Background
+      Administration
     </router-link>
   </div>
 </template>

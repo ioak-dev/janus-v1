@@ -42,7 +42,7 @@
       label="Edit Stage"
     >
       <div slot="modal-body">
-        <UpdateStage v-bind:stage="stage" />
+        <UpdateStage v-bind:stage="stage" @success="toggleStage" />
       </div>
     </OakModal>
   </div>

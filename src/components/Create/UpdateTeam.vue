@@ -98,8 +98,13 @@ export default {
     handleChange: function() {
       this.data[event.target.name] = event.target.value;
     },
-    save: function() {
-      this.saveTeam(this.data);
+    save: async function() {
+      const outcome = await this.saveTeam(this.data);
+      if (outcome) {
+        this.$emit('success');
+      } else {
+        this.$emit('failure');
+      }
     },
     handlePeopleSearch: function() {
       this.searchText = event.target.value;

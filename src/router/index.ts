@@ -5,13 +5,11 @@ import Landing from '@/components/Landing/Landing.vue';
 import TeamProjects from '@/components/Team/TeamProjects.vue';
 import TeamMembers from '@/components/Team/TeamMembers.vue';
 import TaskView from '@/components/Project/Task/TaskView.vue';
-import MainView from '@/components/Project/Main/MainView.vue';
-import TeamView from '@/components/Project/Team/TeamView.vue';
-import ProjectAdministrators from '@/components/ProjectAdministrators/ProjectAdministrators.vue';
+import ProjectDashboard from '@/components/Project/Dashboard/ProjectDashboard.vue';
+import ProjectAdministration from '@/components/Project/Administration/ProjectAdministration.vue';
 import TeamAdministrators from '@/components/TeamAdministrators/TeamAdministrators.vue';
 import Login from '@/components/Auth/Login.vue';
 import Unauthorized from '@/components/Unauthorized/Unauthorized.vue';
-import ProjectChangeBackground from '@/components/Project/Background/ProjectChangeBackground.vue';
 import TeamChangeBackground from '@/components/Team/Background/TeamChangeBackground.vue';
 
 import {
@@ -52,36 +50,18 @@ const routes = [
     name: 'Login',
   },
   {
-    path: '/:space/:projectId/main',
-    component: MainView,
-    name: 'MainView',
+    path: '/:space/:projectId/dashboard',
+    component: ProjectDashboard,
+    name: 'ProjectDashboard',
     meta: {
       context: 'Project',
       middleware: [readSpace, readProject, authenticate],
     },
   },
   {
-    path: '/:space/:projectId/team',
-    component: TeamView,
-    name: 'TeamView',
-    meta: {
-      context: 'Project',
-      middleware: [readSpace, readProject, authenticate],
-    },
-  },
-  {
-    path: '/:space/:projectId/administrators',
-    component: ProjectAdministrators,
-    name: 'ProjectAdministrators',
-    meta: {
-      context: 'Project',
-      middleware: [readSpace, readProject, authenticate, projectAdministrator],
-    },
-  },
-  {
-    path: '/:space/:projectId/changebackground',
-    component: ProjectChangeBackground,
-    name: 'ProjectChangeBackground',
+    path: '/:space/:projectId/administration',
+    component: ProjectAdministration,
+    name: 'ProjectAdministration',
     meta: {
       context: 'Project',
       middleware: [readSpace, readProject, authenticate, projectAdministrator],

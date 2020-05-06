@@ -1,6 +1,7 @@
 <template>
   <div class="member">
     <div class="name">
+      <OakIcon mat="supervisor_account" v-if="isTeamAdministrator" />
       {{ member ? `${member.firstName} ${member.lastName}` : '' }}
     </div>
     <div class="action" v-if="confirmPrompt">
@@ -29,9 +30,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getUserById']),
+    ...mapGetters(['getUserById', 'getRolesByTeamId']),
     member: function() {
       return this.getUserById(this.teamMember.userId);
+    },
+    isTeamAdministrator: function() {
+      return this.getRolesByTeamId(this.team._id).find(
+        item => item.userId === this.teamMember.userId
+      );
     },
   },
   methods: {
@@ -52,6 +58,10 @@ export default {
   border-bottom: 1px solid var(--color-background-2);
   display: grid;
   grid-template-columns: 1fr auto;
+  .name {
+    display: flex;
+    align-items: center;
+  }
   .action {
     display: grid;
     grid-auto-flow: column;

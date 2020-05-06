@@ -14,7 +14,7 @@
         v-for="item in objects"
         :key="item.key"
         :value="item.key"
-        :selected="item === data"
+        :selected="item.key === data"
       >
         {{ item.value }}
       </option>
