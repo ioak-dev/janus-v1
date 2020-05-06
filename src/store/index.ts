@@ -11,6 +11,7 @@ import user from '../store/modules/user';
 import image from '../store/modules/image';
 import taskComment from '../store/modules/taskComment';
 import log from '../store/modules/log';
+import role from '../store/modules/role';
 import taskChecklistitem from '../store/modules/taskChecklistitem';
 import taskAttachment from '../store/modules/taskAttachment';
 
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     task,
     project,
     team,
+    role,
     projectTeam,
     teamMember,
     stage,

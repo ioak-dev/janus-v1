@@ -14,10 +14,10 @@ const getters = {
   getTeamsMembersByUserId: (state: any) => (userId: string) => {
     return state.teamMembers.filter((item: any) => item.userId === userId);
   },
-  getTeamsMembersByTeamId: (state: any) => (teamId: string) => {
+  getTeamMembersByTeamId: (state: any) => (teamId: string) => {
     return state.teamMembers.filter((item: any) => item.teamId === teamId);
   },
-  getTeamsMembersByTeamIdList: (state: any) => (teamIdList: any) => {
+  getTeamMembersByTeamIdList: (state: any) => (teamIdList: any) => {
     return state.teamMembers.filter((item: any) =>
       teamIdList.includes(item.teamId)
     );

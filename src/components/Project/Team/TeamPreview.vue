@@ -70,14 +70,14 @@ export default {
       'getProject',
       'getUserById',
       'findTeamById',
-      'getTeamsMembersByTeamId',
+      'getTeamMembersByTeamId',
     ]),
     team: function() {
       return this.findTeamById(this.projectTeam.teamId);
     },
     people: function() {
       const people = [];
-      this.getTeamsMembersByTeamId(this.team?._id)?.forEach(item => {
+      this.getTeamMembersByTeamId(this.team?._id)?.forEach(item => {
         const userItem = this.getUserById(item.userId);
         people.push(userItem);
       });

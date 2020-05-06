@@ -41,7 +41,7 @@ export default {
   computed: {
     ...mapGetters([
       'getUserById',
-      'getTeamsMembersByTeamIdList',
+      'getTeamMembersByTeamIdList',
       'getProjectTeamsByProjectId',
     ]),
     user: function() {
@@ -53,7 +53,7 @@ export default {
       );
     },
     peopleList: function() {
-      const team = this.getTeamsMembersByTeamIdList(this.teams);
+      const team = this.getTeamMembersByTeamIdList(this.teams);
       const people = [];
       team?.forEach(item => {
         const userItem = this.getUserById(item.userId);

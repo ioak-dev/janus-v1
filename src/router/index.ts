@@ -7,7 +7,10 @@ import TeamMembers from '@/components/Team/TeamMembers.vue';
 import TaskView from '@/components/Project/Task/TaskView.vue';
 import MainView from '@/components/Project/Main/MainView.vue';
 import TeamView from '@/components/Project/Team/TeamView.vue';
+import ProjectAdministrators from '@/components/ProjectAdministrators/ProjectAdministrators.vue';
+import TeamAdministrators from '@/components/TeamAdministrators/TeamAdministrators.vue';
 import Login from '@/components/Auth/Login.vue';
+import Unauthorized from '@/components/Unauthorized/Unauthorized.vue';
 import ProjectChangeBackground from '@/components/Project/Background/ProjectChangeBackground.vue';
 import TeamChangeBackground from '@/components/Team/Background/TeamChangeBackground.vue';
 
@@ -18,11 +21,19 @@ import {
   readProject,
   readTeam,
   readTask,
+  projectAdministrator,
+  teamAdministrator,
 } from './middleware';
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: '/:space/unauthorized',
+    component: Unauthorized,
+    name: 'Unauthorized',
+    meta: { middleware: [readSpace, authenticate] },
+  },
   {
     path: '/:space/home',
     component: Home,
@@ -59,12 +70,21 @@ const routes = [
     },
   },
   {
+    path: '/:space/:projectId/administrators',
+    component: ProjectAdministrators,
+    name: 'ProjectAdministrators',
+    meta: {
+      context: 'Project',
+      middleware: [readSpace, readProject, authenticate, projectAdministrator],
+    },
+  },
+  {
     path: '/:space/:projectId/changebackground',
     component: ProjectChangeBackground,
     name: 'ProjectChangeBackground',
     meta: {
       context: 'Project',
-      middleware: [readSpace, readProject, authenticate],
+      middleware: [readSpace, readProject, authenticate, projectAdministrator],
     },
   },
   {
@@ -95,12 +115,21 @@ const routes = [
     },
   },
   {
+    path: '/:space/:teamId/team/administrators',
+    component: TeamAdministrators,
+    name: 'TeamAdministrators',
+    meta: {
+      context: 'Team',
+      middleware: [readSpace, readTeam, authenticate, teamAdministrator],
+    },
+  },
+  {
     path: '/:space/:teamId/team/changebackground',
     component: TeamChangeBackground,
     name: 'TeamChangeBackground',
     meta: {
       context: 'Team',
-      middleware: [readSpace, readTeam, authenticate],
+      middleware: [readSpace, readTeam, authenticate, teamAdministrator],
     },
   },
   {

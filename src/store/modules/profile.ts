@@ -24,6 +24,7 @@ const actions = {
     dispatch('fetchProjectTeams');
     dispatch('fetchTeamMembers');
     dispatch('fetchUsers');
+    dispatch('fetchRoles');
     dispatch('fetchTeams');
   },
   removeAuth({ commit }: any, cookies: any) {

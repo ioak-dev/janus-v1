@@ -1,13 +1,15 @@
 <template>
   <div class="project">
     <div class="">{{ project.name }}</div>
-    <div class="">10 open tasks</div>
+    <div class="">{{ getTasks.length }} open tasks</div>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'Project',
   props: { project: Object },
+  computed: { ...mapGetters(['getTasks']) },
 };
 </script>
 <style lang="scss" scoped>

@@ -10,7 +10,7 @@
           : ''
       "
     >
-      Task
+      Project
     </router-link>
     <router-link
       class="nav-item"
@@ -21,8 +21,17 @@
     </router-link>
     <router-link
       class="nav-item"
+      v-bind:key="`${getProject._id}_administrators`"
+      v-bind:to="`/${getProfile.space}/${getProject._id}/administrators`"
+      v-if="isProjectAdministrator"
+    >
+      Administrators
+    </router-link>
+    <router-link
+      class="nav-item"
       v-bind:key="`${getProject._id}_changebackground`"
       v-bind:to="`/${getProfile.space}/${getProject._id}/changebackground`"
+      v-if="isProjectAdministrator"
     >
       Change Background
     </router-link>
@@ -34,7 +43,17 @@ import { receiveMessage } from '@/events/MessageService';
 export default {
   name: 'ProjectContextNav',
   computed: {
-    ...mapGetters(['getProfile', 'getProject', 'getTaskToView']),
+    ...mapGetters([
+      'getProfile',
+      'getProject',
+      'getTaskToView',
+      'getRolesByProjectId',
+    ]),
+    isProjectAdministrator: function() {
+      return this.getRolesByProjectId(this.getProject._id).find(
+        item => item.userId === this.getProfile.auth._id
+      );
+    },
   },
   mounted() {
     this.eventBus = receiveMessage().subscribe(message => {

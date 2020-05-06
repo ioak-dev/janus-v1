@@ -21,7 +21,7 @@ import { mapGetters, mapActions } from 'vuex';
 import OakIcon from '@/oakui/OakIcon.vue';
 export default {
   name: 'Member',
-  props: { teamMember: Object, team: Object },
+  props: { role: Object, team: Object },
   components: { OakIcon },
   data: function() {
     return {
@@ -31,13 +31,13 @@ export default {
   computed: {
     ...mapGetters(['getUserById']),
     member: function() {
-      return this.getUserById(this.teamMember.userId);
+      return this.getUserById(this.role.userId);
     },
   },
   methods: {
-    ...mapActions(['deleteTeamMember']),
+    ...mapActions(['deleteRole']),
     remove: function() {
-      this.deleteTeamMember(this.teamMember._id);
+      this.deleteRole(this.role._id);
       this.toggleConfirmPrompt();
     },
     toggleConfirmPrompt: function() {
