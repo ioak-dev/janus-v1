@@ -33,10 +33,11 @@
   </div>
 </template>
 <script>
-import OakText from '@/oakui/OakText.vue';
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
 import OakIcon from '@/oakui/OakIcon.vue';
-import { sendMessage } from '../../../events/MessageService';
+import { sendMessage, receiveMessage } from '../../../events/MessageService';
+import { sessionGet, sessionSet } from '../../../events/SessionService';
+import { mapGetters } from 'vuex';
 export default {
   name: 'TaskFilter',
   data: function() {
@@ -101,6 +102,40 @@ export default {
     OakIcon,
     OakPopoverMenu,
   },
+  mounted() {
+    this.loadFiltersFromSession();
+    receiveMessage().subscribe(message => {
+      if (message.name === 'request-task-filter-change-search') {
+        this.searchCriteria = {
+          field: message.data.field,
+          text: message.data.text,
+        };
+      } else if (message.name === 'request-task-filter-change-sort') {
+        this.sortCriteria = {
+          field: message.data.field,
+          ascending: message.data.ascending,
+        };
+      }
+    });
+  },
+  watch: {
+    getProject: function() {
+      this.loadFiltersFromSession();
+    },
+    sortCriteria: function() {
+      sessionSet(this.getProject._id, 'taskSortCriteria', this.sortCriteria);
+    },
+    searchCriteria: function() {
+      sessionSet(
+        this.getProject._id,
+        'taskSearchCriteria',
+        this.searchCriteria
+      );
+    },
+  },
+  computed: {
+    ...mapGetters(['getProject']),
+  },
   methods: {
     sort: function(key) {
       if (this.sortCriteria.field === key) {
@@ -119,6 +154,33 @@ export default {
         text,
       };
       sendMessage('task-filter-change-search', true, this.searchCriteria);
+    },
+    loadFiltersFromSession: function() {
+      console.log('****');
+      console.log(this.getProject?._id);
+      if (this.getProject) {
+        const searchCriteriaFromSession = sessionGet(
+          this.getProject._id,
+          'taskSearchCriteria'
+        );
+        console.log(searchCriteriaFromSession);
+        if (searchCriteriaFromSession) {
+          this.searchCriteria = searchCriteriaFromSession;
+          sendMessage(
+            'task-filter-change-search',
+            true,
+            searchCriteriaFromSession
+          );
+        }
+        const sortCriteriaFromSession = sessionGet(
+          this.getProject._id,
+          'taskSortCriteria'
+        );
+        if (sortCriteriaFromSession) {
+          this.sortCriteria = sortCriteriaFromSession;
+          sendMessage('task-filter-change-sort', true, sortCriteriaFromSession);
+        }
+      }
     },
   },
 };

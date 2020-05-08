@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-menu">
+  <div class="nav-menu" v-if="isProjectAdministrator">
     <router-link
       class="nav-item"
       v-bind:key="`${getProject._id}_dashboard`"

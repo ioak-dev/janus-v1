@@ -21,6 +21,7 @@ const actions = {
   addAuth({ commit, dispatch }: any, { auth }: any) {
     commit('UPDATE_PROFILE', { ...state, auth: auth });
     dispatch('fetchProjects');
+    dispatch('fetchStages');
     dispatch('fetchProjectTeams');
     dispatch('fetchTeamMembers');
     dispatch('fetchUsers');

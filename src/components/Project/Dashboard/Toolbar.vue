@@ -1,64 +1,67 @@
 <template>
-  <div class="toolbar">
-    <div class="left">
-      <template v-if="getProject">
-        <!-- <OakSwitch
+  <div>
+    <template v-if="getProject">
+      <div class="toolbar" v-bind:key="getProject._id">
+        <div class="left desktop-only">
+          <!-- <OakSwitch
         theme="primary"
         v-bind:data="mode"
         v-bind:objects="modes"
         @change="event => $emit('change', event.target.value)"
       /> -->
-        <router-link
-          class="nav-item"
-          v-bind:key="`${getProject._id}_board`"
-          v-bind:to="
-            `/${getProfile.space}/${getProject._id}/dashboard?view=board`
-          "
-        >
-          Board
-        </router-link>
-        <router-link
-          class="nav-item"
-          v-bind:key="`${getProject._id}_list`"
-          v-bind:to="
-            `/${getProfile.space}/${getProject._id}/dashboard?view=list`
-          "
-        >
-          List
-        </router-link>
-        <router-link
-          class="nav-item"
-          v-bind:key="`${getProject._id}_sprint`"
-          v-bind:to="
-            `/${getProfile.space}/${getProject._id}/dashboard?view=sprint`
-          "
-        >
-          Sprint
-        </router-link>
-        <OakPopoverMenu
-          v-bind:elements="recentTasks"
-          data="option 1"
-          id="toolbar-recent-task-switch"
-          labelVariant="on"
-          theme="primary"
-          left
-        >
-          <div slot="label">
-            <div class="recent-tasks active" v-if="page === 'task'">
-              {{ $route.query.taskid || 'Recent' }}
+          <router-link
+            class="nav-item"
+            v-bind:key="`${getProject._id}_board`"
+            v-bind:to="
+              `/${getProfile.space}/${getProject._id}/dashboard?view=board`
+            "
+          >
+            Board
+          </router-link>
+          <router-link
+            class="nav-item"
+            v-bind:key="`${getProject._id}_list`"
+            v-bind:to="
+              `/${getProfile.space}/${getProject._id}/dashboard?view=list`
+            "
+          >
+            List
+          </router-link>
+          <router-link
+            class="nav-item"
+            v-bind:key="`${getProject._id}_sprint`"
+            v-bind:to="
+              `/${getProfile.space}/${getProject._id}/dashboard?view=sprint`
+            "
+          >
+            Sprint
+          </router-link>
+          <OakPopoverMenu
+            v-bind:elements="recentTasks"
+            data="option 1"
+            id="toolbar-recent-task-switch"
+            labelVariant="on"
+            theme="primary"
+            left
+          >
+            <div slot="label">
+              <div class="recent-tasks active" v-if="page === 'task'">
+                {{ $route.query.taskid || 'Recent' }}
+              </div>
+              <div class="recent-tasks" v-else>
+                Recent
+              </div>
             </div>
-            <div class="recent-tasks" v-else>
-              Recent
-            </div>
-          </div>
-        </OakPopoverMenu>
-      </template>
-    </div>
-    <div>
-      <TaskFilter v-if="['board', 'list'].includes(page)" />
-    </div>
+          </OakPopoverMenu>
+        </div>
+        <div>
+          <TaskFilter v-if="['board', 'list'].includes(page)" />
+        </div>
+      </div>
+    </template>
   </div>
 </template>
+
 <script>
 import { mapGetters } from 'vuex';
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';

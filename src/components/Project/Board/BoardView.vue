@@ -25,28 +25,8 @@ import { receiveMessage } from '../../../events/MessageService';
 import OakText from '@/oakui/OakText.vue';
 export default {
   name: 'BoardView',
+  props: { searchCriteria: Object, sortCriteria: Object },
   components: { VerticalLane, OakText },
-  mounted() {
-    receiveMessage().subscribe(message => {
-      if (message.name === 'task-filter-change-search') {
-        this.searchCriteria = {
-          field: message.data.field,
-          text: message.data.text,
-        };
-      } else if (message.name === 'task-filter-change-sort') {
-        this.sortCriteria = {
-          field: message.data.field,
-          ascending: message.data.ascending,
-        };
-      }
-    });
-  },
-  data: function() {
-    return {
-      sortCriteria: { field: '', ascending: false },
-      searchCriteria: { field: '', text: '' },
-    };
-  },
   computed: {
     ...mapGetters(['getStagesByProjectId', 'getProject']),
   },

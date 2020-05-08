@@ -6,14 +6,22 @@
         <Toolbar @viewTypeChange="switchView" />
       </div>
       <div class="planning-content">
-        <ListView v-if="view === 'list'" />
-        <BoardView v-if="view === 'board'" />
+        <ListView
+          v-if="view === 'list'"
+          v-bind:searchCriteria="searchCriteria"
+          v-bind:sortCriteria="sortCriteria"
+        />
+        <BoardView
+          v-if="view === 'board'"
+          v-bind:searchCriteria="searchCriteria"
+          v-bind:sortCriteria="sortCriteria"
+        />
         <SprintView v-if="view === 'sprint'" />
         <TaskView v-if="view === 'task'" v-bind:taskId="selectedRecentTask" />
       </div>
-    </div>
-    <div class="right">
-      <Toolbar />
+      <div class="toolbar-container mobile-only" v-bind:class="styleClass">
+        <Toolbar @viewTypeChange="switchView" />
+      </div>
     </div>
   </div>
 </template>
@@ -24,6 +32,8 @@ import SprintView from './SprintView.vue';
 import BoardView from '../Board/BoardView.vue';
 import ListView from '../List/ListView.vue';
 import TaskView from '../Task/TaskView.vue';
+import { receiveMessage, sendMessage } from '../../../events/MessageService';
+import { sessionSet, sessionGet } from '../../../events/SessionService';
 export default {
   name: 'ProjectDashboard',
   components: {
@@ -37,6 +47,14 @@ export default {
     return {
       view: '',
       selectedRecentTask: '',
+      searchCriteria: {
+        field: '',
+        text: '',
+      },
+      sortCriteria: {
+        field: '',
+        ascending: true,
+      },
     };
   },
   computed: {
@@ -63,6 +81,19 @@ export default {
         'planning'
       )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
     }
+    receiveMessage().subscribe(message => {
+      if (message.name === 'task-filter-change-search') {
+        this.searchCriteria = {
+          field: message.data.field,
+          text: message.data.text,
+        };
+      } else if (message.name === 'task-filter-change-sort') {
+        this.sortCriteria = {
+          field: message.data.field,
+          ascending: message.data.ascending,
+        };
+      }
+    });
   },
   methods: {
     ...mapActions(['addTaskToView']),

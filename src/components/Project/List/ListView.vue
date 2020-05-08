@@ -32,12 +32,7 @@
           field="title"
           label="Title"
         />
-        <SortableField
-          @click="sort"
-          v-bind:sortCriteria="sortCriteria"
-          field="assignedTo"
-          label="Assigned To"
-        />
+        <div>Assigned To</div>
         <SortableField
           @click="sort"
           v-bind:sortCriteria="sortCriteria"
@@ -62,36 +57,13 @@ import { mapGetters } from 'vuex';
 import OakText from '@/oakui/OakText.vue';
 import HorizontalLane from './HorizontalLane.vue';
 import SortableField from './SortableField.vue';
-import { receiveMessage } from '../../../events/MessageService';
+import { sendMessage } from '../../../events/MessageService';
 export default {
   name: 'ListView',
   components: { OakText, HorizontalLane, SortableField },
-  data: function() {
-    return {
-      sortCriteria: {
-        field: '',
-        ascending: true,
-      },
-      searchCriteria: { field: '', text: '' },
-    };
-  },
+  props: { searchCriteria: Object, sortCriteria: Object },
   computed: {
     ...mapGetters(['getStagesByProjectId', 'getProject']),
-  },
-  mounted() {
-    receiveMessage().subscribe(message => {
-      if (message.name === 'task-filter-change-search') {
-        this.searchCriteria = {
-          field: message.data.field,
-          text: message.data.text,
-        };
-      } else if (message.name === 'task-filter-change-sort') {
-        this.sortCriteria = {
-          field: message.data.field,
-          ascending: message.data.ascending,
-        };
-      }
-    });
   },
   methods: {
     sort: function(key) {
@@ -103,9 +75,15 @@ export default {
           ascending: true,
         };
       }
+      sendMessage('request-task-filter-change-sort', true, this.sortCriteria);
     },
     handleSearchCriteriaChange: function() {
       this.searchCriteria = { field: '', text: event.target.value };
+      sendMessage(
+        'request-task-filter-change-search',
+        true,
+        this.searchCriteria
+      );
     },
   },
 };
