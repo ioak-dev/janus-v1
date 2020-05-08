@@ -20,14 +20,14 @@
       <div v-if="showDeletePrompt" class="action-section">
         <OakButton
           theme="primary"
-          variant="animate in"
+          variant="appear"
           @click="remove"
           icon="delete"
           label="Confirm Deletion"
         />
         <OakButton
           theme="primary"
-          variant="animate in"
+          variant="appear"
           @click="toggleDeletePrompt"
           icon="close"
           label="Cancel"
@@ -36,14 +36,14 @@
       <div v-else class="action-section">
         <OakButton
           theme="primary"
-          variant="animate in"
+          variant="appear"
           @click="toggleDeletePrompt"
           icon="delete"
           label="Delete"
         />
         <OakButton
           theme="primary"
-          variant="animate in"
+          variant="appear"
           @click="save"
           icon="check"
           label="Save"

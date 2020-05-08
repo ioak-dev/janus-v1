@@ -71,7 +71,7 @@
           placeholder="Type to add new item"
         /><OakButton
           theme="primary"
-          variant="animate in"
+          variant="appear"
           @click="save"
           v-if="data.text"
           label="Add"

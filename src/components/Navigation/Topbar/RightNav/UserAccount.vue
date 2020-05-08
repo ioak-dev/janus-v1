@@ -16,14 +16,14 @@
         label="Sign in"
         align="left"
         theme="primary"
-        variant="animate in"
+        variant="appear"
         @click="oaSignin('signin')"
       />
       <OakButton
         label="Sign up"
         align="right"
         theme="primary"
-        variant="animate in"
+        variant="appear"
         @click="oaSignin('signup')"
       />
     </div>
@@ -91,7 +91,7 @@
         <OakButton
           label="Save"
           theme="primary"
-          variant="animate in"
+          variant="appear"
           @click="saveProfile"
         />
       </div>

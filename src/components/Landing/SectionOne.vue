@@ -14,7 +14,7 @@
         <OakButton
           label="Setup your space"
           theme="primary"
-          variant="animate none"
+          variant="regular"
           @click="createSpace"
         />
       </div>

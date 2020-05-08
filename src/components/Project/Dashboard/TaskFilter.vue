@@ -200,7 +200,7 @@ export default {
       background-color: var(--color-background-4);
     }
     &.active {
-      background-color: var(--color-primary-1);
+      background-color: var(--color-secondary-1);
     }
   }
 }

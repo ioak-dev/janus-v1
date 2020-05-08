@@ -1,5 +1,5 @@
 const state = {
-  theme: '',
+  theme: 'theme_light',
   space: '',
   auth: {},
   sidebar: true,

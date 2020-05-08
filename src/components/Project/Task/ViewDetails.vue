@@ -90,7 +90,7 @@
     <div class="action">
       <OakButton
         theme="primary"
-        variant="animate in"
+        variant="appear"
         @click="save"
         label="Save basic details"
       />

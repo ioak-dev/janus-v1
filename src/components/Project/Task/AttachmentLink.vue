@@ -11,7 +11,7 @@
         <OakButton
           label="delete"
           theme="primary"
-          variant="animate in"
+          variant="appear"
           @click="toggleDeletePrompt"
         ></OakButton>
       </div>

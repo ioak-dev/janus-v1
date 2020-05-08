@@ -91,7 +91,7 @@ export default {
     column-gap: 10px;
     a {
       text-decoration: none;
-      color: white;
+      color: var(--color-foreground-1);
     }
     .nav-item {
       height: 30px;

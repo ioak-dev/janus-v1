@@ -16,7 +16,7 @@
         @click="search"
         label="search"
         theme="primary"
-        variant="animate in"
+        variant="appear"
       />
     </form>
     <div class="search-results">

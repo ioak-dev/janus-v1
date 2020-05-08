@@ -16,12 +16,7 @@
       />
     </div>
     <div class="modal-footer">
-      <OakButton
-        theme="primary"
-        variant="animate in"
-        @click="save"
-        label="Save"
-      />
+      <OakButton theme="primary" variant="appear" @click="save" label="Save" />
     </div>
   </div>
 </template>

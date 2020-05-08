@@ -8,7 +8,7 @@
         @change="handleChange"
       /><OakButton
         theme="primary"
-        variant="animate in"
+        variant="appear"
         v-if="data.group"
         @click="saveGroup"
         label="Create"

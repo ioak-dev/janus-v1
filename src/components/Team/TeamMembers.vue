@@ -7,13 +7,13 @@
           label="Save"
           icon="check"
           theme="primary"
-          variant="animate none"
+          variant="regular"
           @click="save"
         />
         <OakButton
           label="Delete Team"
           theme="primary"
-          variant="animate in"
+          variant="appear"
           fa="fas fa-trash"
           @click="toggleDeletePrompt"
         />

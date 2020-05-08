@@ -5,7 +5,7 @@
     </div>
     <OakButton
       theme="primary"
-      variant="animate out"
+      variant="disappear"
       @click="gotoTenantPage"
       label="Visit my space"
     />
