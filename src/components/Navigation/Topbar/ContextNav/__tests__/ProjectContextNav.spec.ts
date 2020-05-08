@@ -27,6 +27,7 @@ describe('ProjectContextNav.vue', () => {
           space: 'teststace',
           auth: {
             isAuth: true,
+            _id: '2',
           },
         };
       },
