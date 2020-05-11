@@ -30,7 +30,7 @@
       label="Create Space"
       @click="submitForm"
       theme="primary"
-      variant="animate in"
+      variant="appear"
     />
   </div>
 </template>

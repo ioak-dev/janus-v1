@@ -1,16 +1,27 @@
 <template>
   <button class="oak-button" :class="style" @click="$emit('click')">
     <div class="button-label-container">
-      <OakIcon v-if="icon" v-bind:mat="icon" size="1.2em" />
-      <OakIcon v-if="mat" v-bind:mat="mat" size="1.2em" />
-      <OakIcon v-if="fa" v-bind:fa="fa" size="1.2em" />
-      <OakIcon v-if="svg" v-bind:svg="svg" size="1.2em" />
+      <i v-if="icon" class="material-icons">{{ icon }}</i>
+      <i v-if="mat" class="material-icons">{{ mat }}</i>
+      <OakIcon
+        v-if="fa"
+        v-bind:fa="fa"
+        size="1.2em"
+        color="var(--btn-text-color)"
+      />
+      <OakIcon
+        v-if="svg"
+        v-bind:svg="svg"
+        size="1.2em"
+        color="var(--btn-text-color)"
+      />
       {{ label }}
     </div>
   </button>
 </template>
 <script>
 import OakIcon from './OakIcon.vue';
+import { mapGetters } from 'vuex';
 export default {
   name: 'OakButton',
   components: { OakIcon },
@@ -27,15 +38,13 @@ export default {
     small: Boolean,
     invert: Boolean,
   },
-  data() {
-    return {
-      style: this.getStyle(),
-    };
-  },
-  methods: {
-    getStyle() {
+  computed: {
+    ...mapGetters(['getProfile']),
+    style() {
       let style = this.theme ? this.theme : '';
-      style += this.variant ? ` ${this.variant}` : '';
+      style += this.getProfile?.theme?.includes('theme_light') ? ' light' : '';
+      console.log(this.getProfile);
+      style += this.variant ? ` ${this.variant}` : ' regular';
 
       if (!this.label) {
         style += ' icon';
@@ -55,5 +64,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import './styles/oak-button-slide.scss';
+@import './styles/oak-button.scss';
 </style>

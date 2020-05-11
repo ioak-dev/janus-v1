@@ -41,21 +41,21 @@
             <OakButton
               v-if="comment.showNew"
               theme="primary"
-              variant="animate in"
+              variant="appear"
               @click="saveComment"
               label="Save Comment"
             />
             <OakButton
               v-if="!comment.showNew"
               theme="primary"
-              variant="animate in"
+              variant="appear"
               @click="toggleAddComment"
               label="Add Comment"
             />
             <OakButton
               v-if="comment.showNew"
               theme="primary"
-              variant="animate in"
+              variant="appear"
               @click="toggleAddComment"
               label="Cancel"
             />

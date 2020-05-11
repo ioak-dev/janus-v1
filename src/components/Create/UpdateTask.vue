@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="modal-body form">
       <OakSelect
         v-if="!task.taskId"
         v-bind:data="data.projectId"
@@ -31,9 +31,9 @@
         @change="handleChange"
       />
       <Assignee
-        v-bind:id="data.assignedTo"
-        @remove="clearAssignee"
-        @change="handleAssigneeChange"
+        v-bind:assignedTo="data.assignedTo"
+        @remove="removeAssignee"
+        @add="addAssignee"
         v-bind:projectId="data.projectId"
       />
       <OakEditor
@@ -43,13 +43,206 @@
         @change="handleDescriptionChange"
         alwaysEdit
       />
+      <div class="space-top-2 space-bottom-2">
+        <OakButton
+          class="space-right-2"
+          v-if="task.taskId"
+          theme="primary"
+          variant="regular"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          class="space-right-2"
+          theme="secondary"
+          variant="regular"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          class="space-right-2"
+          theme="tertiary"
+          variant="regular"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          theme="default"
+          variant="regular"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+      </div>
+      <div class="space-top-2 space-bottom-2">
+        <OakButton
+          class="space-right-2"
+          v-if="task.taskId"
+          theme="primary"
+          variant="appear"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          class="space-right-2"
+          theme="secondary"
+          variant="appear"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          class="space-right-2"
+          theme="tertiary"
+          variant="appear"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          theme="default"
+          variant="appear"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+      </div>
+      <div class="space-top-2 space-bottom-2">
+        <OakButton
+          class="space-right-2"
+          v-if="task.taskId"
+          theme="primary"
+          variant="disappear"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          class="space-right-2"
+          theme="secondary"
+          variant="disappear"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          class="space-right-2"
+          theme="tertiary"
+          variant="disappear"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          theme="default"
+          variant="disappear"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+      </div>
+      <div class="space-top-2 space-bottom-2">
+        <OakButton
+          class="space-right-2"
+          v-if="task.taskId"
+          theme="primary"
+          variant="block"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          class="space-right-2"
+          theme="secondary"
+          variant="block"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          class="space-right-2"
+          theme="tertiary"
+          variant="block"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          theme="default"
+          variant="block"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+      </div>
+      <div class="space-top-2 space-bottom-2">
+        <OakButton
+          class="space-right-2"
+          v-if="task.taskId"
+          theme="primary"
+          variant="outline"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          class="space-right-2"
+          theme="secondary"
+          variant="outline"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          class="space-right-2"
+          theme="tertiary"
+          variant="outline"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          theme="default"
+          variant="outline"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+        <OakButton
+          v-if="task.taskId"
+          theme="primary"
+          variant="drama"
+          @click="openDetailedView"
+          icon="visibility"
+          label="View"
+        />
+      </div>
     </div>
     <div class="modal-footer">
       <div>
         <OakButton
           v-if="task.taskId"
           theme="primary"
-          variant="animate in"
+          variant="appear"
           @click="openDetailedView"
           icon="visibility"
           label="Detailed View"
@@ -58,7 +251,7 @@
       <div>
         <OakButton
           theme="primary"
-          variant="animate in"
+          variant="appear"
           @click="save"
           icon="check"
           label="Save"
@@ -144,23 +337,26 @@ export default {
     handleDescriptionChange: function(text) {
       this.data.description = text;
     },
-    handleClose: function() {
-      this.$emit('close');
-      this.data = { ...this.task };
+    save: async function() {
+      const outcome = await this.saveTask(this.data);
+      if (outcome) {
+        this.$emit('success');
+      } else {
+        this.$emit('failure');
+      }
     },
-    save: function() {
-      this.saveTask(this.data);
+    removeAssignee: function(key) {
+      this.data.assignedTo = this.data.assignedTo.filter(item => item !== key);
     },
-    clearAssignee: function() {
-      this.data.assignedTo = '';
-    },
-    handleAssigneeChange: function(key) {
-      this.data.assignedTo = key;
+    addAssignee: function(key) {
+      if (!this.data.assignedTo.includes(key)) {
+        this.data.assignedTo.push(key);
+      }
     },
     openDetailedView: function() {
       sendMessage('modal', false);
       this.$router.push({
-        path: `/${this.getProfile.space}/${this.task.projectId}/main`,
+        path: `/${this.getProfile.space}/${this.task.projectId}/dashboard`,
         query: { view: 'task', taskid: this.task.taskId },
       });
     },
@@ -168,11 +364,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.two-column {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  row-gap: 20px;
-  column-gap: 10px;
+.form {
+  display: flex;
+  flex-direction: column;
 }
 </style>

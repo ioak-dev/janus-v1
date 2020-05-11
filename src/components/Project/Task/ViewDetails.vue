@@ -1,49 +1,39 @@
 <template>
   <div class="view-details">
-    <div class="section dense-container">
-      <div class="title-section">
-        <OakText
-          v-bind:data="data.title"
-          id="title"
-          label="Title"
-          @change="handleChange"
-        />
-      </div>
-      <div>
-        <OakSelect
-          v-bind:data="data.type"
-          label="Task type"
-          id="type"
-          @change="handleChange"
-          v-bind:elements="['Epic', 'Story', 'Task', 'Sub-task', 'Defect']"
-        />
-      </div>
-      <div>
-        <OakSelect
-          v-bind:data="data.stageId"
-          id="stageId"
-          label="Workflow"
-          v-bind:objects="stageDropDown"
-          @change="handleChange"
-        />
-      </div>
-      <div>
-        <OakSelect
-          v-bind:data="data.priority"
-          id="priority"
-          label="Priority"
-          v-bind:elements="['Low', 'Medium', 'High', 'Critical']"
-          @change="handleChange"
-        />
-      </div>
-      <div>
-        <Assignee
-          v-bind:id="data.assignedTo"
-          @remove="clearAssignee"
-          @change="handleAssigneeChange"
-          v-bind:projectId="data.projectId"
-        />
-      </div>
+    <div class="section">
+      <OakText
+        v-bind:data="data.title"
+        id="title"
+        label="Title"
+        @change="handleChange"
+      />
+      <OakSelect
+        v-bind:data="data.type"
+        label="Task type"
+        id="type"
+        @change="handleChange"
+        v-bind:elements="['Epic', 'Story', 'Task', 'Sub-task', 'Defect']"
+      />
+      <OakSelect
+        v-bind:data="data.stageId"
+        id="stageId"
+        label="Workflow"
+        v-bind:objects="stageDropDown"
+        @change="handleChange"
+      />
+      <OakSelect
+        v-bind:data="data.priority"
+        id="priority"
+        label="Priority"
+        v-bind:elements="['Low', 'Medium', 'High', 'Critical']"
+        @change="handleChange"
+      />
+      <Assignee
+        v-bind:assignedTo="data.assignedTo"
+        @remove="removeAssignee"
+        @add="addAssignee"
+        v-bind:projectId="data.projectId"
+      />
       <div class="parent-task" v-if="data.parentTaskId">
         <div class="typography-4">Parent Task</div>
         <div class="typography-4 one-line-text">
@@ -100,7 +90,7 @@
     <div class="action">
       <OakButton
         theme="primary"
-        variant="animate in"
+        variant="appear"
         @click="save"
         label="Save basic details"
       />
@@ -161,7 +151,7 @@ export default {
         priority: '',
         title: '',
         description: '',
-        assignedTo: '',
+        assignedTo: [],
         parentTaskId: '',
         epic: '',
       },
@@ -219,11 +209,13 @@ export default {
       this.data.epic = value;
       this.toggleEpicSelectionDialogOpen();
     },
-    clearAssignee: function() {
-      this.data.assignedTo = '';
+    removeAssignee: function(key) {
+      this.data.assignedTo = this.data.assignedTo.filter(item => item !== key);
     },
-    handleAssigneeChange: function(key) {
-      this.data.assignedTo = key;
+    addAssignee: function(key) {
+      if (!this.data.assignedTo.includes(key)) {
+        this.data.assignedTo.push(key);
+      }
     },
     save: function() {
       this.saveTask(this.data);
@@ -244,38 +236,27 @@ export default {
     -webkit-box-orient: vertical;
   }
   .section {
+    display: flex;
+    flex-direction: column;
     padding: 20px 10px;
-    &.dense-container {
-      // padding: 20px 10px;
-      // margin: 50px;
+
+    .parent-task,
+    .epic {
+      padding: 20px 0;
       display: grid;
-      grid-template-columns: auto;
-      align-items: center;
-      column-gap: 10px;
-      &.single-column {
-        padding: 20px 10px;
-        display: grid;
-        grid-template-columns: auto;
-      }
+      grid-auto-flow: column;
+      justify-content: flex-start;
+      column-gap: 20px;
 
-      .parent-task,
-      .epic {
-        padding: 20px 0;
-        display: grid;
-        grid-auto-flow: column;
-        justify-content: flex-start;
-        column-gap: 20px;
-
-        .parent-task-link,
-        .epic-link {
-          user-select: none;
-          margin-left: 10px;
-          cursor: pointer;
-          text-decoration: underline;
-          color: var(--color-primary-1);
-          &:hover {
-            color: var(--color-primary-2);
-          }
+      .parent-task-link,
+      .epic-link {
+        user-select: none;
+        margin-left: 10px;
+        cursor: pointer;
+        text-decoration: underline;
+        color: var(--color-primary-1);
+        &:hover {
+          color: var(--color-primary-2);
         }
       }
     }

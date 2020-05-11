@@ -19,7 +19,7 @@
       </div>
       <br />
       <OakButton
-        variant="animate out"
+        variant="disappear"
         theme="primary"
         @click="signin"
         label="Sign In"
@@ -29,7 +29,7 @@
       Don&apos;t have an account?
       <OakButton
         theme="default"
-        variant="animate in"
+        variant="appear"
         small
         @click="$emit('toggle')"
         label="Sign Up"
@@ -38,7 +38,7 @@
     <br />
     <!-- <OakButton
             theme="default"
-            variant="animate in"
+            variant="appear"
             small
             @click="sentEmailWithCode"
             label="Forgot password ?"

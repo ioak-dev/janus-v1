@@ -48,7 +48,7 @@
         @click="submit"
         label="Choose selected"
         theme="primary"
-        variant="animate in"
+        variant="appear"
       />
     </div>
   </div>

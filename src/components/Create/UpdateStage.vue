@@ -2,6 +2,7 @@
   <div>
     <div>
       <OakSelect
+        v-if="!stage._id"
         v-bind:data="data.projectId"
         id="projectId"
         label="Project"
@@ -16,33 +17,44 @@
       />
     </div>
     <div class="modal-footer">
-      <OakButton
-        theme="primary"
-        variant="animate in"
-        @click="save"
-        icon="check"
-        label="Save"
-      />
-      <OakButton
-        theme="primary"
-        variant="animate in"
-        @click="toggleDeletePrompt"
-        icon="delete"
-        label="Delete"
-      />
+      <div v-if="showDeletePrompt" class="action-section">
+        <OakButton
+          theme="primary"
+          variant="appear"
+          @click="remove"
+          icon="delete"
+          label="Confirm Deletion"
+        />
+        <OakButton
+          theme="primary"
+          variant="appear"
+          @click="toggleDeletePrompt"
+          icon="close"
+          label="Cancel"
+        />
+      </div>
+      <div v-else class="action-section">
+        <OakButton
+          theme="primary"
+          variant="appear"
+          @click="toggleDeletePrompt"
+          icon="delete"
+          label="Delete"
+        />
+        <OakButton
+          theme="primary"
+          variant="appear"
+          @click="save"
+          icon="check"
+          label="Save"
+        />
+      </div>
     </div>
-    <OakPrompt
-      v-bind:visible="showDeletePrompt"
-      v-bind:text="`Are you sure you want to delete the stage? (${stage.name})`"
-      @click="remove"
-      @close="toggleDeletePrompt"
-    />
   </div>
 </template>
 <script>
 import OakText from '@/oakui/OakText.vue';
 import OakButton from '@/oakui/OakButton.vue';
-import OakPrompt from '@/oakui/OakPrompt.vue';
 import { mapActions, mapGetters } from 'vuex';
 import OakSelect from '@/oakui/OakSelect.vue';
 
@@ -52,7 +64,6 @@ export default {
     OakSelect,
     OakText,
     OakButton,
-    OakPrompt,
   },
   props: {
     stage: Object,
@@ -86,8 +97,14 @@ export default {
     handleChange: function() {
       this.data[event.target.name] = event.target.value;
     },
-    save: function() {
-      this.saveStage(this.data);
+    save: async function() {
+      const outcome = await this.saveStage(this.data);
+      console.log(outcome);
+      if (outcome) {
+        this.$emit('success');
+      } else {
+        this.$emit('failure');
+      }
     },
     remove: function() {
       this.deleteStage(this.stage._id);

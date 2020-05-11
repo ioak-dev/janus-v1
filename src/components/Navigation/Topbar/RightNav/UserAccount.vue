@@ -16,14 +16,14 @@
         label="Sign in"
         align="left"
         theme="primary"
-        variant="animate in"
+        variant="appear"
         @click="oaSignin('signin')"
       />
       <OakButton
         label="Sign up"
         align="right"
         theme="primary"
-        variant="animate in"
+        variant="appear"
         @click="oaSignin('signup')"
       />
     </div>
@@ -91,7 +91,7 @@
         <OakButton
           label="Save"
           theme="primary"
-          variant="animate in"
+          variant="appear"
           @click="saveProfile"
         />
       </div>
@@ -167,7 +167,7 @@ export default {
       this.removeAuth(this.$cookies);
     },
     oaSignin(type) {
-      window.location.href = `${process.env.VUE_APP_ONEAUTH_URL}/#/${this.getProfile?.space}/login?type=${type}&appId=${process.env.VUE_APP_ONEAUTH_APP_ID}`;
+      window.location.href = `${process.env.VUE_APP_ONEAUTH_URL}/#/space/${this.getProfile?.space}/login?type=${type}&appId=${process.env.VUE_APP_ONEAUTH_APP_ID}`;
     },
     toggleProfileDialog() {
       this.profileDialogOpen = !this.profileDialogOpen;

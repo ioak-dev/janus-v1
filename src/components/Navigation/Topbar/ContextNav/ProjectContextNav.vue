@@ -1,30 +1,35 @@
 <template>
-  <div class="nav-menu">
+  <div class="nav-menu" v-if="isProjectAdministrator">
     <router-link
       class="nav-item"
-      v-bind:key="`${getProject._id}_main`"
-      v-bind:to="`/${getProfile.space}/${getProject._id}/main?view=board`"
+      v-bind:key="`${getProject._id}_dashboard`"
+      v-bind:to="`/${getProfile.space}/${getProject._id}/dashboard?view=board`"
       v-bind:class="
-        $route.path.startsWith(`/${getProfile.space}/${getProject._id}/main`)
+        $route.path.startsWith(
+          `/${getProfile.space}/${getProject._id}/dashboard`
+        )
           ? 'main-route-active'
           : ''
       "
     >
-      Task
+      Dashboard
     </router-link>
     <router-link
       class="nav-item"
-      v-bind:key="`${getProject._id}_team`"
-      v-bind:to="`/${getProfile.space}/${getProject._id}/team`"
+      v-if="isProjectAdministrator"
+      v-bind:key="`${getProject._id}_administration`"
+      v-bind:to="
+        `/${getProfile.space}/${getProject._id}/administration?view=team`
+      "
+      v-bind:class="
+        $route.path.startsWith(
+          `/${getProfile.space}/${getProject._id}/administration`
+        )
+          ? 'main-route-active'
+          : ''
+      "
     >
-      Team
-    </router-link>
-    <router-link
-      class="nav-item"
-      v-bind:key="`${getProject._id}_changebackground`"
-      v-bind:to="`/${getProfile.space}/${getProject._id}/changebackground`"
-    >
-      Change Background
+      Administration
     </router-link>
   </div>
 </template>
@@ -34,7 +39,17 @@ import { receiveMessage } from '@/events/MessageService';
 export default {
   name: 'ProjectContextNav',
   computed: {
-    ...mapGetters(['getProfile', 'getProject', 'getTaskToView']),
+    ...mapGetters([
+      'getProfile',
+      'getProject',
+      'getTaskToView',
+      'getRolesByProjectId',
+    ]),
+    isProjectAdministrator: function() {
+      return this.getRolesByProjectId(this.getProject._id).find(
+        item => item.userId === this.getProfile.auth._id
+      );
+    },
   },
   mounted() {
     this.eventBus = receiveMessage().subscribe(message => {

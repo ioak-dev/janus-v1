@@ -13,7 +13,7 @@
           data-test="action-close"
           @click="$emit('close')"
           theme="default"
-          variant="animate in"
+          variant="appear"
           align="left"
           label="No"
           fa="fas fa-times"
@@ -25,7 +25,7 @@
             $emit('close');
           "
           theme="primary"
-          variant="animate out"
+          variant="disappear"
           align="right"
           label="Yes"
           fa="fas fa-check"

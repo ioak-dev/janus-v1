@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="container">
+      <div class="container" v-bind:class="isDragging ? 'dragging' : ''">
         <template v-if="tasks.length > 0">
           <div v-for="task in tasks" v-bind:key="task.id" v-bind:id="task.id">
             <Card v-bind:task="task" />
@@ -42,7 +42,7 @@
       label="Edit Stage"
     >
       <div slot="modal-body">
-        <UpdateStage v-bind:stage="stage" />
+        <UpdateStage v-bind:stage="stage" @success="toggleStage" />
       </div>
     </OakModal>
   </div>
@@ -68,6 +68,8 @@ export default {
   },
   props: {
     stage: Object,
+    sortCriteria: Object,
+    searchCriteria: Object,
   },
   data: function() {
     return {
@@ -143,13 +145,17 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getTasksByStage',
+      'getTasksByStageSorted',
       'getTaskById',
       'getProject',
       'getProfile',
     ]),
     tasks: function() {
-      const taskList = this.getTasksByStage(this.stage._id);
+      const taskList = this.getTasksByStageSorted(
+        this.stage._id,
+        this.sortCriteria,
+        this.searchCriteria
+      );
       return taskList;
     },
   },
@@ -169,7 +175,7 @@ export default {
   margin-top: 50px;
   // padding: 6px;
   .container {
-    height: 75vh;
+    height: 70vh;
     overflow-y: auto;
     &.dragging {
       overflow-y: hidden;

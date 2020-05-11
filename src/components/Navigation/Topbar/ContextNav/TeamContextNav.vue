@@ -16,8 +16,17 @@
     </router-link>
     <router-link
       class="nav-item"
+      v-bind:key="`${getTeam._id}_administrators`"
+      v-bind:to="`/${getProfile.space}/${getTeam._id}/team/administrators`"
+      v-if="isTeamAdministrator"
+    >
+      Administrators
+    </router-link>
+    <router-link
+      class="nav-item"
       v-bind:key="`${getTeam._id}_changebackground`"
       v-bind:to="`/${getProfile.space}/${getTeam._id}/team/changebackground`"
+      v-if="isTeamAdministrator"
     >
       Change Background
     </router-link>
@@ -28,7 +37,12 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'TeamContextNav',
   computed: {
-    ...mapGetters(['getProfile', 'getTeam']),
+    ...mapGetters(['getProfile', 'getTeam', 'getRolesByTeamId']),
+    isTeamAdministrator: function() {
+      return this.getRolesByTeamId(this.getTeam._id).find(
+        item => item.userId === this.getProfile.auth._id
+      );
+    },
   },
 };
 </script>

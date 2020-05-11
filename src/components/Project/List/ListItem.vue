@@ -16,12 +16,15 @@
         <TaskTypeBadge v-bind:type="task.type" />
         <div class="one-liner">{{ task.type }}</div>
       </div>
+      <div>
+        <EpicBadge v-bind:epic="getTaskById(task.epic)" />
+      </div>
       <div class="one-liner">{{ task.title }}</div>
       <div>
         <Avatar
-          v-if="assignedToUser"
-          v-bind:user="assignedToUser"
-          showName
+          v-for="member in members"
+          v-bind:user="member"
+          v-bind:key="member._id"
           size="small"
         />
       </div>
@@ -36,7 +39,7 @@
       label="Quick Edit - Task"
     >
       <div slot="modal-body">
-        <UpdateTask v-bind:task="task" />
+        <UpdateTask v-bind:task="task" @success="toggleTask" />
       </div>
     </OakModal>
   </div>
@@ -50,10 +53,12 @@ import Avatar from '@/components/Avatar/Avatar.vue';
 import OakModal from '@/oakui/OakModal.vue';
 import TaskTypeBadge from '../Task/TaskTypeBadge.vue';
 import TaskPriorityBadge from '../Task/TaskPriorityBadge.vue';
+import EpicBadge from '../Task/EpicBadge.vue';
 
 export default {
   name: 'ListItem',
   components: {
+    EpicBadge,
     OakModal,
     UpdateTask,
     Avatar,
@@ -70,9 +75,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getUserById']),
-    assignedToUser: function() {
-      return this.getUserById(this.task.assignedTo);
+    ...mapGetters(['getUserById', 'getTaskById']),
+    members: function() {
+      const memberList = [];
+      this.task.assignedTo?.forEach(item =>
+        memberList.push(this.getUserById(item))
+      );
+      return memberList;
     },
   },
   methods: {
@@ -163,7 +172,7 @@ export default {
     border-bottom: 1px solid var(--color-primary-1);
   }
   display: grid;
-  grid-template-columns: repeat(5, minmax(25px, 1fr));
+  grid-template-columns: repeat(6, minmax(25px, 1fr));
   column-gap: 20px;
   .action {
     width: 10px;

@@ -73,42 +73,10 @@ export default {
       this.deleteProjectTeam(id);
     },
   },
-  watch: {
-    getProject: function() {
-      if (this.getProject?.image) {
-        document.getElementsByClassName(
-          'team'
-        )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
-      }
-    },
-  },
-  mounted() {
-    if (this.getProject?.image) {
-      document.getElementsByClassName(
-        'team'
-      )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
-    }
-  },
 };
 </script>
 <style lang="scss" scoped>
 .team {
-  &.background-present {
-    background-size: cover !important;
-  }
-  .toolbar-container {
-    &.background-not-present {
-      background-color: var(--color-background-2);
-      border-bottom: 1px solid var(--color-background-1);
-      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-        0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-        0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-    }
-    &.background-present {
-      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2);
-      background-color: var(--color-background-transparent-1);
-    }
-  }
   .container {
     height: calc(100vh - 60px);
     overflow: auto;

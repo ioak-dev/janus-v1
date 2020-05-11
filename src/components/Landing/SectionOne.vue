@@ -11,7 +11,12 @@
         </div>
       </div>
       <div class="action">
-        <OakButton label="Start today" theme="primary" variant="animate none" />
+        <OakButton
+          label="Setup your space"
+          theme="primary"
+          variant="regular"
+          @click="createSpace"
+        />
       </div>
     </div>
   </div>
@@ -22,6 +27,11 @@ import OakButton from '@/oakui/OakButton.vue';
 export default {
   name: 'SectionOne',
   components: { OakButton, Navigation },
+  methods: {
+    createSpace: function() {
+      window.location.href = `${process.env.VUE_APP_ONEAUTH_URL}/#/login?type=signup`;
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -48,6 +58,7 @@ export default {
     margin: auto;
     .text {
       background-color: var(--color-background-transparent-6);
+      // color: white;
       display: grid;
       grid-auto-flow: row;
       justify-items: center;

@@ -17,9 +17,14 @@
       @close="toggleTask"
       v-bind:visible="editTask"
       label="Quick Edit - Task"
+      v-bind:error="editTaskError"
     >
       <div slot="modal-body">
-        <UpdateTask v-bind:task="task" />
+        <UpdateTask
+          v-bind:task="task"
+          @success="toggleTask"
+          @failure="handleFailure"
+        />
       </div>
     </OakModal>
   </div>
@@ -48,6 +53,7 @@ export default {
   data: function() {
     return {
       editTask: false,
+      editTaskError: false,
       dragClass: '',
     };
   },
@@ -104,8 +110,12 @@ export default {
       // listItem.style.display = 'block';
       // e.target.appendChild(listItem);
     },
+    handleFailure: function() {
+      this.editTaskError = true;
+    },
     toggleTask: function() {
       this.editTask = !this.editTask;
+      this.editTaskError = false;
     },
   },
 };

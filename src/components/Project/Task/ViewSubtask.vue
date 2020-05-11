@@ -29,28 +29,28 @@
       <OakButton
         v-if="data.showNew"
         theme="primary"
-        variant="animate in"
+        variant="appear"
         @click="save"
         label="Save Sub-task"
       />
       <OakButton
         v-if="!data.showNew"
         theme="primary"
-        variant="animate in"
+        variant="appear"
         @click="toggleAdd"
         label="Add existing"
       />
       <OakButton
         v-if="!data.showNew"
         theme="primary"
-        variant="animate in"
+        variant="appear"
         @click="toggle"
         label="New"
       />
       <OakButton
         v-if="data.showNew"
         theme="primary"
-        variant="animate in"
+        variant="appear"
         @click="toggle"
         label="Cancel"
       />

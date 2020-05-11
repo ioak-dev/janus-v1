@@ -1,5 +1,5 @@
 <template>
-  <div class="task-view">
+  <div class="task-view" v-bind:key="taskId">
     <div class="task-view-content">
       <TaskContent v-bind:task="task" />
     </div>

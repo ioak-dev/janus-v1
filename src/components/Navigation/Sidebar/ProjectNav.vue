@@ -17,7 +17,7 @@
         class="project-container"
       >
         <router-link
-          v-bind:to="`/${getProfile.space}/${project._id}/main?view=board`"
+          v-bind:to="`/${getProfile.space}/${project._id}/dashboard?view=board`"
           v-bind:class="
             $route.path.startsWith(`/${getProfile.space}/${project._id}`)
               ? 'project-route-active'
@@ -80,7 +80,7 @@ export default {
   padding: 10px 0px;
   a {
     text-decoration: none;
-    color: white;
+    color: #fcfcfc;
     padding: 0 10px 0 15px;
     height: 28px;
     line-height: 28px;
@@ -88,7 +88,7 @@ export default {
     display: inline-block;
     width: 100%;
     &:hover {
-      background-color: var(--color-background-2);
+      background-color: var(--color-nav-hover);
     }
     &.project-route-active {
       background-color: var(--color-primary-1);
@@ -98,7 +98,7 @@ export default {
     padding: 5px 15px;
     height: 28px;
     line-height: 28px;
-    color: var(--color-foreground-2);
+    color: #fcfcfc;
     font-size: 0.9em;
     display: flex;
     justify-content: space-between;

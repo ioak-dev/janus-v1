@@ -31,6 +31,7 @@ export default {
   .material-icons {
     cursor: pointer;
     line-height: 60px;
+    color: #fcfcfc;
   }
 }
 </style>

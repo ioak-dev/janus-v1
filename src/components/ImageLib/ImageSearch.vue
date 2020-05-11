@@ -5,10 +5,10 @@
       @pageChanged="pageChanged"
       v-bind:pageSizes="['10', '20', '30']"
     />
-    <div class="form-view">
+    <form method="GET" @submit="search" noValidate class="form-view">
       <OakText
         v-bind:data="searchText"
-        placeholder="Search for background images"
+        label="Type to search for images"
         id="image-search-text"
         @change="handleSearchTextChange"
       />
@@ -16,9 +16,9 @@
         @click="search"
         label="search"
         theme="primary"
-        variant="animate in"
+        variant="appear"
       />
-    </div>
+    </form>
     <div class="search-results">
       <div class="thumb" v-for="item in getImages" v-bind:key="item.id">
         <img
@@ -56,6 +56,7 @@ export default {
       this.searchText = event.target.value;
     },
     search: function() {
+      event.preventDefault();
       this.searchImages({
         searchText: this.searchText,
         pageNo: this.pageNo,

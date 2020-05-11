@@ -7,13 +7,13 @@
           label="Save"
           icon="check"
           theme="primary"
-          variant="animate none"
+          variant="regular"
           @click="save"
         />
         <OakButton
           label="Delete Team"
           theme="primary"
-          variant="animate in"
+          variant="appear"
           fa="fas fa-trash"
           @click="toggleDeletePrompt"
         />
@@ -35,7 +35,7 @@
       </div>
       <div class="members">
         <div
-          v-for="(item, index) in getTeamsMembersByTeamId(getTeam._id)"
+          v-for="(item, index) in getTeamMembersByTeamId(getTeam._id)"
           :key="index"
         >
           <Member v-bind:teamMember="item" v-bind:team="getTeam" />
@@ -75,7 +75,7 @@ export default {
       'getTeam',
       'getUsers',
       'getUserById',
-      'getTeamsMembersByTeamId',
+      'getTeamMembersByTeamId',
     ]),
     styleClass: function() {
       if (this.getTeam?.image) {

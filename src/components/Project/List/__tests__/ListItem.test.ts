@@ -16,7 +16,7 @@ const task = {
   title: 'test title',
   description: 'test description',
   priority: null,
-  assignedTo: 1,
+  assignedTo: [1],
   parentTaskId: null,
   taskId: 'test-1',
 };
@@ -38,6 +38,13 @@ describe('ListItem.vue', () => {
           _id: id,
           name: 'John Doe',
           email: 'test@test.com',
+        };
+      },
+      getTaskById: (state: any) => (id: string) => {
+        return {
+          _id: id,
+          taskId: 'test-1',
+          title: 'test title',
         };
       },
     };

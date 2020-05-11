@@ -1,6 +1,7 @@
 <template>
   <div class="member">
     <div class="name">
+      <OakIcon mat="supervisor_account" v-if="isTeamAdministrator" />
       {{ member ? `${member.firstName} ${member.lastName}` : '' }}
     </div>
     <div class="action" v-if="confirmPrompt">
@@ -11,25 +12,32 @@
     </div>
     <div class="action" v-else>
       <div class="confirm-prompt trigger" @click="toggleConfirmPrompt">
-        X
+        <OakIcon mat="close" />
       </div>
     </div>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import OakIcon from '@/oakui/OakIcon.vue';
 export default {
   name: 'Member',
   props: { teamMember: Object, team: Object },
+  components: { OakIcon },
   data: function() {
     return {
       confirmPrompt: false,
     };
   },
   computed: {
-    ...mapGetters(['getUserById']),
+    ...mapGetters(['getUserById', 'getRolesByTeamId']),
     member: function() {
       return this.getUserById(this.teamMember.userId);
+    },
+    isTeamAdministrator: function() {
+      return this.getRolesByTeamId(this.team._id).find(
+        item => item.userId === this.teamMember.userId
+      );
     },
   },
   methods: {
@@ -50,6 +58,10 @@ export default {
   border-bottom: 1px solid var(--color-background-2);
   display: grid;
   grid-template-columns: 1fr auto;
+  .name {
+    display: flex;
+    align-items: center;
+  }
   .action {
     display: grid;
     grid-auto-flow: column;

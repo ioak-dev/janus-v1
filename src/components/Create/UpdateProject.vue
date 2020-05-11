@@ -1,23 +1,22 @@
 <template>
   <div>
-    <div class="two-column">
-      <div class="typography-4">Project Methodology</div>
+    <div class="modal-body form">
       <OakSelect
         v-bind:data="data.type"
         id="type"
         @change="handleChange"
+        label="Project methodology"
         v-bind:elements="['Kanban', 'Scrum']"
       />
-      <div class="typography-4">Project</div>
-      <OakText v-bind:data="data.name" id="name" @change="handleChange" />
+      <OakText
+        v-bind:data="data.name"
+        id="name"
+        label="Project name"
+        @change="handleChange"
+      />
     </div>
     <div class="modal-footer">
-      <OakButton
-        theme="primary"
-        variant="animate in"
-        @click="save"
-        label="Save"
-      />
+      <OakButton theme="primary" variant="appear" @click="save" label="Save" />
     </div>
   </div>
 </template>
@@ -55,19 +54,20 @@ export default {
     handleChange: function() {
       this.data[event.target.name] = event.target.value;
     },
-    save: function() {
-      this.saveProject(this.data);
+    save: async function() {
+      const outcome = await this.saveProject(this.data);
+      if (outcome) {
+        this.$emit('success');
+      } else {
+        this.$emit('failure');
+      }
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-.two-column {
-  padding-bottom: 50px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  row-gap: 20px;
-  column-gap: 10px;
+.form {
+  display: flex;
+  flex-direction: column;
 }
 </style>

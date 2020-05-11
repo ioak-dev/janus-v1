@@ -1,5 +1,5 @@
 const state = {
-  theme: '',
+  theme: 'theme_light',
   space: '',
   auth: {},
   sidebar: true,
@@ -21,9 +21,11 @@ const actions = {
   addAuth({ commit, dispatch }: any, { auth }: any) {
     commit('UPDATE_PROFILE', { ...state, auth: auth });
     dispatch('fetchProjects');
+    dispatch('fetchStages');
     dispatch('fetchProjectTeams');
     dispatch('fetchTeamMembers');
     dispatch('fetchUsers');
+    dispatch('fetchRoles');
     dispatch('fetchTeams');
   },
   removeAuth({ commit }: any, cookies: any) {

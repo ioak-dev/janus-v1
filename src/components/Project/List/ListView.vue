@@ -1,5 +1,12 @@
 <template>
   <div class="list-view">
+    <div class="search-container">
+      <OakText
+        v-bind:data="searchCriteria.field ? '' : searchCriteria.text"
+        @change="handleSearchCriteriaChange"
+        label="Type to search"
+      />
+    </div>
     <div class="content-container">
       <div class="list-view-header">
         <SortableField
@@ -13,18 +20,19 @@
           v-bind:sortCriteria="sortCriteria"
           field="type"
           label="Type"
+        />
+        <SortableField
+          @click="sort"
+          v-bind:sortCriteria="sortCriteria"
+          field="epic"
+          label="Epic"
         /><SortableField
           @click="sort"
           v-bind:sortCriteria="sortCriteria"
           field="title"
           label="Title"
         />
-        <SortableField
-          @click="sort"
-          v-bind:sortCriteria="sortCriteria"
-          field="assignedTo"
-          label="Assigned To"
-        />
+        <div>Assigned To</div>
         <SortableField
           @click="sort"
           v-bind:sortCriteria="sortCriteria"
@@ -37,6 +45,7 @@
           <horizontal-lane
             v-bind:stage="stage"
             v-bind:sortCriteria="sortCriteria"
+            v-bind:searchCriteria="searchCriteria"
           />
         </div>
       </div>
@@ -45,22 +54,14 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import OakText from '@/oakui/OakText.vue';
 import HorizontalLane from './HorizontalLane.vue';
 import SortableField from './SortableField.vue';
+import { sendMessage } from '../../../events/MessageService';
 export default {
   name: 'ListView',
-  components: {
-    HorizontalLane,
-    SortableField,
-  },
-  data: function() {
-    return {
-      sortCriteria: {
-        field: '',
-        ascending: true,
-      },
-    };
-  },
+  components: { OakText, HorizontalLane, SortableField },
+  props: { searchCriteria: Object, sortCriteria: Object },
   computed: {
     ...mapGetters(['getStagesByProjectId', 'getProject']),
   },
@@ -74,6 +75,15 @@ export default {
           ascending: true,
         };
       }
+      sendMessage('request-task-filter-change-sort', true, this.sortCriteria);
+    },
+    handleSearchCriteriaChange: function() {
+      this.searchCriteria = { field: '', text: event.target.value };
+      sendMessage(
+        'request-task-filter-change-search',
+        true,
+        this.searchCriteria
+      );
     },
   },
 };
@@ -105,13 +115,18 @@ export default {
     padding: 0 30px;
     display: grid;
     column-gap: 20px;
-    grid-template-columns: repeat(5, minmax(25px, 1fr));
+    grid-template-columns: repeat(6, minmax(25px, 1fr));
+    white-space: nowrap;
+  }
+
+  .search-container,
+  .content-container {
+    margin: 20px 20px;
   }
 
   .content-container {
     overflow-y: auto;
     border-radius: 6px;
-    margin: 20px 20px;
     box-shadow: var(--bs-lg);
   }
 }

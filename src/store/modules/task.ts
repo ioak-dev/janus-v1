@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { sendMessage, newMessageId } from '@/events/MessageService';
+import {
+  sendMessage,
+  newMessageId,
+  httpHandleRequest,
+  httpHandleResponse,
+  httpHandleError,
+} from '@/events/MessageService';
 import { isEmptyOrSpaces } from '@/Utils';
 
 const baseUrl = process.env.VUE_APP_ROOT_API;
@@ -8,6 +14,8 @@ const state = {
   tasks: Array<any>(),
   taskToView: Array<string>(),
 };
+
+const domain = 'Task';
 
 const getters = {
   getTasks: (state: any) => {
@@ -23,9 +31,29 @@ const getters = {
   },
   getTasksByStageSorted: (state: any, rootState: any) => (
     stageId: string,
-    sortCriteria: any
+    sortCriteria: any,
+    searchCriteria: any
   ) => {
-    const unorderedTasksList = rootState.getTasksByStage(stageId);
+    const unorderedTasksList = rootState
+      .getTasksByStage(stageId)
+      .filter((item: any) => {
+        if (searchCriteria?.text) {
+          if (
+            (searchCriteria.field &&
+              searchCriteria.text === item[searchCriteria.field]) ||
+            item.title
+              ?.toLowerCase()
+              .includes(searchCriteria.text.toLowerCase()) ||
+            item.taskId
+              ?.toLowerCase()
+              .includes(searchCriteria.text.toLowerCase())
+          ) {
+            return true;
+          }
+          return false;
+        }
+        return true;
+      });
     if (isEmptyOrSpaces(sortCriteria.field)) {
       return unorderedTasksList;
     } else {
@@ -42,8 +70,8 @@ const getters = {
             ? bUser.firstName?.toLowerCase() + bUser.lastName?.toLowerCase()
             : '';
         } else {
-          aLower = a[sortCriteria.field].toLowerCase();
-          bLower = b[sortCriteria.field].toLowerCase();
+          aLower = a[sortCriteria.field]?.toLowerCase();
+          bLower = b[sortCriteria.field]?.toLowerCase();
         }
         if (aLower > bLower) {
           return sortCriteria.ascending ? 1 : -1;
@@ -88,53 +116,44 @@ const actions = {
     commit('UPDATE_TASKS', response.data.data);
   },
   async saveTask({ commit, dispatch, rootState }: any, payload: any) {
+    const action = 'Save Task';
     const messageId = newMessageId();
-    sendMessage('notification', true, {
-      id: messageId,
-      type: 'running',
-      message: payload._id
-        ? `Updating task (${payload.taskId}})`
-        : `Creating task (${payload.title.substring(0, 10)}..})`,
-    });
-    const response = await axios.put(
-      `${baseUrl}/task/${rootState.profile.space}/${payload.projectId}`,
-      payload,
-      {
-        headers: {
-          Authorization: `${rootState.profile.auth.token}`,
-        },
+    httpHandleRequest(messageId, action, payload.title.substring(0, 10));
+    try {
+      const response = await axios.put(
+        `${baseUrl}/task/${rootState.profile.space}/${payload.projectId}`,
+        payload,
+        {
+          headers: {
+            Authorization: `${rootState.profile.auth.token}`,
+          },
+        }
+      );
+      const outcome = httpHandleResponse(
+        messageId,
+        response,
+        action,
+        payload.title.substring(0, 10)
+      );
+      if (outcome) {
+        dispatch('fetchTasks');
+        dispatch('fetchLogs', { domain: 'Task', reference: payload._id });
       }
-    );
-    if (response.status === 200) {
-      sendMessage('notification', true, {
-        id: messageId,
-        type: 'success',
-        message: payload._id
-          ? `Task (${payload.taskId}) updated`
-          : `Task (${payload.title.substring(0, 10)}..) created`,
-        duration: 3000,
-      });
-    } else {
-      sendMessage('notification', true, {
-        id: messageId,
-        type: 'failure',
-        message: payload._id
-          ? `Task (${payload.taskId}}) failed to update`
-          : `Task (${payload.title.substring(0, 10)}..}) failed to create`,
-      });
+      return outcome;
+    } catch (error) {
+      return httpHandleError(
+        messageId,
+        error,
+        action,
+        payload.title.substring(0, 10)
+      );
     }
-    // commit('UPDATE_PROJECTS', response.data.data);
-    dispatch('fetchTasks');
-    dispatch('fetchLogs', { domain: 'Task', reference: payload._id });
   },
   async moveTask({ commit, dispatch, rootState }: any, payload: any) {
+    const action = 'Move Task';
     const moveTask = state.tasks.find(item => item._id === payload.moveTaskId);
     const messageId = newMessageId();
-    sendMessage('notification', true, {
-      id: messageId,
-      type: 'running',
-      message: `Moving task (${moveTask?.taskId}})`,
-    });
+    httpHandleRequest(messageId, action, moveTask?.taskId);
     try {
       const response = await axios.post(
         `${baseUrl}/task/${rootState.profile.space}/${rootState.project.project._id}/move`,
@@ -145,28 +164,18 @@ const actions = {
           },
         }
       );
-      if (response.status === 200) {
-        sendMessage('notification', true, {
-          id: messageId,
-          type: 'success',
-          message: `Task (${moveTask?.taskId}) moved`,
-          duration: 3000,
-        });
-      } else {
-        sendMessage('notification', true, {
-          id: messageId,
-          type: 'failure',
-          message: `Task (${moveTask?.taskId}}) failed to move`,
-        });
+      const outcome = httpHandleResponse(
+        messageId,
+        response,
+        action,
+        moveTask?.taskId
+      );
+      if (outcome) {
+        dispatch('fetchTasks');
       }
-      // commit('UPDATE_PROJECTS', response.data.data);
-      dispatch('fetchTasks');
+      return outcome;
     } catch (error) {
-      sendMessage('notification', true, {
-        id: messageId,
-        type: 'error',
-        message: `Task (${moveTask?.taskId}) failed to move`,
-      });
+      return httpHandleError(messageId, error, action, moveTask?.taskId);
     }
   },
   addTaskToView({ commit, dispatch, rootState }: any, payload: any) {

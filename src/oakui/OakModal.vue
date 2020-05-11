@@ -6,7 +6,7 @@
   >
     <div class="backdrop-fade" @click="$emit('close')" />
     <div class="oak-modal">
-      <div class="modal">
+      <div class="modal" v-bind:class="error ? 'error' : ''">
         <div :class="visible ? 'container' : 'container hidetext'">
           <div class="modal-header">
             <div class="left">
@@ -23,9 +23,9 @@
               </div>
             </div>
           </div>
-          <!-- <div v-if="$slots['modal-container']" class="modal-container">
+          <template v-if="$slots['modal-container']">
             <slot name="modal-container" />
-          </div> -->
+          </template>
           <div v-if="$slots['modal-body']" class="modal-body">
             <slot name="modal-body" />
           </div>
@@ -46,6 +46,7 @@ export default {
     fullscreen: Boolean,
     noheader: Boolean,
     donotMobilize: Boolean,
+    error: Boolean,
   },
   data() {
     return {

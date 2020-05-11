@@ -27,6 +27,7 @@ describe('ProjectContextNav.vue', () => {
           space: 'teststace',
           auth: {
             isAuth: true,
+            _id: '2',
           },
         };
       },
@@ -37,6 +38,16 @@ describe('ProjectContextNav.vue', () => {
       },
       getTaskToView: () => {
         return null;
+      },
+      getRolesByProjectId: (state: any) => (id: string) => {
+        return [
+          {
+            _id: 1,
+            type: 'ProjectAdministrator',
+            userId: '2',
+            domainId: '1',
+          },
+        ];
       },
     };
     actions = {

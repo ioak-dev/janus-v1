@@ -28,7 +28,7 @@ export default {
       return (
         this.type === 'Story' ||
         this.type === 'Task' ||
-        this.type === 'Sub-Task' ||
+        this.type === 'Sub-task' ||
         this.type === 'Defect' ||
         this.type === 'Epic'
       );

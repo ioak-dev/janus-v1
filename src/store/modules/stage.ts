@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { newMessageId, sendMessage } from '@/events/MessageService';
+import {
+  newMessageId,
+  sendMessage,
+  httpHandleRequest,
+  httpHandleResponse,
+  httpHandleError,
+} from '@/events/MessageService';
 
 const baseUrl = process.env.VUE_APP_ROOT_API;
 
@@ -35,29 +41,67 @@ const actions = {
     commit('UPDATE_STAGES', response.data.data);
   },
   async saveStage({ commit, dispatch, rootState }: any, payload: any) {
-    const response = await axios.put(
-      `${baseUrl}/stage/${rootState.profile.space}/`,
-      payload,
-      {
-        headers: {
-          Authorization: `${rootState.profile.auth.token}`,
-        },
+    const action = 'Save Workflow Stage';
+    const messageId = newMessageId();
+    httpHandleRequest(messageId, action, payload.name.substring(0, 10));
+    try {
+      const response = await axios.put(
+        `${baseUrl}/stage/${rootState.profile.space}/`,
+        payload,
+        {
+          headers: {
+            Authorization: `${rootState.profile.auth.token}`,
+          },
+        }
+      );
+
+      const outcome = httpHandleResponse(
+        messageId,
+        response,
+        action,
+        payload.name.substring(0, 10)
+      );
+      if (outcome) {
+        dispatch('fetchStages');
       }
-    );
-    dispatch('fetchStages');
-    // commit('UPDATE_PROJECTS', response.data.data);
+      return outcome;
+    } catch (error) {
+      return httpHandleError(
+        messageId,
+        error,
+        action,
+        payload.name.substring(0, 10)
+      );
+    }
   },
   async deleteStage({ commit, dispatch, rootState }: any, id: any) {
-    const response = await axios.delete(
-      `${baseUrl}/stage/${rootState.profile.space}/${id}`,
-      {
-        headers: {
-          Authorization: `${rootState.profile.auth.token}`,
-        },
+    const action = 'Delete Workflow Stage';
+    const messageId = newMessageId();
+    const deleteItem: any = state.stages.find((item: any) => item._id === id);
+    httpHandleRequest(messageId, action, deleteItem?.name);
+    try {
+      const response = await axios.delete(
+        `${baseUrl}/stage/${rootState.profile.space}/${id}`,
+        {
+          headers: {
+            Authorization: `${rootState.profile.auth.token}`,
+          },
+        }
+      );
+
+      const outcome = httpHandleResponse(
+        messageId,
+        response,
+        action,
+        deleteItem?.name
+      );
+      if (outcome) {
+        dispatch('fetchStages');
       }
-    );
-    dispatch('fetchStages');
-    // commit('UPDATE_PROJECTS', response.data.data);
+      return outcome;
+    } catch (error) {
+      return httpHandleError(messageId, error, action, deleteItem?.name);
+    }
   },
   async moveStage({ commit, dispatch, rootState }: any, payload: any) {
     const moveStage: any = state.stages.find(

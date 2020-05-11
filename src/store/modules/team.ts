@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { sendMessage, newMessageId } from '@/events/MessageService';
+import {
+  sendMessage,
+  newMessageId,
+  httpHandleRequest,
+  httpHandleResponse,
+  httpHandleError,
+} from '@/events/MessageService';
 
 const baseUrl = process.env.VUE_APP_ROOT_API;
 
@@ -89,43 +95,38 @@ const actions = {
     dispatch('fetchTeams');
   },
   async saveTeam({ commit, dispatch, rootState }: any, payload: any) {
+    const action = 'Save Team';
     const messageId = newMessageId();
-    sendMessage('notification', true, {
-      id: messageId,
-      type: 'running',
-      message: payload._id
-        ? `Updating team (${payload.name})`
-        : `Creating team (${payload.name})`,
-    });
-    const response = await axios.put(
-      `${baseUrl}/team/${rootState.profile.space}/`,
-      payload,
-      {
-        headers: {
-          Authorization: `${rootState.profile.auth.token}`,
-        },
+    httpHandleRequest(messageId, action, payload.name.substring(0, 10));
+    try {
+      const response = await axios.put(
+        `${baseUrl}/team/${rootState.profile.space}/`,
+        payload,
+        {
+          headers: {
+            Authorization: `${rootState.profile.auth.token}`,
+          },
+        }
+      );
+
+      const outcome = httpHandleResponse(
+        messageId,
+        response,
+        action,
+        payload.name.substring(0, 10)
+      );
+      if (outcome) {
+        dispatch('fetchTeams');
       }
-    );
-    if (response.status === 200) {
-      sendMessage('notification', true, {
-        id: messageId,
-        type: 'success',
-        message: payload._id
-          ? `Team (${payload.name}) updated`
-          : `Team (${payload.name}) created`,
-        duration: 3000,
-      });
-    } else {
-      sendMessage('notification', true, {
-        id: messageId,
-        type: 'failure',
-        message: payload._id
-          ? `Team (${payload.name}) failed to update`
-          : `Team (${payload.name}) failed to create`,
-      });
+      return outcome;
+    } catch (error) {
+      return httpHandleError(
+        messageId,
+        error,
+        action,
+        payload.name.substring(0, 10)
+      );
     }
-    // commit('UPDATE_PROJECTS', response.data.data);
-    dispatch('fetchTeams');
   },
 };
 

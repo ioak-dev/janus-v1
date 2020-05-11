@@ -8,7 +8,16 @@
         </div>
       </div>
       <div class="right">
-        <Avatar v-if="assignedToUser" v-bind:user="assignedToUser" />
+        <template v-for="(member, index) in members">
+          <Avatar
+            v-if="index < 2"
+            v-bind:user="member"
+            v-bind:key="member._id"
+          />
+        </template>
+        <div v-if="members.length > 2" class="members-more">
+          {{ `+${members.length - 2}` }}
+        </div>
       </div>
     </div>
     <div class="row-two">
@@ -28,6 +37,11 @@
         Jan 31
       </div>
     </div>
+    <div class="row-four" v-if="epic">
+      <div>
+        <EpicBadge v-bind:epic="epic" />
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -37,6 +51,7 @@ import TaskPriorityBadge from '../Task/TaskPriorityBadge.vue';
 import TaskStatusBadge from '../Task/TaskStatusBadge.vue';
 import TaskChildCountBadge from '../Task/TaskChildCountBadge.vue';
 import TaskAttachmentCountBadge from '../Task/TaskAttachmentCountBadge.vue';
+import EpicBadge from '../Task/EpicBadge.vue';
 import { mapGetters } from 'vuex';
 export default {
   name: 'CardPreview',
@@ -48,11 +63,22 @@ export default {
     TaskStatusBadge,
     TaskChildCountBadge,
     TaskAttachmentCountBadge,
+    EpicBadge,
   },
   computed: {
-    ...mapGetters(['getUserById', 'getSubtasksByTaskId']),
+    ...mapGetters(['getUserById', 'getSubtasksByTaskId', 'getTaskById']),
     assignedToUser: function() {
       return this.getUserById(this.task.assignedTo);
+    },
+    epic: function() {
+      return this.getTaskById(this.task.epic);
+    },
+    members: function() {
+      const memberList = [];
+      this.task.assignedTo?.forEach(item =>
+        memberList.push(this.getUserById(item))
+      );
+      return memberList;
     },
   },
 };
@@ -66,8 +92,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .left,
-    .right {
+    .left {
       display: grid;
       grid-auto-flow: column;
       column-gap: 6px;
@@ -77,13 +102,21 @@ export default {
         align-items: center;
       }
     }
-    .left {
-    }
     .right {
-      .task-status {
-        &.complete {
-          color: var(--color-success);
-        }
+      display: grid;
+      grid-auto-flow: column;
+      column-gap: 4px;
+      overflow: hidden;
+      .members-more {
+        border: 1px solid var(--color-foreground-1);
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8em;
       }
     }
   }
@@ -109,6 +142,11 @@ export default {
         align-items: center;
       }
     }
+  }
+  .row-four {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
   //   .top-row {
   //     display: grid;
