@@ -1,5 +1,4 @@
 export function sessionSet(domainId: string, key: string, value: string) {
-  console.log(domainId);
   const sessionData = sessionStorage.getItem(domainId);
   let dataContainer: any = {};
   if (sessionData) {
