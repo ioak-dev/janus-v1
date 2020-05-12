@@ -26,7 +26,7 @@ export default {
   name: 'Topbar',
   data: function() {
     return {
-      janusLogo: require('@/assets/janus_logo.svg'),
+      janusLogo: require('@/assets/janus_white.svg'),
     };
   },
   components: {
