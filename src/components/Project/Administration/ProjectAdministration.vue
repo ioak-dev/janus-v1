@@ -2,7 +2,7 @@
   <div class="planning" v-bind:class="styleClass">
     <!-- <img v-bind:src="getProject.image" />{{ getProject.image }} -->
     <div class="left">
-      <div class="toolbar-container desktop-only" v-bind:class="styleClass">
+      <div class="toolbar-container" v-bind:class="styleClass">
         <Toolbar @viewTypeChange="switchView" />
       </div>
       <div class="planning-content">
@@ -10,9 +10,6 @@
         <ProjectAdministrators v-if="view === 'administrators'" />
         <ProjectChangeBackground v-if="view === 'background'" />
       </div>
-    </div>
-    <div class="right">
-      <Toolbar />
     </div>
   </div>
 </template>

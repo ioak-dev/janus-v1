@@ -2,7 +2,7 @@
   <div class="planning" v-bind:class="styleClass">
     <!-- <img v-bind:src="getProject.image" />{{ getProject.image }} -->
     <div class="left">
-      <div class="toolbar-container desktop-only" v-bind:class="styleClass">
+      <div class="toolbar-container" v-bind:class="styleClass">
         <Toolbar @viewTypeChange="switchView" />
       </div>
       <div class="planning-content">
@@ -19,9 +19,9 @@
         <SprintView v-if="view === 'sprint'" />
         <TaskView v-if="view === 'task'" v-bind:taskId="selectedRecentTask" />
       </div>
-      <div class="toolbar-container mobile-only" v-bind:class="styleClass">
+      <!-- <div class="toolbar-container mobile-only" v-bind:class="styleClass">
         <Toolbar @viewTypeChange="switchView" />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

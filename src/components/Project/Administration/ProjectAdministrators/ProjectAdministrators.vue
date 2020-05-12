@@ -1,5 +1,5 @@
 <template>
-  <div class="project-administrator" v-bind:class="styleClass">
+  <div class="project-administrator">
     <div class="container" v-if="getProject">
       <div>
         <OakAutoComplete
@@ -34,12 +34,6 @@ export default {
       'getUserById',
       'getRolesByProjectId',
     ]),
-    styleClass: function() {
-      if (this.getProject?.image) {
-        return 'background-present';
-      }
-      return 'background-not-present';
-    },
     peopleList: function() {
       const people = [];
       this.getUsers?.forEach(item => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="team" v-bind:class="styleClass">
+  <div class="team">
     <!-- <div class="toolbar-container desktop-only" v-bind:class="styleClass">
       <Toolbar />
     </div> -->
@@ -47,12 +47,6 @@ export default {
       'findTeamById',
       'getProjectTeamsByProjectId',
     ]),
-    styleClass: function() {
-      if (this.getProject?.image) {
-        return 'background-present';
-      }
-      return 'background-not-present';
-    },
     teamList: function() {
       const teams = [];
       this.getTeams?.forEach(item => {

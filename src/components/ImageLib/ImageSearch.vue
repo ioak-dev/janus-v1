@@ -23,7 +23,7 @@
       <div class="thumb" v-for="item in getImages" v-bind:key="item.id">
         <img
           v-bind:src="item.urls.thumb"
-          @click="chooseImage(item.urls.full)"
+          @click="chooseImage(item.urls.regular)"
         />
       </div>
     </div>
