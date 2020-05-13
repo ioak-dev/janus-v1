@@ -13,27 +13,27 @@
     >
       <CardPreview v-bind:task="task" />
     </div>
-    <OakModal
+    <!-- <OakModal
       @close="toggleTask"
       v-bind:visible="editTask"
       label="Quick Edit - Task"
       v-bind:error="editTaskError"
     >
-      <div slot="modal-body">
-        <UpdateTask
-          v-bind:task="task"
-          @success="toggleTask"
-          @failure="handleFailure"
-        />
-      </div>
-    </OakModal>
+      <div slot="modal-body"> -->
+    <UpdateTask
+      @toggle="toggleTask"
+      v-bind:visible="editTask"
+      v-bind:task="task"
+    />
+    <!-- </div>
+    </OakModal> -->
   </div>
 </template>
 
 <script>
 import { sendMessage } from '@/events/MessageService';
 import { mapGetters, mapActions } from 'vuex';
-import UpdateTask from '@/components/Create/UpdateTask.vue';
+import UpdateTask from '@/components/Project/Task/UpdateTask.vue';
 import OakModal from '@/oakui/OakModal.vue';
 import CardPreview from './CardPreview.vue';
 
@@ -41,7 +41,7 @@ export default {
   name: 'Card',
   components: {
     UpdateTask,
-    OakModal,
+    // OakModal,
     CardPreview,
   },
   props: {
@@ -53,7 +53,6 @@ export default {
   data: function() {
     return {
       editTask: false,
-      editTaskError: false,
       dragClass: '',
     };
   },
@@ -110,12 +109,8 @@ export default {
       // listItem.style.display = 'block';
       // e.target.appendChild(listItem);
     },
-    handleFailure: function() {
-      this.editTaskError = true;
-    },
     toggleTask: function() {
       this.editTask = !this.editTask;
-      this.editTaskError = false;
     },
   },
 };

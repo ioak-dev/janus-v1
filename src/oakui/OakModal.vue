@@ -18,8 +18,8 @@
             </div>
             <div class="right">
               <div @click="$emit('close')">
-                <i class="material-icons">close</i>
-                <div class="text-esc">esc</div>
+                <i class="material-icons modal-close-icon">close</i>
+                <!-- <div class="text-esc">esc</div> -->
               </div>
             </div>
           </div>

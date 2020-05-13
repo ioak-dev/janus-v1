@@ -2,6 +2,7 @@
   --metric-formelement-height: 36px;
   --metric-formelement-height-mobile: 32px;
   --metric-formelement-padding: 0 16px;
+  --metric-formelement-label-size: 14px;
   --metric-space-vertical: 10px;
   --metric-space-horizontal: 10px;
 
@@ -229,4 +230,8 @@
   display: -webkit-box !important;
   -webkit-line-clamp: 1; /* number of lines to show */
   -webkit-box-orient: vertical;
+}
+
+.formelement-label {
+  font-size: var(--metric-formelement-label-size);
 }

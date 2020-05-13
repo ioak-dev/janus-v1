@@ -1,13 +1,17 @@
 <template>
-  <div>
-    <div class="modal-body">
+  <OakModal
+    :visible="visible"
+    @close="$emit('toggle')"
+    :label="label || 'Choose task'"
+  >
+    <div class="modal-body" slot="modal-body">
       <div class="choose-task">
         <div class="search-bar">
           <div>
             <OakText
               v-bind:data="searchCriteria.text"
               id="text"
-              placeholder="Type to search by title"
+              label="Type to search by title"
               @change="handleChange"
             />
           </div>
@@ -15,26 +19,31 @@
             <OakSelect
               v-bind:data="searchCriteria.stageId"
               id="stageId"
+              label="Choose workflow"
               @change="handleChange"
               v-bind:objects="stageDropDown"
             />
           </div>
         </div>
         <div>
-          <!-- <div class="header">
-          <div></div>
-          <div>Task Id</div>
-          <div>Type</div>
-          <div>Title</div>
-        </div> -->
-          <div
-            v-for="item in view"
-            v-bind:key="item._id"
-            class="record"
-            @click="choose(item._id)"
-          >
-            <div class="select-radio">
-              <div v-if="item._id === chosenItem" class="active" />
+          <div v-for="item in view" v-bind:key="item._id" class="record">
+            <div v-if="multiselect">
+              <OakCheckbox
+                theme="primary"
+                variant="circle"
+                :id="item._id"
+                :data="chosenList.includes(item._id)"
+                @change="handleCheckboxChange"
+              />
+            </div>
+            <div v-else>
+              <OakRadio
+                theme="primary"
+                variant="circle"
+                :id="item._id"
+                :data="chosenItem === item._id"
+                @change="handleRadioChange"
+              />
             </div>
             <div>{{ item.taskId }}</div>
             <div>{{ item.type }}</div>
@@ -43,28 +52,56 @@
         </div>
       </div>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" slot="modal-footer">
       <OakButton
+        v-if="!chosenItem && chosenList.length === 0"
         @click="submit"
-        label="Choose selected"
+        label="Choose to proceed"
+        theme="default"
+        variant="regular disabled"
+      />
+      <OakButton
+        v-if="multiselect && chosenList.length > 0"
+        @click="submit"
+        :label="`${chosenList.length} selected`"
         theme="primary"
-        variant="appear"
+        variant="regular"
+      />
+      <OakButton
+        v-if="!multiselect && chosenItem"
+        @click="submit"
+        :label="`Choose selected`"
+        theme="primary"
+        variant="regular"
       />
     </div>
-  </div>
+  </OakModal>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 import OakButton from '@/oakui/OakButton.vue';
 import OakText from '@/oakui/OakText.vue';
 import OakSelect from '@/oakui/OakSelect.vue';
+import OakCheckbox from '@/oakui/OakCheckbox.vue';
 import { isEmptyOrSpaces } from '../../../Utils';
+import OakModal from '@/oakui/OakModal.vue';
+import OakRadio from '@/oakui/OakRadio.vue';
 export default {
   name: 'ChooseTask',
-  components: { OakButton, OakSelect, OakText },
+  components: {
+    OakButton,
+    OakSelect,
+    OakText,
+    OakCheckbox,
+    OakRadio,
+    OakModal,
+  },
   props: {
     task: Object,
     types: Array,
+    multiselect: Boolean,
+    visible: Boolean,
+    label: String,
   },
   data: function() {
     return {
@@ -118,21 +155,39 @@ export default {
     },
     stageDropDown: function() {
       const stageList = [];
-      this.getStagesByProjectId(this.task.projectId).forEach(item =>
+      this.getStagesByProjectId(this.task?.projectId)?.forEach(item =>
         stageList.push({ key: item._id, value: item.name })
       );
       return stageList;
+    },
+  },
+  watch: {
+    visible: function() {
+      this.chosenList = [];
+      this.chosenItem = null;
     },
   },
   methods: {
     handleChange: function() {
       this.searchCriteria[event.target.name] = event.target.value;
     },
-    choose: function(id) {
-      this.chosenItem = id;
+    handleCheckboxChange: function() {
+      if (event.target.checked) {
+        this.chosenList.push(event.target.name);
+      } else {
+        this.chosenList = this.chosenList.filter(
+          item => item !== event.target.name
+        );
+      }
+    },
+    handleRadioChange: function() {
+      this.chosenItem = event.target.name;
     },
     submit: function() {
-      this.$emit('choose', this.chosenItem);
+      this.$emit(
+        'choose',
+        this.multiselect ? this.chosenList : this.chosenItem
+      );
     },
   },
 };
@@ -152,7 +207,7 @@ export default {
     padding: 10px 0;
     display: grid;
     align-items: center;
-    grid-template-columns: auto auto auto 1fr;
+    grid-template-columns: auto repeat(3, 1fr);
     column-gap: 20px;
     border-bottom: 1px solid var(--color-background-5);
     user-select: none;

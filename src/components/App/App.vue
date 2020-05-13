@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="theme_dark themecolor_1">
+  <div id="app" class="themecolor_1" :class="getProfile.theme">
     <!-- <AuthInit /> -->
     <Notification />
     <!-- <Navigation /> -->

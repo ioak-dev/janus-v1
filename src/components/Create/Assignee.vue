@@ -1,7 +1,15 @@
 <template>
   <div class="assigned-to">
-    <div class="typography-4 form-element-label">
+    <!-- <div class="typography-4 form-element-label">
       Assign to
+    </div> -->
+    <div class="edit-content">
+      <OakAutoComplete
+        v-bind:id="'search-assignee-' + Math.random()"
+        @change="key => $emit('add', key)"
+        label="Search team members to assign"
+        v-bind:objects="peopleSearchList"
+      />
     </div>
     <div v-if="members && members.length > 0" class="view-content">
       <div class="container">
@@ -12,14 +20,6 @@
           >
         </div>
       </div>
-    </div>
-    <div class="edit-content">
-      <OakAutoComplete
-        v-bind:id="'search-assignee-' + Math.random()"
-        @change="key => $emit('add', key)"
-        label="Search team members to assign"
-        v-bind:objects="peopleSearchList"
-      />
     </div>
   </div>
 </template>

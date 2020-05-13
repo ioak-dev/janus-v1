@@ -30,16 +30,17 @@
         <UpdateTeam v-bind:team="teamStub" @success="toggleTeam" />
       </div>
     </OakModal>
-    <OakModal @close="toggleTask" v-bind:visible="newTask" label="New Task">
-      <div slot="modal-body">
-        <UpdateTask v-bind:task="taskStub" @success="toggleTask" />
-      </div>
-    </OakModal>
+    <NewTask
+      v-bind:task="taskStub"
+      @success="toggleTask"
+      v-bind:visible="newTask"
+      @toggle="toggleTask"
+    />
   </div>
 </template>
 <script>
 import UpdateProject from '@/components/Create/UpdateProject.vue';
-import UpdateTask from '@/components/Create/UpdateTask.vue';
+import NewTask from '@/components/Create/NewTask.vue';
 import UpdateStage from '@/components/Create/UpdateStage.vue';
 import UpdateTeam from '@/components/Create/UpdateTeam.vue';
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
@@ -74,7 +75,7 @@ export default {
   components: {
     OakPopoverMenu,
     UpdateProject,
-    UpdateTask,
+    NewTask,
     UpdateTeam,
     UpdateStage,
     OakModal,

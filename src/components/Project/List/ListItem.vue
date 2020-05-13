@@ -33,24 +33,19 @@
         <div class="one-liner">{{ task.priority }}</div>
       </div>
     </div>
-    <OakModal
-      @close="toggleTask"
+    <UpdateTask
+      v-bind:task="task"
+      @toggle="toggleTask"
       v-bind:visible="editTask"
-      label="Quick Edit - Task"
-    >
-      <div slot="modal-body">
-        <UpdateTask v-bind:task="task" @success="toggleTask" />
-      </div>
-    </OakModal>
+    />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { sendMessage } from '@/events/MessageService';
-import UpdateTask from '@/components/Create/UpdateTask.vue';
+import UpdateTask from '@/components/Project/Task/UpdateTask.vue';
 import Avatar from '@/components/Avatar/Avatar.vue';
-import OakModal from '@/oakui/OakModal.vue';
 import TaskTypeBadge from '../Task/TaskTypeBadge.vue';
 import TaskPriorityBadge from '../Task/TaskPriorityBadge.vue';
 import EpicBadge from '../Task/EpicBadge.vue';
@@ -59,7 +54,6 @@ export default {
   name: 'ListItem',
   components: {
     EpicBadge,
-    OakModal,
     UpdateTask,
     Avatar,
     TaskTypeBadge,

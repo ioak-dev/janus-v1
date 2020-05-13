@@ -20,7 +20,12 @@
       @keyup="$emit('change')"
       @blur="blurEvent"
     />
-    <label v-if="label" :for="id" :class="data ? 'active' : ''">
+    <label
+      v-if="label"
+      :for="id"
+      clas="formelement-label"
+      :class="data ? 'active' : ''"
+    >
       {{ label }}
     </label>
   </div>

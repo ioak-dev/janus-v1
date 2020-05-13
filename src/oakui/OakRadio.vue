@@ -1,25 +1,23 @@
 <template>
-  <div class="oak-check-box" :class="style">
-    <div class="checkbox-container">
-      <label class="checkbox">
-        <input
-          type="checkbox"
-          :name="id"
-          :checked="data"
-          :id="id"
-          @change="$emit('change')"
-          :disabled="disabled"
-        />
-        <label class="typography-5" :for="id">
-          {{ label }}
-        </label>
-      </label>
-    </div>
+  <div class="oak-radio" :class="style">
+    <!-- <div class="radio-container"> -->
+    <label class="container">
+      <input
+        type="radio"
+        :name="id"
+        :checked="data"
+        :id="id"
+        @change="$emit('change')"
+        :disabled="disabled"
+      />
+      <span class="checkmark"> </span>
+    </label>
+    <!-- </div> -->
   </div>
 </template>
 <script>
 export default {
-  name: 'OakCheckbox',
+  name: 'OakRadio',
   props: {
     label: String,
     id: String,
@@ -45,5 +43,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import './styles/oak-checkbox.scss';
+@import './styles/oak-radio.scss';
 </style>

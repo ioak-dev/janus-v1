@@ -4,12 +4,14 @@
     <CommonNav />
     <ProjectNav />
     <TeamNav />
+    <ThemeNav />
   </div>
 </template>
 <script>
 import CommonNav from './CommonNav.vue';
 import ProjectNav from './ProjectNav.vue';
 import TeamNav from './TeamNav.vue';
+import ThemeNav from './ThemeNav.vue';
 import Header from './Header.vue';
 export default {
   name: 'Sidebar',
@@ -18,14 +20,18 @@ export default {
     Header,
     ProjectNav,
     TeamNav,
+    ThemeNav,
   },
 };
 </script>
 <style scoped lang="scss">
 .sidebar {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: repeat(4, auto) 1fr;
   height: 100vh;
+  align-content: flex-start;
+  align-items: flex-end;
+  row-gap: 10px;
   overflow-y: auto;
   overflow-x: hidden;
 }

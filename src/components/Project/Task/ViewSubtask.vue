@@ -55,16 +55,14 @@
         label="Cancel"
       />
     </div>
-
-    <OakModal v-bind:visible="addDialog" @close="toggleAdd">
-      <div slot="modal-body">
-        <ChooseTask
-          @choose="handleAddTask"
-          v-bind:task="task"
-          v-bind:types="taskTypes"
-        />
-      </div>
-    </OakModal>
+    <ChooseTask
+      v-bind:visible="addDialog"
+      multiselect
+      @toggle="toggleAdd"
+      @choose="handleAddTask"
+      v-bind:task="task"
+      v-bind:types="taskTypes"
+    />
   </div>
 </template>
 <script>
@@ -79,7 +77,6 @@ import ChooseTask from '../Task/ChooseTask.vue';
 export default {
   name: 'ViewSubtask',
   components: {
-    OakModal,
     OakButton,
     OakText,
     OakSelect,
@@ -109,6 +106,9 @@ export default {
         case 'Story':
           response = ['Sub-task', 'Defect'];
           break;
+        case 'Epic':
+          response = ['Story', 'Task', 'Defect'];
+          break;
         case 'Task':
           return ['Sub-task', 'Defect'];
       }
@@ -129,10 +129,13 @@ export default {
       this.data[event.target.name] = event.target.value;
     },
     handleAddTask: function(chosenData) {
-      this.saveTask({
-        ...this.getTaskById(chosenData),
-        parentTaskId: this.task._id,
+      chosenData?.forEach(item => {
+        this.saveTask({
+          ...this.getTaskById(item),
+          parentTaskId: this.task._id,
+        });
       });
+
       this.toggleAdd();
     },
     save: function() {

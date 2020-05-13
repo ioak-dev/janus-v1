@@ -33,7 +33,7 @@
     </div>
     <OakModal @close="toggleTask" v-bind:visible="newTask" label="New Task">
       <div slot="modal-body">
-        <UpdateTask v-bind:task="taskStub" />
+        <NewTask v-bind:task="taskStub" />
       </div>
     </OakModal>
     <OakModal
@@ -51,10 +51,9 @@
 import { mapGetters, mapActions } from 'vuex';
 import Card from './Card';
 import { receiveMessage, sendMessage } from '@/events/MessageService';
-import UpdateTask from '@/components/Create/UpdateTask.vue';
+import NewTask from '@/components/Create/NewTask.vue';
 import UpdateStage from '@/components/Create/UpdateStage.vue';
 import OakModal from '@/oakui/OakModal.vue';
-import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
 import EmptyPlaceholderCard from './EmptyPlaceholderCard.vue';
 
 export default {
@@ -62,7 +61,7 @@ export default {
   components: {
     OakModal,
     Card,
-    UpdateTask,
+    NewTask,
     UpdateStage,
     EmptyPlaceholderCard,
   },

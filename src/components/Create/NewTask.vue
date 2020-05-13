@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="modal-body form">
+  <OakModal @close="$emit('toggle')" v-bind:visible="visible" label="New task">
+    <div slot="modal-body" class="form">
       <OakSelect
         v-if="!task.taskId"
         v-bind:data="data.projectId"
@@ -122,80 +122,6 @@
           class="space-right-2"
           v-if="task.taskId"
           theme="primary"
-          variant="disappear"
-          @click="openDetailedView"
-          icon="visibility"
-          label="View"
-        />
-        <OakButton
-          v-if="task.taskId"
-          class="space-right-2"
-          theme="secondary"
-          variant="disappear"
-          @click="openDetailedView"
-          icon="visibility"
-          label="View"
-        />
-        <OakButton
-          v-if="task.taskId"
-          class="space-right-2"
-          theme="tertiary"
-          variant="disappear"
-          @click="openDetailedView"
-          icon="visibility"
-          label="View"
-        />
-        <OakButton
-          v-if="task.taskId"
-          theme="default"
-          variant="disappear"
-          @click="openDetailedView"
-          icon="visibility"
-          label="View"
-        />
-      </div>
-      <div class="space-top-2 space-bottom-2">
-        <OakButton
-          class="space-right-2"
-          v-if="task.taskId"
-          theme="primary"
-          variant="block"
-          @click="openDetailedView"
-          icon="visibility"
-          label="View"
-        />
-        <OakButton
-          v-if="task.taskId"
-          class="space-right-2"
-          theme="secondary"
-          variant="block"
-          @click="openDetailedView"
-          icon="visibility"
-          label="View"
-        />
-        <OakButton
-          v-if="task.taskId"
-          class="space-right-2"
-          theme="tertiary"
-          variant="block"
-          @click="openDetailedView"
-          icon="visibility"
-          label="View"
-        />
-        <OakButton
-          v-if="task.taskId"
-          theme="default"
-          variant="block"
-          @click="openDetailedView"
-          icon="visibility"
-          label="View"
-        />
-      </div>
-      <div class="space-top-2 space-bottom-2">
-        <OakButton
-          class="space-right-2"
-          v-if="task.taskId"
-          theme="primary"
           variant="outline"
           @click="openDetailedView"
           icon="visibility"
@@ -237,7 +163,7 @@
         />
       </div>
     </div>
-    <div class="modal-footer">
+    <div slot="modal-footer" class="modal-footer">
       <div>
         <OakButton
           v-if="task.taskId"
@@ -258,10 +184,10 @@
         />
       </div>
     </div>
-  </div>
+  </OakModal>
 </template>
 <script>
-import OakShowdown from '@/oakui/OakShowdown.vue';
+import OakModal from '@/oakui/OakModal.vue';
 import OakDialog from '@/oakui/OakDialog.vue';
 import OakText from '@/oakui/OakText.vue';
 import OakButton from '@/oakui/OakButton.vue';
@@ -275,9 +201,10 @@ import { mapActions, mapGetters } from 'vuex';
 import { sendMessage } from '../../events/MessageService';
 
 export default {
-  name: 'UpdateTask',
+  name: 'NewTask',
   components: {
     OakEditor,
+    OakModal,
     OakButton,
     OakText,
     OakSelect,
@@ -285,6 +212,7 @@ export default {
   },
   props: {
     task: Object,
+    visible: Boolean,
   },
   data: function() {
     return {

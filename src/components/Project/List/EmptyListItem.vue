@@ -17,9 +17,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { sendMessage } from '@/events/MessageService';
-import UpdateTask from '@/components/Create/UpdateTask.vue';
-import Avatar from '@/components/Avatar/Avatar.vue';
-import OakModal from '@/oakui/OakModal.vue';
 export default {
   name: 'EmptyListItem',
   props: {

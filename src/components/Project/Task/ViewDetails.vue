@@ -95,37 +95,28 @@
         label="Save basic details"
       />
     </div>
-    <OakModal
+    <ChooseTask
       v-bind:visible="parentSelectionDialogOpen"
-      @close="toggleParentSelectionDialogOpen"
-    >
-      <div slot="modal-body">
-        <ChooseTask
-          @choose="handleParentTaskChange"
-          v-bind:task="task"
-          v-bind:types="['Story', 'Task']"
-        />
-      </div>
-    </OakModal>
-    <OakModal
+      @toggle="toggleParentSelectionDialogOpen"
+      @choose="handleParentTaskChange"
+      v-bind:task="task"
+      label="Choose parent task"
+      v-bind:types="['Story', 'Task']"
+    />
+    <ChooseTask
       v-bind:visible="epicSelectionDialogOpen"
-      @close="toggleEpicSelectionDialogOpen"
-    >
-      <div slot="modal-body">
-        <ChooseTask
-          @choose="handleEpicChange"
-          v-bind:task="task"
-          v-bind:types="['Epic']"
-        />
-      </div>
-    </OakModal>
+      @toggle="toggleEpicSelectionDialogOpen"
+      @choose="handleEpicChange"
+      v-bind:task="task"
+      label="Choose epic"
+      v-bind:types="['Epic']"
+    />
   </div>
 </template>
 <script>
 import OakSelect from '@/oakui/OakSelect.vue';
 import OakEditor from '@/oakui/OakEditor.vue';
 import OakButton from '@/oakui/OakButton.vue';
-import OakModal from '@/oakui/OakModal.vue';
 import Assignee from '@/components/Create/Assignee.vue';
 import { mapActions, mapGetters } from 'vuex';
 import OakText from '@/oakui/OakText.vue';
@@ -138,7 +129,6 @@ export default {
     OakSelect,
     Assignee,
     OakButton,
-    OakModal,
     ChooseTask,
   },
   props: { task: Object },

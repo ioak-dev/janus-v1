@@ -40,6 +40,6 @@ export default {
       background-color: var(--color-primary-1);
     }
   }
-  padding-bottom: 10px;
+  // padding-bottom: 10px;
 }
 </style>

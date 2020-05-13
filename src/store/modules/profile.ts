@@ -1,5 +1,5 @@
 const state = {
-  theme: 'theme_light',
+  theme: 'theme_dark',
   space: '',
   auth: {},
   sidebar: true,
@@ -12,8 +12,9 @@ const getters = {
 };
 
 const actions = {
-  setTheme({ commit }: any, theme: any) {
-    commit('UPDATE_PROFILE', { ...state, theme });
+  setTheme({ commit }: any, theme: string) {
+    console.log(theme);
+    commit('UPDATE_PROFILE', { ...state, theme: theme });
   },
   setSpace({ commit }: any, space: any) {
     commit('UPDATE_PROFILE', { ...state, space });

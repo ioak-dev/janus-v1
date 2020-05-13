@@ -77,7 +77,7 @@ export default {
   flex-direction: column;
   // border-top: 1px solid var(--color-background-2);
   // border-bottom: 1px solid var(--color-background-2);
-  padding: 10px 0px;
+  // padding: 10px 0px;
   a {
     text-decoration: none;
     color: #fcfcfc;
