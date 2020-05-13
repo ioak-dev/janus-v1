@@ -46,6 +46,7 @@
     }
   }
   .content {
+    overflow-y: hidden;
     &.active {
       display: block;
       animation: slide-up 0.3s ease;

@@ -1,29 +1,35 @@
 <template>
   <div class="view-subtask">
-    <div v-for="item in subtasks" v-bind:key="item._id">
-      <SubtaskRow v-bind:subtask="item" />
-    </div>
     <div class="create-sub-task" v-if="data.showNew">
-      <div class="typography-4">Type</div>
       <div v-if="taskTypes.length > 1">
         <OakSelect
           v-bind:data="data.type"
           id="type"
+          label="Task type"
           @change="handleChange"
           v-bind:elements="taskTypes"
         />
       </div>
       <div v-else>{{ taskTypes[0] }}</div>
-      <div class="typography-4">Title</div>
-      <OakText id="title" v-bind:data="data.title" @change="handleChange" />
-      <div class="typography-4">Description</div>
+      <OakText
+        id="title"
+        label="Summary"
+        v-bind:data="data.title"
+        @change="handleChange"
+      />
       <OakText
         id="description"
+        label="Description"
         v-bind:data="data.description"
         @change="handleChange"
         multiline
         v-bind:rows="10"
       />
+    </div>
+    <div class="list-view" v-else>
+      <div v-for="item in subtasks" v-bind:key="item._id">
+        <SubtaskRow v-bind:subtask="item" />
+      </div>
     </div>
     <div class="action">
       <OakButton
@@ -155,13 +161,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .view-subtask {
+  .list-view {
+    display: grid;
+    grid-auto-flow: row;
+    row-gap: 20px;
+  }
   .create-sub-task {
     display: grid;
-    grid-template-columns: auto 1fr;
-    row-gap: 20px;
-    column-gap: 20px;
+    grid-auto-flow: row;
   }
   .action {
+    padding-top: 20px;
     display: grid;
     grid-auto-flow: column;
     column-gap: 20px;

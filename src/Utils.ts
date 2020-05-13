@@ -32,3 +32,9 @@ export function sort(array: any, property: string, isReverseOrder: boolean) {
 
   return result;
 }
+
+export function htmlToText(str: string) {
+  if (str === null || str === '') return false;
+  else str = str.toString();
+  return str.replace(/(<([^>]+)>)/gi, '');
+}

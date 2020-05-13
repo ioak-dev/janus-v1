@@ -16,7 +16,6 @@
           >
         </div>
         <div class="label">{{ item.label }}</div>
-
         <!-- <div class="tooltip">
           Hover over me
           <span class="tooltiptext">Tooltip text</span>

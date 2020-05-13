@@ -26,12 +26,15 @@
       </div>
       <div slot="comments">
         <div class="content single-column comments-section" slot="content">
+          <!-- <template v-if="!comment.showNew"> -->
           <div v-for="item in getCommentsForTask" v-bind:key="item._id">
             <ViewComment v-bind:comment="item" />
           </div>
+          <!-- </template> -->
           <OakText
             v-if="comment.showNew"
             id="text"
+            label="Comment text"
             v-bind:data="comment.text"
             @change="handleCommentChange"
             multiline
@@ -50,7 +53,7 @@
               theme="primary"
               variant="appear"
               @click="toggleAddComment"
-              label="Add Comment"
+              label="New Comment"
             />
             <OakButton
               v-if="comment.showNew"
@@ -230,6 +233,13 @@ export default {
         display: grid;
         grid-template-columns: auto;
       }
+    }
+    .action {
+      padding-top: 20px;
+      display: grid;
+      grid-auto-flow: column;
+      column-gap: 20px;
+      justify-content: center;
     }
   }
 }

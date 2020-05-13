@@ -31,7 +31,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .view-comment {
-  background-color: var(--color-background-3);
+  background-color: var(--color-background-4);
   padding: 10px;
   margin: 0 20px;
   border-radius: 4px;
