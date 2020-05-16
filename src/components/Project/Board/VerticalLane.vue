@@ -85,6 +85,8 @@ export default {
         assignedTo: [],
         parentTaskId: null,
         projectId: '',
+        timeEstimate: 0,
+        storyPoints: 0,
       },
     };
   },

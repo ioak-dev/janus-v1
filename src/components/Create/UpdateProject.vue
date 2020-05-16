@@ -1,6 +1,12 @@
 <template>
   <div>
     <div class="modal-body form">
+      <OakText
+        v-bind:data="data.name"
+        id="name"
+        label="Project name"
+        @change="handleChange"
+      />
       <OakSelect
         v-bind:data="data.type"
         id="type"
@@ -8,11 +14,12 @@
         label="Project methodology"
         v-bind:elements="['Kanban', 'Scrum']"
       />
-      <OakText
-        v-bind:data="data.name"
-        id="name"
-        label="Project name"
+      <OakSelect
+        v-bind:data="data.estimationMetric"
+        id="estimationMetric"
         @change="handleChange"
+        label="Estimation metric"
+        v-bind:elements="['Story points', 'Time estimate']"
       />
     </div>
     <div class="modal-footer">

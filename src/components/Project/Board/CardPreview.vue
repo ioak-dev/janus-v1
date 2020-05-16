@@ -34,7 +34,27 @@
         <TaskStatusBadge v-bind:status="task.status" />
       </div>
       <div class="right typography-3">
-        Jan 31
+        <div>Jan 31</div>
+        <div
+          class="estimate"
+          v-if="
+            getProject &&
+              getProject.estimationMetric === 'Time estimate' &&
+              task.timeEstimate > 0
+          "
+        >
+          {{ task.timeEstimate }}
+        </div>
+        <div
+          class="estimate"
+          v-if="
+            getProject &&
+              getProject.estimationMetric === 'Story points' &&
+              task.storyPoints > 0
+          "
+        >
+          {{ task.storyPoints }}
+        </div>
       </div>
     </div>
     <div class="row-four" v-if="epic">
@@ -66,7 +86,12 @@ export default {
     EpicBadge,
   },
   computed: {
-    ...mapGetters(['getUserById', 'getSubtasksByTaskId', 'getTaskById']),
+    ...mapGetters([
+      'getUserById',
+      'getSubtasksByTaskId',
+      'getTaskById',
+      'getProject',
+    ]),
     assignedToUser: function() {
       return this.getUserById(this.task.assignedTo);
     },
@@ -140,6 +165,17 @@ export default {
       .material-icons {
         display: flex;
         align-items: center;
+      }
+    }
+    .right {
+      display: grid;
+      grid-auto-flow: column;
+      column-gap: 2px;
+
+      .estimate {
+        background-color: var(--color-foreground-5);
+        padding: 0 4px;
+        border-radius: 4px;
       }
     }
   }

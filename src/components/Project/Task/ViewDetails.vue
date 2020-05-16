@@ -28,6 +28,24 @@
         v-bind:elements="['Low', 'Medium', 'High', 'Critical']"
         @change="handleChange"
       />
+      <OakText
+        v-if="
+          chosenProject && chosenProject.estimationMetric === 'Time estimate'
+        "
+        v-bind:data="data.timeEstimate"
+        id="timeEstimate"
+        :label="`Time estimate (${data.timeEstimate} hours)`"
+        @change="handleChange"
+        type="number"
+      />
+      <OakText
+        v-else
+        v-bind:data="data.storyPoints"
+        id="storyPoints"
+        label="Story points"
+        @change="handleChange"
+        type="number"
+      />
       <Assignee
         v-bind:assignedTo="data.assignedTo"
         @remove="removeAssignee"
@@ -157,6 +175,9 @@ export default {
         projectList.push({ key: item._id, value: item.name })
       );
       return projectList;
+    },
+    chosenProject: function() {
+      return this.getProjectById(this.data.projectId);
     },
     stageDropDown: function() {
       const stageList = [];
