@@ -223,7 +223,7 @@ export default {
         priority: '',
         title: '',
         description: '',
-        assignedTo: '',
+        assignedTo: [],
       },
     };
   },

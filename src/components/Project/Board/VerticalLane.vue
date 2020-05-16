@@ -31,11 +31,12 @@
         </div>
       </div>
     </div>
-    <OakModal @close="toggleTask" v-bind:visible="newTask" label="New Task">
-      <div slot="modal-body">
-        <NewTask v-bind:task="taskStub" />
-      </div>
-    </OakModal>
+    <NewTask
+      v-bind:task="taskStub"
+      v-bind:visible="newTask"
+      @toggle="toggleTask"
+      @success="toggleTask"
+    />
     <OakModal
       @close="toggleStage"
       v-bind:visible="editStage"
@@ -81,7 +82,7 @@ export default {
         title: '',
         description: '',
         priority: '',
-        assignedTo: null,
+        assignedTo: [],
         parentTaskId: null,
         projectId: '',
       },
@@ -91,7 +92,11 @@ export default {
     ...mapActions(['moveStage', 'saveTask']),
     toggleTask: function() {
       this.newTask = !this.newTask;
-      this.taskStub = { ...this.taskStub, projectId: this.getProject._id };
+      this.taskStub = {
+        ...this.taskStub,
+        projectId: this.getProject._id,
+        assignedTo: [],
+      };
     },
     toggleStage: function() {
       this.editStage = !this.editStage;
