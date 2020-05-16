@@ -155,10 +155,11 @@ export default {
       if (outcome) {
         // this.$emit('success');
         this.$emit('toggle');
-      } else {
-        // this.$emit('failure');
-        console.log('failed to save task');
       }
+      // else {
+      //   // this.$emit('failure');
+      //   console.log('failed to save task');
+      // }
     },
     removeAssignee: function(key) {
       this.data.assignedTo = this.data.assignedTo.filter(item => item !== key);
