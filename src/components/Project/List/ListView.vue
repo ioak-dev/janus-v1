@@ -1,12 +1,5 @@
 <template>
   <div class="list-view">
-    <div class="search-container">
-      <OakText
-        v-bind:data="searchCriteria.field ? '' : searchCriteria.text"
-        @change="handleSearchCriteriaChange"
-        label="Type to search"
-      />
-    </div>
     <div class="content-container">
       <div class="list-view-header">
         <SortableField
@@ -60,7 +53,7 @@ import SortableField from './SortableField.vue';
 import { sendMessage } from '../../../events/MessageService';
 export default {
   name: 'ListView',
-  components: { OakText, HorizontalLane, SortableField },
+  components: { HorizontalLane, SortableField },
   props: { searchCriteria: Object, sortCriteria: Object },
   computed: {
     ...mapGetters(['getStagesByProjectId', 'getProject']),

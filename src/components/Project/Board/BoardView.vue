@@ -1,12 +1,5 @@
 <template>
   <div class="board">
-    <div class="search-bar">
-      <OakText
-        v-bind:data="searchCriteria.field ? '' : searchCriteria.text"
-        label="Type to search"
-        @change="handleSearchCriteriaChange"
-      />
-    </div>
     <div class="board-content">
       <div v-for="stage in getStagesByProjectId()" v-bind:key="stage._id">
         <vertical-lane
@@ -26,14 +19,9 @@ import OakText from '@/oakui/OakText.vue';
 export default {
   name: 'BoardView',
   props: { searchCriteria: Object, sortCriteria: Object },
-  components: { VerticalLane, OakText },
+  components: { VerticalLane },
   computed: {
     ...mapGetters(['getStagesByProjectId', 'getProject']),
-  },
-  methods: {
-    handleSearchCriteriaChange: function() {
-      this.searchCriteria = { field: '', text: event.target.value };
-    },
   },
 };
 </script>

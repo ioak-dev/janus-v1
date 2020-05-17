@@ -2,10 +2,29 @@
   <div class="planning" v-bind:class="styleClass">
     <!-- <img v-bind:src="getProject.image" />{{ getProject.image }} -->
     <div class="left">
-      <div class="toolbar-container" v-bind:class="styleClass">
-        <Toolbar @viewTypeChange="switchView" />
+      <div v-bind:class="styleClass">
+        <Toolbar
+          class="toolbar-container"
+          @viewTypeChange="switchView"
+          @toggleFilter="toggleFilter"
+          :showFilterBar="showFilterBar"
+        />
+        <div
+          class="filterbar-container"
+          v-if="['board', 'list'].includes(view)"
+        >
+          <Filterbar
+            v-bind:class="showFilterBar ? 'show' : 'hide'"
+            @viewTypeChange="switchView"
+          />
+        </div>
       </div>
-      <div class="planning-content">
+      <div
+        class="planning-content"
+        v-bind:class="
+          ['board', 'list'].includes(view) && showFilterBar ? 'filter-on' : ''
+        "
+      >
         <ListView
           v-if="view === 'list'"
           v-bind:searchCriteria="searchCriteria"
@@ -32,12 +51,14 @@ import SprintView from './SprintView.vue';
 import BoardView from '../Board/BoardView.vue';
 import ListView from '../List/ListView.vue';
 import TaskView from '../Task/TaskView.vue';
+import Filterbar from './Filterbar.vue';
 import { receiveMessage, sendMessage } from '../../../events/MessageService';
 import { sessionSet, sessionGet } from '../../../events/SessionService';
 export default {
   name: 'ProjectDashboard',
   components: {
     Toolbar,
+    Filterbar,
     ListView,
     BoardView,
     SprintView,
@@ -45,6 +66,7 @@ export default {
   },
   data: function() {
     return {
+      showFilterBar: false,
       view: '',
       selectedRecentTask: '',
       searchCriteria: {
@@ -104,6 +126,9 @@ export default {
         this.addTaskToView(selectedRecentTask);
       }
     },
+    toggleFilter: function() {
+      this.showFilterBar = !this.showFilterBar;
+    },
   },
 };
 </script>
@@ -123,6 +148,19 @@ export default {
     //   background-color: var(--color-background-transparent-5);
     // }
   }
+  .filterbar-container {
+    background-color: var(--color-background-transparent-1);
+    .show {
+      height: 50px;
+      transition: height 0.2s ease-in-out;
+      overflow: hidden;
+    }
+    .hide {
+      height: 0;
+      overflow: hidden;
+      transition: height 0.2s ease-in-out;
+    }
+  }
   .planning-content {
     touch-action: none;
     // display: flex;
@@ -131,6 +169,9 @@ export default {
     overflow: auto;
     // overflow-y: scroll;
     height: calc(100vh - 60px - 50px);
+    &.filter-on {
+      height: calc(100vh - 60px - 50px - 50px);
+    }
   }
 }
 </style>

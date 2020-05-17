@@ -54,8 +54,15 @@
             </div>
           </OakPopoverMenu>
         </div>
-        <div>
-          <TaskFilter v-if="['board', 'list'].includes(page)" />
+        <div class="right">
+          <div @click="$emit('toggleFilter')" class="filter">
+            <OakIcon mat="filter_list" />
+            <div>Filter</div>
+            <OakIcon
+              mat="keyboard_arrow_down"
+              v-bind:class="showFilterBar ? 'show' : 'hide'"
+            />
+          </div>
         </div>
       </div>
     </template>
@@ -66,9 +73,11 @@
 import { mapGetters } from 'vuex';
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
 import TaskFilter from './TaskFilter.vue';
+import OakIcon from '@/oakui/OakIcon.vue';
 export default {
   name: 'Toolbar',
-  components: { OakPopoverMenu, TaskFilter },
+  props: { showFilterBar: Boolean },
+  components: { OakPopoverMenu, OakIcon },
   computed: {
     ...mapGetters([
       'getProfile',
@@ -179,6 +188,27 @@ export default {
   }
 
   .right {
+    .filter {
+      user-select: none;
+      cursor: pointer;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 6px;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      &.active {
+        background-color: var(--color-primary-1);
+      }
+
+      .show {
+        transform: scaleY(-1);
+        transition: transform 0.2s ease-in-out;
+      }
+      .hide {
+        transition: transform 0.2s ease-in-out;
+      }
+    }
   }
 }
 </style>

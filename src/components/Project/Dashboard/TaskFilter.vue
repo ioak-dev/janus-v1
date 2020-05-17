@@ -106,10 +106,7 @@ export default {
     this.loadFiltersFromSession();
     receiveMessage().subscribe(message => {
       if (message.name === 'request-task-filter-change-search') {
-        this.searchCriteria = {
-          field: message.data.field,
-          text: message.data.text,
-        };
+        this.search(message.data.field, message.data.text);
       } else if (message.name === 'request-task-filter-change-sort') {
         this.sortCriteria = {
           field: message.data.field,
