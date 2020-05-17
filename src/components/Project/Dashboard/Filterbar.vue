@@ -2,7 +2,7 @@
   <div>
     <template v-if="getProject">
       <div class="filterbar" v-bind:key="getProject._id">
-        <div class="left desktop-only">
+        <div class="left">
           <div class="search-bar">
             <OakText
               v-bind:data="searchText"
@@ -113,8 +113,10 @@ export default {
   line-height: 50px;
   // background-color: var(--color-background-1);
   // border-bottom: 1px solid var(--color-background-1);
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 10px;
+  // justify-content: space-between;
   align-items: center;
   margin: 0 10px;
 
@@ -122,6 +124,12 @@ export default {
     display: grid;
     grid-auto-flow: column;
     column-gap: 10px;
+
+    .search-bar {
+      .oak-text-field {
+        margin: 0;
+      }
+    }
   }
 
   .right {

@@ -2,7 +2,10 @@
   <div class="subtask-row">
     <div class="left">
       <div class="single-row">
-        <TaskTypeBadge v-bind:type="subtask.type" />{{ subtask.taskId }}
+        <TaskTypeBadge v-bind:type="subtask.type" />
+        <div class="task-id space-left-1" @click="toggleTask">
+          {{ subtask.taskId }}
+        </div>
       </div>
       <div>{{ subtask.title }}</div>
       <div class="two-liner typography-4">
@@ -28,21 +31,34 @@
         </div>
       </div>
     </div>
+    <UpdateTask
+      @toggle="toggleTask"
+      v-bind:visible="editTask"
+      v-bind:task="subtask"
+      :key="subtask._id"
+    />
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Avatar from '@/components/Avatar/Avatar.vue';
 import TaskTypeBadge from './TaskTypeBadge.vue';
+import UpdateTask from '@/components/Project/Task/UpdateTask.vue';
 import { htmlToText } from '../../../Utils';
+import { sendMessage } from '../../../events/MessageService';
 export default {
   name: 'SubtaskRow',
   props: {
     subtask: Object,
   },
-  components: { Avatar, TaskTypeBadge },
+  data: function() {
+    return {
+      editTask: false,
+    };
+  },
+  components: { Avatar, TaskTypeBadge, UpdateTask },
   computed: {
-    ...mapGetters(['getUserById']),
+    ...mapGetters(['getUserById', 'getProfile']),
     user: function() {
       return this.getUserById(this.subtask.createdBy);
     },
@@ -62,6 +78,19 @@ export default {
     toPlainText: function(text) {
       return htmlToText(text);
     },
+    toggleTask: function() {
+      // console.log(this.subtask.taskId);
+      // this.$emit('viewTypeChange', 'task', this.subtask.taskId);
+      // sendMessage('project-view-updated', true, {
+      //   view: 'task',
+      //   taskId: this.subtask.taskId,
+      // });
+      // this.$router.push({
+      //   path: `/${this.getProfile.space}/${this.subtask.projectId}/dashboard`,
+      //   query: { view: 'task', taskid: this.subtask.taskId },
+      // });
+      this.editTask = !this.editTask;
+    },
   },
 };
 </script>
@@ -77,6 +106,12 @@ export default {
     display: grid;
     grid-auto-flow: row;
     row-gap: 10px;
+    .task-id {
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
     .single-row {
       display: flex;
       align-items: center;

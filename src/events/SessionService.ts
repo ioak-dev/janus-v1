@@ -1,4 +1,4 @@
-export function sessionSet(domainId: string, key: string, value: string) {
+export function sessionSet(domainId: string, key: string, value: any) {
   const sessionData = sessionStorage.getItem(domainId);
   let dataContainer: any = {};
   if (sessionData) {

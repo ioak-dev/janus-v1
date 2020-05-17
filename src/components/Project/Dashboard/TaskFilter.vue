@@ -1,5 +1,26 @@
 <template>
   <div class="task-filter">
+    <div
+      class="filter-label"
+      v-bind:class="searchCriteriaMap.assignedTo ? 'active' : ''"
+      @click="searchAssignedToMe"
+    >
+      Assigned to me
+    </div>
+    <div>
+      <OakPopoverMenu
+        v-bind:elements="typeFilter"
+        id="board-view-filter-type"
+        right
+      >
+        <div slot="label" v-if="!searchCriteriaMap.type" class="filter-label">
+          Task type
+        </div>
+        <div slot="label" v-else class="filter-label active">
+          {{ `Task type: ${searchCriteriaMap.type}` }}
+        </div>
+      </OakPopoverMenu>
+    </div>
     <div>
       <OakPopoverMenu
         v-bind:elements="sortFields"
@@ -16,20 +37,6 @@
         </div>
       </OakPopoverMenu>
     </div>
-    <div>
-      <OakPopoverMenu
-        v-bind:elements="typeFilter"
-        id="board-view-filter-type"
-        right
-      >
-        <div slot="label" v-if="!searchCriteria.field" class="filter-label">
-          Task type
-        </div>
-        <div slot="label" v-else class="filter-label active">
-          {{ `Task type: ${searchCriteria.text}` }}
-        </div>
-      </OakPopoverMenu>
-    </div>
   </div>
 </template>
 <script>
@@ -42,7 +49,7 @@ export default {
   name: 'TaskFilter',
   data: function() {
     return {
-      searchCriteria: { field: '', text: '' },
+      searchCriteria: [{ field: '', text: '' }],
       sortCriteria: {
         field: '',
         ascending: true,
@@ -84,7 +91,7 @@ export default {
         },
         {
           label: 'Clear',
-          action: () => this.search('', ''),
+          action: () => this.search('type', ''),
           icon: 'close',
         },
       ],
@@ -122,16 +129,29 @@ export default {
     sortCriteria: function() {
       sessionSet(this.getProject._id, 'taskSortCriteria', this.sortCriteria);
     },
-    searchCriteria: function() {
-      sessionSet(
-        this.getProject._id,
-        'taskSearchCriteria',
-        this.searchCriteria
-      );
+    searchCriteria: {
+      deep: true,
+      handler() {
+        sessionSet(
+          this.getProject._id,
+          'taskSearchCriteria',
+          this.searchCriteria
+        );
+      },
     },
   },
   computed: {
-    ...mapGetters(['getProject']),
+    ...mapGetters(['getProject', 'getUserByEmail', 'getProfile']),
+    searchCriteriaMap: function() {
+      const result = {};
+      this.searchCriteria.forEach(item => {
+        result[item.field] = item.text;
+      });
+      return result;
+    },
+    user: function() {
+      return this?.getUserByEmail(this?.getProfile?.auth?.email);
+    },
   },
   methods: {
     sort: function(key) {
@@ -146,21 +166,30 @@ export default {
       sendMessage('task-filter-change-sort', true, this.sortCriteria);
     },
     search: function(field, text) {
-      this.searchCriteria = {
-        field,
-        text,
-      };
+      if (!text) {
+        this.searchCriteria = this.searchCriteria.filter(
+          item => item.field !== field
+        );
+      } else {
+        let update = false;
+        this.searchCriteria.forEach(item => {
+          if (item.field === field) {
+            item.text = text;
+            update = true;
+          }
+        });
+        if (!update) {
+          this.searchCriteria.push({ field, text });
+        }
+      }
       sendMessage('task-filter-change-search', true, this.searchCriteria);
     },
     loadFiltersFromSession: function() {
-      console.log('****');
-      console.log(this.getProject?._id);
       if (this.getProject) {
         const searchCriteriaFromSession = sessionGet(
           this.getProject._id,
           'taskSearchCriteria'
         );
-        console.log(searchCriteriaFromSession);
         if (searchCriteriaFromSession) {
           this.searchCriteria = searchCriteriaFromSession;
           sendMessage(
@@ -179,6 +208,16 @@ export default {
         }
       }
     },
+    searchAssignedToMe: function() {
+      if (this.searchCriteria.find(item => item.field === 'assignedTo')) {
+        // this.searchCriteria = this.searchCriteria.filter(
+        //   item => item.field !== 'assignedTo'
+        // );
+        this.search('assignedTo', '');
+      } else {
+        this.search('assignedTo', this.user?._id);
+      }
+    },
   },
 };
 </script>
@@ -188,6 +227,8 @@ export default {
   grid-auto-flow: column;
   column-gap: 10px;
   .filter-label {
+    cursor: pointer;
+    user-select: none;
     padding: 0 10px;
     border-radius: 4px;
     display: flex;

@@ -186,12 +186,19 @@ export default {
       this.data.assignedTo = this.data.assignedTo.filter(item => item !== key);
     },
     addAssignee: function(key) {
+      if (!this.data.assignedTo) {
+        this.data.assignedTo = [];
+      }
       if (!this.data.assignedTo.includes(key)) {
         this.data.assignedTo.push(key);
       }
     },
     openDetailedView: function() {
       sendMessage('modal', false);
+      sendMessage('project-view-updated', true, {
+        view: 'task',
+        taskId: this.task.taskId,
+      });
       this.$router.push({
         path: `/${this.getProfile.space}/${this.task.projectId}/dashboard`,
         query: { view: 'task', taskid: this.task.taskId },

@@ -69,7 +69,7 @@ export default {
   props: {
     stage: Object,
     sortCriteria: Object,
-    searchCriteria: Object,
+    searchCriteria: Array,
   },
   data: function() {
     return {
@@ -87,6 +87,7 @@ export default {
         projectId: '',
         timeEstimate: 0,
         storyPoints: 0,
+        status: 'open',
       },
     };
   },

@@ -2,7 +2,7 @@
   <div>
     <template v-if="getProject">
       <div class="toolbar" v-bind:key="getProject._id">
-        <div class="left desktop-only">
+        <div class="left">
           <!-- <OakSwitch
         theme="primary"
         v-bind:data="mode"
@@ -19,13 +19,22 @@
             Board
           </router-link>
           <router-link
-            class="nav-item"
+            class="nav-item desktop-only"
             v-bind:key="`${getProject._id}_list`"
             v-bind:to="
               `/${getProfile.space}/${getProject._id}/dashboard?view=list`
             "
           >
             List
+          </router-link>
+          <router-link
+            class="nav-item"
+            v-bind:key="`${getProject._id}_epic`"
+            v-bind:to="
+              `/${getProfile.space}/${getProject._id}/dashboard?view=epic`
+            "
+          >
+            Epic
           </router-link>
           <router-link
             class="nav-item"
@@ -43,6 +52,7 @@
             labelVariant="on"
             theme="primary"
             left
+            class="desktop-only"
           >
             <div slot="label">
               <div class="recent-tasks active" v-if="page === 'task'">

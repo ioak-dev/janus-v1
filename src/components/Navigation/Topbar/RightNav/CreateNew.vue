@@ -71,6 +71,7 @@ const projectStub = {
     projectId: '',
     timeEstimate: 0,
     storyPoints: 0,
+    status: 'open',
   };
 import { mapGetters } from 'vuex';
 export default {

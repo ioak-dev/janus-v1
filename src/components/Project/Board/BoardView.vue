@@ -18,7 +18,7 @@ import { receiveMessage } from '../../../events/MessageService';
 import OakText from '@/oakui/OakText.vue';
 export default {
   name: 'BoardView',
-  props: { searchCriteria: Object, sortCriteria: Object },
+  props: { searchCriteria: Array, sortCriteria: Object },
   components: { VerticalLane },
   computed: {
     ...mapGetters(['getStagesByProjectId', 'getProject']),
