@@ -127,8 +127,6 @@ export default {
   methods: {
     ...mapActions(['addTaskToView']),
     switchView: function(view, selectedRecentTask = undefined) {
-      console.log('switch view');
-      console.log(selectedRecentTask);
       this.view = view;
       this.selectedRecentTask = selectedRecentTask;
       if (view === 'task') {

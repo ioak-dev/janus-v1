@@ -58,6 +58,12 @@ export default {
       )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
     }
   },
+  methods: {
+    ...mapActions(['addTaskToView']),
+    switchView: function(view) {
+      this.view = view;
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
