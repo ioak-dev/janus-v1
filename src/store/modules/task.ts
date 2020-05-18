@@ -132,10 +132,8 @@ const actions = {
         },
       }
     );
-    commit(
-      'UPDATE_TASK_TO_VIEW',
-      sessionGet(rootState.project?._id, 'recentTasks')
-    );
+    const recentTasks = sessionGet(rootState.project?._id, 'recentTasks');
+    commit('UPDATE_TASK_TO_VIEW', recentTasks ? recentTasks : []);
     commit('UPDATE_TASKS', response.data.data);
   },
   async saveTask({ commit, dispatch, rootState }: any, payload: any) {
