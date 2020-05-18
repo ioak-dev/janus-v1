@@ -7,6 +7,7 @@ import {
   httpHandleError,
 } from '@/events/MessageService';
 import { isEmptyOrSpaces } from '@/Utils';
+import { sessionSet, sessionGet } from '@/events/SessionService';
 
 const baseUrl = process.env.VUE_APP_ROOT_API;
 
@@ -37,22 +38,40 @@ const getters = {
     const unorderedTasksList = rootState
       .getTasksByStage(stageId)
       .filter((item: any) => {
-        if (searchCriteria?.text) {
-          if (
-            (searchCriteria.field &&
-              searchCriteria.text === item[searchCriteria.field]) ||
+        let outcome = true;
+        searchCriteria?.forEach((searchParameter: any) => {
+          if (!outcome) {
+            return outcome;
+          }
+          if (searchParameter.field) {
+            if (searchParameter.field === 'assignedTo') {
+              if (
+                item[searchParameter.field] &&
+                item[searchParameter.field].includes(searchParameter.text)
+              ) {
+                outcome = true;
+              } else {
+                outcome = false;
+              }
+            } else if (searchParameter.text === item[searchParameter.field]) {
+              outcome = true;
+            } else {
+              outcome = false;
+            }
+          } else if (
             item.title
               ?.toLowerCase()
-              .includes(searchCriteria.text.toLowerCase()) ||
+              .includes(searchParameter.text.toLowerCase()) ||
             item.taskId
               ?.toLowerCase()
-              .includes(searchCriteria.text.toLowerCase())
+              .includes(searchParameter.text.toLowerCase())
           ) {
-            return true;
+            outcome = true;
+          } else {
+            outcome = false;
           }
-          return false;
-        }
-        return true;
+        });
+        return outcome;
       });
     if (isEmptyOrSpaces(sortCriteria.field)) {
       return unorderedTasksList;
@@ -112,6 +131,10 @@ const actions = {
           Authorization: `${rootState.profile.auth.token}`,
         },
       }
+    );
+    commit(
+      'UPDATE_TASK_TO_VIEW',
+      sessionGet(rootState.project?._id, 'recentTasks')
     );
     commit('UPDATE_TASKS', response.data.data);
   },
@@ -180,7 +203,10 @@ const actions = {
   },
   addTaskToView({ commit, dispatch, rootState }: any, payload: any) {
     if (!state.taskToView.includes(payload)) {
-      commit('ADD_TASK_TO_VIEW', payload);
+      const taskList = state.taskToView;
+      taskList.push(payload);
+      commit('UPDATE_TASK_TO_VIEW', taskList);
+      sessionSet(rootState.project?._id, 'recentTasks', taskList);
     }
   },
 };
@@ -189,8 +215,8 @@ const mutations = {
   UPDATE_TASKS: (state: any, tasks: any) => {
     state.tasks = tasks;
   },
-  ADD_TASK_TO_VIEW: (state: any, taskId: any) => {
-    state.taskToView.push(taskId);
+  UPDATE_TASK_TO_VIEW: (state: any, taskList: any) => {
+    state.taskToView = taskList;
   },
 };
 

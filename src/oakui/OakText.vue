@@ -1,16 +1,29 @@
 <template>
   <div class="oak-text-field">
-    <input
-      v-if="!multiline"
-      :disabled="disabled"
-      autoComplete="off"
-      :type="type ? type : 'text'"
-      :name="id"
-      :value="data"
-      @keyup="$emit('change')"
-      @blur="blurEvent"
-      @focus="$emit('focus')"
-    />
+    <template v-if="!multiline">
+      <input
+        v-if="type === 'number'"
+        :disabled="disabled"
+        autoComplete="off"
+        :type="type ? type : 'text'"
+        :name="id"
+        v-model.number="value"
+        @keyup="$emit('change', value)"
+        @blur="blurEvent"
+        @focus="$emit('focus')"
+      />
+      <input
+        v-else
+        :disabled="disabled"
+        autoComplete="off"
+        :type="type ? type : 'text'"
+        :name="id"
+        v-model="value"
+        @keyup="$emit('change')"
+        @blur="blurEvent"
+        @focus="$emit('focus')"
+      />
+    </template>
     <textarea
       v-else
       :disabled="disabled"
@@ -37,7 +50,7 @@ export default {
   props: {
     label: String,
     id: String,
-    data: String,
+    data: [String, Number],
     type: String,
     handleChange: Function,
     errorFields: Object,
@@ -47,7 +60,15 @@ export default {
     placeholder: String,
   },
   data() {
-    return {};
+    return { value: '' };
+  },
+  mounted() {
+    this.value = this.data;
+  },
+  watch: {
+    data: function() {
+      this.value = this.data;
+    },
   },
   methods: {
     blurEvent: function() {

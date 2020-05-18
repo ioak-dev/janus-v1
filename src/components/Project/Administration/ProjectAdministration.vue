@@ -58,16 +58,6 @@ export default {
       )[0].style.background = `url(${this.getProject.image}) no-repeat center center`;
     }
   },
-  methods: {
-    ...mapActions(['addTaskToView']),
-    switchView: function(view, selectedRecentTask = undefined) {
-      this.view = view;
-      this.selectedRecentTask = selectedRecentTask;
-      if (view === 'task') {
-        this.addTaskToView(selectedRecentTask);
-      }
-    },
-  },
 };
 </script>
 <style lang="scss" scoped>

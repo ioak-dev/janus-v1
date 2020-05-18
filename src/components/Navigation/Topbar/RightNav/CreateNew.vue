@@ -49,6 +49,7 @@ import OakModal from '@/oakui/OakModal.vue';
 const projectStub = {
     name: '',
     type: 'Kanban',
+    estimationMetric: 'Story points',
   },
   teamStub = {
     name: '',
@@ -68,6 +69,9 @@ const projectStub = {
     assignedTo: [],
     parentTaskId: null,
     projectId: '',
+    timeEstimate: 0,
+    storyPoints: 0,
+    status: 'open',
   };
 import { mapGetters } from 'vuex';
 export default {

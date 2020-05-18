@@ -41,6 +41,24 @@
         @change="handleDescriptionChange"
         alwaysEdit
       />
+      <OakText
+        v-if="
+          chosenProject && chosenProject.estimationMetric === 'Time estimate'
+        "
+        v-bind:data="data.timeEstimate"
+        id="timeEstimate"
+        :label="`Time estimate (${data.timeEstimate} hours)`"
+        @change="handleChange"
+        type="number"
+      />
+      <OakText
+        v-else
+        v-bind:data="data.storyPoints"
+        id="storyPoints"
+        label="Story points"
+        @change="handleChange"
+        type="number"
+      />
       <Assignee
         v-bind:assignedTo="data.assignedTo"
         @remove="removeAssignee"
@@ -119,6 +137,9 @@ export default {
       'getProjectById',
       'getProfile',
     ]),
+    chosenProject: function() {
+      return this.getProjectById(this.data.projectId);
+    },
     projectDropDown: function() {
       const projectList = [];
       this.getProjects.forEach(item =>
@@ -144,8 +165,9 @@ export default {
   },
   methods: {
     ...mapActions(['saveTask']),
-    handleChange: function() {
-      this.data[event.target.name] = event.target.value;
+    handleChange: function(value) {
+      this.data[event.target.name] =
+        value !== undefined && value !== null ? value : event.target.value;
     },
     handleDescriptionChange: function(text) {
       this.data.description = text;
@@ -165,12 +187,19 @@ export default {
       this.data.assignedTo = this.data.assignedTo.filter(item => item !== key);
     },
     addAssignee: function(key) {
+      if (!this.data.assignedTo) {
+        this.data.assignedTo = [];
+      }
       if (!this.data.assignedTo.includes(key)) {
         this.data.assignedTo.push(key);
       }
     },
     openDetailedView: function() {
       sendMessage('modal', false);
+      sendMessage('project-view-updated', true, {
+        view: 'task',
+        taskId: this.task.taskId,
+      });
       this.$router.push({
         path: `/${this.getProfile.space}/${this.task.projectId}/dashboard`,
         query: { view: 'task', taskid: this.task.taskId },

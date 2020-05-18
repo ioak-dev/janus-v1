@@ -277,6 +277,9 @@ export default {
       this.data.assignedTo = this.data.assignedTo.filter(item => item !== key);
     },
     addAssignee: function(key) {
+      if (!this.data.assignedTo) {
+        this.data.assignedTo = [];
+      }
       if (!this.data.assignedTo.includes(key)) {
         this.data.assignedTo.push(key);
       }

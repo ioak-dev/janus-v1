@@ -28,48 +28,78 @@
         v-bind:elements="['Low', 'Medium', 'High', 'Critical']"
         @change="handleChange"
       />
+      <OakText
+        v-if="
+          chosenProject && chosenProject.estimationMetric === 'Time estimate'
+        "
+        v-bind:data="data.timeEstimate"
+        id="timeEstimate"
+        :label="`Time estimate (${data.timeEstimate} hours)`"
+        @change="handleChange"
+        type="number"
+      />
+      <OakText
+        v-else
+        v-bind:data="data.storyPoints"
+        id="storyPoints"
+        label="Story points"
+        @change="handleChange"
+        type="number"
+      />
       <Assignee
         v-bind:assignedTo="data.assignedTo"
         @remove="removeAssignee"
         @add="addAssignee"
         v-bind:projectId="data.projectId"
       />
-      <div class="parent-task" v-if="data.parentTaskId">
-        <div class="typography-4">Parent Task</div>
-        <div class="typography-4 one-line-text">
-          {{
-            `${getTaskById(data.parentTaskId).taskId} (${
-              getTaskById(data.parentTaskId).title
-            })`
-          }}
+      <template v-if="task && !['Epic'].includes(data.type)">
+        <div class="parent-task" v-if="data.parentTaskId">
+          <div class="typography-4">Parent Task</div>
+          <div class="typography-4 one-line-text">
+            {{
+              `${getTaskById(data.parentTaskId).taskId} (${
+                getTaskById(data.parentTaskId).title
+              })`
+            }}
+          </div>
+          <div
+            class="parent-task-link"
+            @click="toggleParentSelectionDialogOpen"
+          >
+            Change
+          </div>
         </div>
-        <div class="parent-task-link" @click="toggleParentSelectionDialogOpen">
-          Change
+        <div class="parent-task" v-else>
+          <div class="typography-4">Parent Task</div>
+          <div
+            class="parent-task-link"
+            @click="toggleParentSelectionDialogOpen"
+          >
+            Choose
+          </div>
         </div>
-      </div>
-      <div class="parent-task" v-else>
-        <div class="typography-4">Parent Task</div>
-        <div class="parent-task-link" @click="toggleParentSelectionDialogOpen">
-          Choose
+      </template>
+      <template v-if="task && !['Epic'].includes(data.type)">
+        <div class="epic" v-if="data.epic">
+          <div class="typography-4">Epic</div>
+          <div class="typography-4 one-line-text">
+            {{
+              `${getTaskById(data.epic).taskId} (${
+                getTaskById(data.epic).title
+              })`
+            }}
+          </div>
+          <div class="epic-link" @click="toggleEpicSelectionDialogOpen">
+            Change
+          </div>
         </div>
-      </div>
-      <div class="epic" v-if="data.epic">
-        <div class="typography-4">Epic</div>
-        <div class="typography-4 one-line-text">
-          {{
-            `${getTaskById(data.epic).taskId} (${getTaskById(data.epic).title})`
-          }}
+        <div class="epic" v-else>
+          <div class="typography-4">Epic</div>
+          <div class="epic-link" @click="toggleEpicSelectionDialogOpen">
+            Choose
+          </div>
         </div>
-        <div class="epic-link" @click="toggleEpicSelectionDialogOpen">
-          Change
-        </div>
-      </div>
-      <div class="epic" v-else>
-        <div class="typography-4">Epic</div>
-        <div class="epic-link" @click="toggleEpicSelectionDialogOpen">
-          Choose
-        </div>
-      </div>
+      </template>
       <!-- </div> -->
       <!-- <div class="hr" /> -->
       <!-- <div class="section container">
@@ -158,6 +188,9 @@ export default {
       );
       return projectList;
     },
+    chosenProject: function() {
+      return this.getProjectById(this.data.projectId);
+    },
     stageDropDown: function() {
       const stageList = [];
       this.getStagesByProjectId(this.data.projectId).forEach(item =>
@@ -203,6 +236,9 @@ export default {
       this.data.assignedTo = this.data.assignedTo.filter(item => item !== key);
     },
     addAssignee: function(key) {
+      if (!this.data.assignedTo) {
+        this.data.assignedTo = [];
+      }
       if (!this.data.assignedTo.includes(key)) {
         this.data.assignedTo.push(key);
       }

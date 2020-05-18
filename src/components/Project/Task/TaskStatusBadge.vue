@@ -1,5 +1,8 @@
 <template>
   <div class="task-status" v-if="show">
+    <div class="icon open" v-if="status === 'open'">
+      <OakIcon mat="calendar_today" />
+    </div>
     <div class="icon complete" v-if="status === 'complete'">
       <OakIcon mat="check_circle" color="success" />
     </div>
@@ -13,10 +16,14 @@ import OakIcon from '@/oakui/OakIcon.vue';
 export default {
   name: 'TaskStatusBadge',
   components: { OakIcon },
-  props: { status: String },
+  props: { status: String, showOpen: Boolean },
   computed: {
     show: function() {
-      return this.status === 'complete' || this.status === 'archived';
+      if (this.showOpen) {
+        return ['open', 'complete', 'archived'].includes(this.status);
+      } else {
+        return ['complete', 'archived'].includes(this.status);
+      }
     },
   },
 };
