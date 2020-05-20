@@ -15,7 +15,7 @@
       Dashboard
     </router-link>
     <router-link
-      class="nav-item"
+      class="nav-item desktop-only"
       v-if="isProjectAdministrator"
       v-bind:key="`${getProject._id}_administration`"
       v-bind:to="

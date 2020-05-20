@@ -28,12 +28,12 @@
       />
     </div>
 
-    <OakDialog
+    <OakModal
       v-bind:visible="profileDialogOpen"
       @close="toggleProfileDialog"
       label="Edit profile"
     >
-      <div slot="dialog-body">
+      <div slot="modal-body">
         <div class="edit-profile">
           <div>
             <div class="typography-6 heading">Choose Avatar</div>
@@ -80,14 +80,14 @@
           </div>
           <div>
             <div class="typography-6 heading">Other settings</div>
-            <div class="typography-2">Name, email, password</div>
+            <div class="typography-2">Password and profile settings</div>
             <div class="typography-4">
-              You can change these settings from oneauth
+              Managed in Oneauth
             </div>
           </div>
         </div>
       </div>
-      <div slot="dialog-footer">
+      <div slot="modal-footer">
         <OakButton
           label="Save"
           theme="primary"
@@ -95,14 +95,14 @@
           @click="saveProfile"
         />
       </div>
-    </OakDialog>
+    </OakModal>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import OakPopoverMenu from '@/oakui/OakPopoverMenu.vue';
 import OakButton from '@/oakui/OakButton.vue';
-import OakDialog from '@/oakui/OakDialog.vue';
+import OakModal from '@/oakui/OakModal.vue';
 import OakSwitch from '@/oakui/OakSwitch.vue';
 import Avatar from '@/components/Avatar/Avatar.vue';
 import AvatarImage from '@/components/Avatar/AvatarImage.vue';
@@ -111,7 +111,7 @@ export default {
   components: {
     OakPopoverMenu,
     OakButton,
-    OakDialog,
+    OakModal,
     Avatar,
     AvatarImage,
     OakSwitch,
@@ -180,6 +180,7 @@ export default {
     },
     saveProfile() {
       this.saveUser({ ...this.user, avatar: this.data.avatar });
+      this.toggleProfileDialog();
     },
   },
 };
@@ -208,6 +209,7 @@ export default {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+      justify-content: center;
       .avatar-item {
         margin: 20px;
         padding: 10px;

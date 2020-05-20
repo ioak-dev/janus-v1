@@ -1,5 +1,10 @@
 <template>
-  <OakModal @close="$emit('toggle')" v-bind:visible="visible" label="New task">
+  <OakModal
+    @close="$emit('toggle')"
+    v-bind:visible="visible"
+    label="New task"
+    icon="library_add_check"
+  >
     <div slot="modal-body" class="form">
       <OakSelect
         v-if="!task.taskId"

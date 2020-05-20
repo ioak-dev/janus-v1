@@ -1,16 +1,35 @@
 <template>
   <div class="team-projects" v-bind:class="styleClass">
     <div class="container" v-if="getTeam">
-      {{ getTeam }}
+      <div
+        v-for="item in getProjectTeamsByTeamId(getTeam._id)"
+        v-bind:key="item._id"
+      >
+        <Project v-bind:project="getProjectById(item.projectId)" />
+      </div>
+      <div
+        v-for="item in getProjectTeamsByTeamId(getTeam._id)"
+        v-bind:key="item._id"
+      >
+        <Project v-bind:project="getProjectById(item.projectId)" />
+      </div>
+      <div
+        v-for="item in getProjectTeamsByTeamId(getTeam._id)"
+        v-bind:key="item._id"
+      >
+        <Project v-bind:project="getProjectById(item.projectId)" />
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import Project from './Project.vue';
 export default {
   name: 'TeamProjects',
+  components: { Project },
   computed: {
-    ...mapGetters(['getTeam']),
+    ...mapGetters(['getTeam', 'getProjectTeamsByTeamId', 'getProjectById']),
     styleClass: function() {
       if (this.getTeam?.image) {
         return 'background-present';
@@ -57,14 +76,11 @@ export default {
   height: calc(100vh - 60px);
   overflow: auto;
   .container {
-    margin: 20px 20px;
+    margin: auto;
     padding: 20px;
-    border-radius: 4px;
     display: grid;
-    grid-template-rows: auto auto auto;
-    align-items: flex-start;
-    row-gap: 30px;
-    background-color: var(--color-background-2);
+    grid-auto-flow: row;
+    row-gap: 20px;
   }
 }
 </style>

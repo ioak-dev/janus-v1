@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="lane-vertical">
+    <div class="lane-vertical" v-bind:class="showFilterBar ? 'filter-on' : ''">
       <div
-        class="header typography-4 space-bottom-2"
+        class="header typography-4"
         draggable="true"
         @dragover.prevent="dragOver"
         @dragstart="dragStart"
@@ -27,7 +27,10 @@
           </div>
         </template>
         <div v-else>
-          <EmptyPlaceholderCard v-bind:stage="stage" />
+          <EmptyPlaceholderCard
+            v-bind:stage="stage"
+            v-bind:showFilterBar="showFilterBar"
+          />
         </div>
       </div>
     </div>
@@ -41,6 +44,7 @@
       @close="toggleStage"
       v-bind:visible="editStage"
       label="Edit Stage"
+      icon="edit"
     >
       <div slot="modal-body">
         <UpdateStage v-bind:stage="stage" @success="toggleStage" />
@@ -70,6 +74,7 @@ export default {
     stage: Object,
     sortCriteria: Object,
     searchCriteria: Array,
+    showFilterBar: Boolean,
   },
   data: function() {
     return {
@@ -179,13 +184,28 @@ export default {
 .lane-vertical {
   width: 300px;
   margin-left: 50px;
-  margin-top: 50px;
+  margin-top: 20px;
   // padding: 6px;
   .container {
-    height: 70vh;
+    // top bar = 60px
+    // toolbar = 50px
+    // margin above lane title = 20px
+    // lane name height = 32px
+    // vertical padding on lane name = 2px
+    // margin below lane name = 20px
+    // self padding bottom = 20px
+    height: calc(100vh - 60px - 50px - 20px - 32px - 2px - 20px - 20px);
     overflow-y: auto;
     &.dragging {
       overflow-y: hidden;
+    }
+  }
+
+  &.filter-on {
+    .container {
+      height: calc(
+        100vh - 60px - 50px - 20px - 32px - 2px - 20px - 20px - 50px
+      );
     }
   }
 
@@ -197,7 +217,8 @@ export default {
     line-height: 32px;
     background-color: var(--color-background-transparent-4);
     border-radius: 4px;
-    padding: 4px 10px;
+    padding: 1px 4px;
+    margin-bottom: 20px;
     .stage-name {
       white-space: nowrap;
       overflow: hidden;

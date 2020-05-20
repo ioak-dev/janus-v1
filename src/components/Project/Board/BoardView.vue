@@ -6,6 +6,7 @@
           v-bind:stage="stage"
           v-bind:sortCriteria="sortCriteria"
           v-bind:searchCriteria="searchCriteria"
+          v-bind:showFilterBar="showFilterBar"
         />
       </div>
     </div>
@@ -18,7 +19,11 @@ import { receiveMessage } from '../../../events/MessageService';
 import OakText from '@/oakui/OakText.vue';
 export default {
   name: 'BoardView',
-  props: { searchCriteria: Array, sortCriteria: Object },
+  props: {
+    searchCriteria: Array,
+    sortCriteria: Object,
+    showFilterBar: Boolean,
+  },
   components: { VerticalLane },
   computed: {
     ...mapGetters(['getStagesByProjectId', 'getProject']),

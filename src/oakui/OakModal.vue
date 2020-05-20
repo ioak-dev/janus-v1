@@ -10,9 +10,11 @@
         <div :class="visible ? 'container' : 'container hidetext'">
           <div class="modal-header">
             <div class="left">
-              <div class="icon">
-                <!-- <i className="material-icons">blur_on</i> -->
-                N
+              <div class="icon" v-if="icon">
+                <i class="material-icons">{{ icon }}</i>
+              </div>
+              <div class="icon" v-else>
+                {{ label.substring(0, 1) }}
               </div>
               <div class="label one-liner">{{ label }}</div>
             </div>
@@ -47,6 +49,7 @@ export default {
     noheader: Boolean,
     donotMobilize: Boolean,
     error: Boolean,
+    icon: String,
   },
   data() {
     return {
