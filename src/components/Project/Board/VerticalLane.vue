@@ -113,10 +113,10 @@ export default {
       this.dragClass = 'source-spot';
       e.dataTransfer.setData('id', this.stage._id);
       e.dataTransfer.setData('domain', 'stage');
-      setTimeout(() => {
-        // e.target.style.display = 'none';
-        console.log('here you can set display as none');
-      }, 0);
+      // setTimeout(() => {
+      //   // e.target.style.display = 'none';
+      //   console.log('here you can set display as none');
+      // }, 0);
     },
     dragEnd() {
       this.dragClass = '';
