@@ -9,7 +9,7 @@
       @drop.prevent="drop"
       @dragleave="dragLeave"
     >
-      <div class="container" />
+      <div class="container" v-bind:class="showFilterBar ? 'filter-on' : ''" />
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@ export default {
       type: Object,
       required: true,
     },
+    showFilterBar: Boolean,
   },
   data: function() {
     return {
@@ -87,8 +88,15 @@ export default {
   }
   .container {
     width: 100%;
-    height: 75vh;
+    // height: 75vh;
+    height: calc(100vh - 60px - 50px - 20px - 32px - 2px - 20px - 20px);
+
     // background-color: aqua;
+    &.filter-on {
+      height: calc(
+        100vh - 60px - 50px - 20px - 32px - 2px - 20px - 20px - 50px
+      );
+    }
   }
 }
 </style>

@@ -37,6 +37,7 @@
             Epic
           </router-link>
           <router-link
+            v-if="getProject.type === 'Scrum'"
             class="nav-item"
             v-bind:key="`${getProject._id}_sprint`"
             v-bind:to="
@@ -46,6 +47,7 @@
             Sprint
           </router-link>
           <OakPopoverMenu
+            v-if="recentTasks && recentTasks.length > 0"
             v-bind:elements="recentTasks"
             data="option 1"
             id="toolbar-recent-task-switch"

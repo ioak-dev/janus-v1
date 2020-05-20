@@ -15,17 +15,28 @@
       @close="toggleProject"
       v-bind:visible="newProject"
       label="New Project"
+      icon="apps"
     >
       <div slot="modal-body">
         <UpdateProject v-bind:project="projectStub" @success="toggleProject" />
       </div>
     </OakModal>
-    <OakModal @close="toggleStage" v-bind:visible="newStage" label="New Stage">
+    <OakModal
+      @close="toggleStage"
+      v-bind:visible="newStage"
+      label="New Stage"
+      icon="vertical_split"
+    >
       <div slot="modal-body">
         <UpdateStage v-bind:stage="stageStub" @success="toggleStage" />
       </div>
     </OakModal>
-    <OakModal @close="toggleTeam" v-bind:visible="newTeam" label="New Team">
+    <OakModal
+      @close="toggleTeam"
+      v-bind:visible="newTeam"
+      label="New Team"
+      icon="people_alt"
+    >
       <div slot="modal-body">
         <UpdateTeam v-bind:team="teamStub" @success="toggleTeam" />
       </div>

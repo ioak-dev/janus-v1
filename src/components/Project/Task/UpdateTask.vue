@@ -3,6 +3,7 @@
     @close="$emit('toggle')"
     v-bind:visible="visible"
     label="Quick Edit - Task"
+    icon="edit"
   >
     <div slot="modal-body" class="form">
       <OakSelect

@@ -35,6 +35,7 @@
             v-if="view === 'board'"
             v-bind:searchCriteria="searchCriteria"
             v-bind:sortCriteria="sortCriteria"
+            v-bind:showFilterBar="showFilterBar"
           />
           <EpicList v-if="view === 'epic'" v-bind:epicId="selectedRecentTask" />
           <SprintView v-if="view === 'sprint'" />
@@ -156,7 +157,7 @@ export default {
     // }
   }
   .filterbar-container {
-    background-color: var(--color-background-transparent-1);
+    background-color: var(--color-background-transparent-4);
     .show {
       height: 50px;
       transition: height 0.2s ease-in-out;
