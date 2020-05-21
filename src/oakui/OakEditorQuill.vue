@@ -16,21 +16,29 @@
 <script>
 import Quill from 'quill';
 const toolbarOptions = [
-  ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-  ['blockquote', 'code-block'],
-
-  [{ header: 1 }, { header: 2 }], // custom button values
-  [{ list: 'ordered' }, { list: 'bullet' }],
-  [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-  [{ direction: 'rtl' }], // text direction
-
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-  [{ font: [] }],
-  [{ align: [] }],
-
-  ['clean'], // remove formatting button
+  [
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    { align: 'left' },
+    { align: 'center' },
+    { align: 'right' },
+    { align: 'justify' },
+    // { header: 1 },
+    // { header: 2 },
+    { list: 'ordered' },
+    { list: 'bullet' },
+    { indent: '-1' },
+    { indent: '+1' },
+    { color: [] },
+    { background: [] },
+    // 'blockquote',
+    'code-block',
+    { header: [1, 2, 3, 4, 5, 6, false] },
+    { font: [] },
+    // 'clean',
+  ],
 ];
 export default {
   name: 'OakEditorQuill',
@@ -62,16 +70,22 @@ export default {
       },
       theme: 'snow',
       formats: [
-        'bold',
-        'underline',
         'header',
+        'bold',
         'italic',
+        'underline',
         'strike',
-        'code-block',
+        'blockquote',
         'list',
+        'bullet',
+        'indent',
         'color',
         'font',
-        'indent',
+        'code-block',
+        'link',
+        'image',
+        'background',
+        'align',
       ],
     });
 
@@ -102,6 +116,6 @@ export default {
 //   background-color: white;
 // }
 .oak-editor-quill {
-  background-color: var(--color-background-5) !important;
+  // background-color: var(--color-background-5) !important;
 }
 </style>
