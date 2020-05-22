@@ -1,6 +1,6 @@
 <template>
   <div class="epic-badge one-liner" v-if="epic" v-bind:class="epic.color">
-    {{ `${epic.taskId}: ${epic.title} ${epic.color}` }}
+    {{ `${epic.taskId}: ${epic.title}` }}
   </div>
 </template>
 <script>
