@@ -117,7 +117,7 @@ const getters = {
   },
   getSubtasksByTaskId: (state: any) => (taskId: string) => {
     return state.tasks.filter((item: any) => {
-      return item.parentTaskId === taskId;
+      return item.parentTaskId === taskId || item.epic === taskId;
     });
   },
 };
