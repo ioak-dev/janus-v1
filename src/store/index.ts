@@ -14,6 +14,7 @@ import log from '../store/modules/log';
 import role from '../store/modules/role';
 import taskChecklistitem from '../store/modules/taskChecklistitem';
 import taskAttachment from '../store/modules/taskAttachment';
+import space from '../store/modules/space';
 
 Vue.use(Vuex);
 
@@ -36,5 +37,6 @@ export default new Vuex.Store({
     log,
     taskChecklistitem,
     taskAttachment,
+    space,
   },
 });

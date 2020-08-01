@@ -4,6 +4,7 @@
     <CommonNav />
     <ProjectNav />
     <TeamNav />
+    <HelpNav />
     <ThemeNav />
   </div>
 </template>
@@ -13,6 +14,7 @@ import ProjectNav from './ProjectNav.vue';
 import TeamNav from './TeamNav.vue';
 import ThemeNav from './ThemeNav.vue';
 import Header from './Header.vue';
+import HelpNav from './HelpNav.vue';
 export default {
   name: 'Sidebar',
   components: {
@@ -21,13 +23,14 @@ export default {
     ProjectNav,
     TeamNav,
     ThemeNav,
+    HelpNav,
   },
 };
 </script>
 <style scoped lang="scss">
 .sidebar {
   display: grid;
-  grid-template-rows: repeat(4, auto) 1fr;
+  grid-template-rows: repeat(5, auto) 1fr;
   height: 100vh;
   align-content: flex-start;
   align-items: flex-end;

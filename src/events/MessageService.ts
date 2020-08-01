@@ -1,4 +1,5 @@
 import { Subject, Observable } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 import { Message } from '../components/Types/GeneralTypes';
 
 const subject = new Subject<Message>();
@@ -24,7 +25,7 @@ export function newMessageId() {
 }
 
 export function newId() {
-  return Math.random();
+  return uuidv4();
 }
 
 export function httpHandleRequest(
