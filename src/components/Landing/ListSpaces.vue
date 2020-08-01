@@ -26,7 +26,6 @@ export default {
   },
   methods: {
     chooseSpace(spaceId) {
-      console.log(spaceId);
       this.$router.push({
         name: 'SpaceHomeDefault',
         params: { space: spaceId },
