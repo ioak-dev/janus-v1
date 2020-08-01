@@ -13,7 +13,6 @@ const getters = {
 
 const actions = {
   setTheme({ commit }: any, theme: string) {
-    console.log(theme);
     commit('UPDATE_PROFILE', { ...state, theme: theme });
   },
   setSpace({ commit }: any, space: any) {
