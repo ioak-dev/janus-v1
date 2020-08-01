@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import store from '@/store/index';
 import { mapGetters } from 'vuex';
 import Notification from '@/components/Notification/Notification.vue';
 // import AuthInit from '@/components/Auth/AuthInit.vue';
@@ -20,6 +21,9 @@ export default {
     // AuthInit,
     // Navigation,
     Container,
+  },
+  mounted() {
+    store.dispatch('fetchSpaces');
   },
   computed: {
     ...mapGetters(['getProfile']),
