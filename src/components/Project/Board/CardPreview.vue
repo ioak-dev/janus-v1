@@ -34,7 +34,7 @@
         <TaskStatusBadge v-bind:status="task.status" />
       </div>
       <div class="right typography-3">
-        <div>Jan 31</div>
+        <div>{{ formatDateText(task.deadline) }}</div>
         <div
           class="estimate"
           v-if="
@@ -73,6 +73,7 @@ import TaskChildCountBadge from '../Task/TaskChildCountBadge.vue';
 import TaskAttachmentCountBadge from '../Task/TaskAttachmentCountBadge.vue';
 import EpicBadge from '../Task/EpicBadge.vue';
 import { mapGetters } from 'vuex';
+import { formatDateText } from '../../../lib/DateUtils';
 export default {
   name: 'CardPreview',
   props: { task: Object },
@@ -104,6 +105,11 @@ export default {
         memberList.push(this.getUserById(item))
       );
       return memberList;
+    },
+  },
+  methods: {
+    formatDateText: function(text) {
+      return formatDateText(text);
     },
   },
 };

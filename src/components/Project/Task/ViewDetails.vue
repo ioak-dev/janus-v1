@@ -100,6 +100,14 @@
           </div>
         </div>
       </template>
+      <div class="deadline">
+        <OakDate
+          label="Deadline"
+          v-bind:data="data.deadline"
+          id="deadline"
+          @change="handleChange"
+        />
+      </div>
       <!-- </div> -->
       <!-- <div class="hr" /> -->
       <!-- <div class="section container">
@@ -147,6 +155,7 @@
 import OakSelect from '@/oakui/OakSelect.vue';
 import OakEditor from '@/oakui/OakEditor.vue';
 import OakButton from '@/oakui/OakButton.vue';
+import OakDate from '@/oakui/OakDate.vue';
 import Assignee from '@/components/Create/Assignee.vue';
 import { mapActions, mapGetters } from 'vuex';
 import OakText from '@/oakui/OakText.vue';
@@ -159,6 +168,7 @@ export default {
     OakSelect,
     Assignee,
     OakButton,
+    OakDate,
     ChooseTask,
   },
   props: { task: Object },
@@ -174,6 +184,7 @@ export default {
         assignedTo: [],
         parentTaskId: '',
         epic: '',
+        deadline: '2020-01-01',
       },
       parentSelectionDialogOpen: false,
       epicSelectionDialogOpen: false,
@@ -216,6 +227,7 @@ export default {
       this.epicSelectionDialogOpen = !this.epicSelectionDialogOpen;
     },
     handleChange: function() {
+      console.log(event);
       this.data[event.target.name] = event.target.value;
       if (event.target.name === 'type') {
         this.$emit('typeChange', event);

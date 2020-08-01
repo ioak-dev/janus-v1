@@ -1,38 +1,60 @@
 <template>
   <div class="landing-content">
-    <SectionOne />
-    <SectionTwo />
-    <SectionThree />
-    <SectionFour />
-    <SectionFive />
-    <SectionSix />
+    <div class="landing-content--logo"><Logo /></div>
+    <div class="landing-content--container">
+      <div class="landing-content--container--left">
+        <ListSpaces />
+      </div>
+      <hr />
+      <div class="landing-content--container--right">
+        <GettingStarted />
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import SectionOne from './SectionOne.vue';
-import SectionTwo from './SectionTwo.vue';
-import SectionThree from './SectionThree.vue';
-import SectionFour from './SectionFour.vue';
-import SectionFive from './SectionFive.vue';
-import SectionSix from './SectionSix.vue';
+import GettingStarted from './GettingStarted.vue';
+import ListSpaces from './ListSpaces.vue';
+import Logo from '../Logo/Logo.vue';
 export default {
   name: 'LandingContent',
-  components: {
-    SectionOne,
-    SectionTwo,
-    SectionThree,
-    SectionFour,
-    SectionFive,
-    SectionSix,
-  },
+  components: { GettingStarted, ListSpaces, Logo },
 };
 </script>
 <style lang="scss" scoped>
 .landing-content {
-  user-select: none;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   background-color: var(--color-background-2);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-items: center;
+  align-content: center;
+  .landing-content--logo {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+  }
+
+  .landing-content--container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    align-content: center;
+    .landing-content--container--left,
+    .landing-content--container--right {
+      max-height: 100vh;
+      display: grid;
+      grid-auto-flow: row;
+      // align-content: center;
+      padding: 0 20px;
+      overflow: auto;
+    }
+
+    hr {
+      height: 80%;
+      border: 1px solid var(--color-background-5);
+      margin: auto;
+    }
+  }
 }
 </style>
